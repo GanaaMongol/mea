@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="mn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Хэрэглэгч — MEA</title>
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+            rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="styles.css" />
+    </head>
+    <body>
+        <!-- Announcement Bar -->
+        <div class="announcement-bar">
+            <div class="container">
+                <p class="announcement-bar__text">ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д <a href="#">Бүртгүүлэх</a></p>
+                <div class="announcement-bar__links">
+                    <a href="#">Үйлчилгээ</a>
+                    <a href="#">Яв дагалдуул</a>
+                    <div class="lang-selector">
+                        <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="10" />
+                            <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                        </svg>
+                        <span>Mongolian</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <a
+                    href="index.html"
+                    class="header__logo">
+                    <img
+                        src="images/logo.svg"
+                        alt="MEA Logo"
+                        width="120"
+                        height="36" />
+                </a>
+                <nav class="header__nav">
+                    <a href="#">Бидний Тухай</a>
+                    <a href="news.html">Мэдээ &amp; Нийтлэл</a>
+                    <a href="membership.html">Гишүүнчлэл</a>
+                    <a href="departments.html">Үйлчлэлийн Албад</a>
+                    <a href="#">Donation</a>
+                    <a href="#">Холбоо Барих</a>
+                </nav>
+                <div class="header__actions">
+                    <button
+                        class="header__search-btn"
+                        aria-label="Хайх">
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="8" />
+                            <line
+                                x1="21"
+                                y1="21"
+                                x2="16.65"
+                                y2="16.65" />
+                        </svg>
+                    </button>
+                    <a
+                        href="login.html"
+                        class="btn btn--primary btn--sm"
+                        >Нэвтрэх</a
+                    >
+                </div>
+                <button
+                    class="header__menu-toggle"
+                    aria-label="Цэс">
+                    <span></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- User Profile Section -->
+        <main class="profile-section">
+            <div class="profile-content">
+                <h1 class="profile-greeting">Welcome, Erdenebaatar</h1>
+
+                <div class="profile-layout">
+                    <!-- Sidebar Menu -->
+                    <nav class="profile-menu">
+                        <a
+                            href="#"
+                            class="profile-menu__item profile-menu__item--active">
+                            <span class="profile-menu__left">
+                                <span class="profile-menu__icon">
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                        <circle
+                                            cx="12"
+                                            cy="7"
+                                            r="4" />
+                                    </svg>
+                                </span>
+                                Хэрэглэгч
+                            </span>
+                            <span class="profile-menu__arrow">
+                                <svg
+                                    width="5"
+                                    height="10"
+                                    viewBox="0 0 5 10"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.33"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M1 1l4 4-4 4" />
+                                </svg>
+                            </span>
+                        </a>
+                        <a
+                            href="#"
+                            class="profile-menu__item">
+                            <span class="profile-menu__left">
+                                <span class="profile-menu__icon">
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                                        <polyline points="16 17 21 12 16 7" />
+                                        <line
+                                            x1="21"
+                                            y1="12"
+                                            x2="9"
+                                            y2="12" />
+                                    </svg>
+                                </span>
+                                Системээс Гарах
+                            </span>
+                            <span class="profile-menu__arrow">
+                                <svg
+                                    width="5"
+                                    height="10"
+                                    viewBox="0 0 5 10"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.33"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M1 1l4 4-4 4" />
+                                </svg>
+                            </span>
+                        </a>
+                    </nav>
+
+                    <div class="profile-divider"></div>
+
+                    <!-- Settings Panel -->
+                    <div class="profile-panel">
+                        <div class="profile-panel__header">
+                            <h2 class="profile-panel__title">Хэрэглэгчийн Тохиргоо</h2>
+                            <a
+                                href="#"
+                                class="profile-edit-link">
+                                Мэдээлэл өөрчлөх
+                                <span class="profile-edit-link__icon">
+                                    <svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- General Info -->
+                        <div class="profile-info-section">
+                            <h3 class="profile-info-section__title">Ерөнхий Мэдээлэл</h3>
+                            <div class="profile-field-row">
+                                <div class="profile-field">
+                                    <label class="profile-field__label">Утасны дугаар</label>
+                                    <div class="profile-field__value">94109967</div>
+                                </div>
+                                <div class="profile-field">
+                                    <label class="profile-field__label">Цахим шуудан</label>
+                                    <div class="profile-field__value">erdenebaatar.e@gmail.com</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-panel__divider"></div>
+
+                        <!-- Password Section -->
+                        <div class="profile-info-section">
+                            <div class="profile-info-section__header">
+                                <h3 class="profile-info-section__title">Нууц үг</h3>
+                                <a
+                                    href="#"
+                                    class="profile-edit-link">
+                                    Нууц үг солих
+                                    <span class="profile-edit-link__icon">
+                                        <svg
+                                            width="14"
+                                            height="14"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="profile-field-row">
+                                <div class="profile-field">
+                                    <label class="profile-field__label">Нууц үг</label>
+                                    <div class="profile-field__value profile-field__value--password">••••••••</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer__inner">
+                <div class="footer__top">
+                    <div>
+                        <a
+                            href="index.html"
+                            class="footer__logo">
+                            <img
+                                src="images/logo.svg"
+                                alt="MEA Logo"
+                                width="120"
+                                height="36" />
+                        </a>
+                        <div class="footer__links-row">
+                            <a href="#">Яв Дагалдуул</a>
+                            <a href="#">Donation &amp; Fee</a>
+                            <a href="login.html">Нэвтрэх</a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="footer__contact-title">Title</p>
+                        <div class="footer__contact-info">
+                            <span>(+976) 9903-2010, 9015-2040</span>
+                            <a href="mailto:info@mea.mn">info@mea.mn</a>
+                            <span>3345 Улаанбаатар хот, Баянзүрх дүүрэг, 4-хороо, 15-р хороолол, Энхтайвны тайвны өргөн чөлөө гудамж 4-р байр, 130 тоот</span>
+                        </div>
+                    </div>
+                </div>
+                <nav class="footer__nav">
+                    <div>
+                        <p class="footer__nav-group-title">Бидний Тухай</p>
+                        <ul class="footer__nav-list">
+                            <li><a href="about-vision.html">Алсын хараа</a></li>
+                            <li><a href="about-history.html">Түүх</a></li>
+                            <li><a href="#">Бүтэц</a></li>
+                            <li><a href="about-congress.html">Их Хурал</a></li>
+                            <li><a href="#">Бага Хурал</a></li>
+                            <li><a href="about-board.html">Удирдах Зөвлөл</a></li>
+                            <li><a href="#">Гүйцэтгэх Алба</a></li>
+                            <li><a href="about-creed.html">Итгэлийн Тунхаг</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="footer__nav-group-title">Гишүүнчлэл</p>
+                        <ul class="footer__nav-list">
+                            <li><a href="#">Гишүүнээр элсэх</a></li>
+                            <li><a href="#">Мэдээлэл Шинэчлэх</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="footer__nav-group-title">Үйлчилгээ</p>
+                        <ul class="footer__nav-list">
+                            <li><a href="#">Тодорхойлолт Авах</a></li>
+                            <li><a href="#">Хуулийн Зөвлөгөө</a></li>
+                            <li><a href="#">Чуулган Байгуулах</a></li>
+                            <li><a href="#">Гишүүдийг Сэрэмжлүүлэх</a></li>
+                            <li><a href="#">Хамтын Ажиллагаа</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="footer__nav-group-title">ХАБ</p>
+                        <ul class="footer__nav-list">
+                            <li><a href="hub-ulaanbaatar.html">Улаанбаатар хот</a></li>
+                            <li><a href="hub-21-aimag.html">21 Аймаг</a></li>
+                            <li><a href="hub-faith-orgs.html">Итгэл Суурьт Байгууллага</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="footer__nav-group-title">Албад</p>
+                        <ul class="footer__nav-list">
+                            <li><a href="#">Хүүхдийн Алба</a></li>
+                            <li><a href="#">Өсвөр Залуучуудын Алба</a></li>
+                            <li><a href="#">Эрчүүдийн Алба</a></li>
+                            <li><a href="#">Эмэгтэйчүүдийн Алба</a></li>
+                            <li><a href="#">Ахмадын Алба</a></li>
+                            <li><a href="#">Илгээлтийн Алба</a></li>
+                            <li><a href="#">Судалгааны Алба</a></li>
+                            <li><a href="#">Залбирлын Алба</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="footer__bottom">
+                    <p class="footer__copyright">MEA &copy; 2026</p>
+                    <span class="footer__legal-link">Зар байршуулах / Лого татах</span>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
