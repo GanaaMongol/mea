@@ -214,3 +214,7 @@ pass; env is documented in `.env.example`; static `lib/*.ts` content is removed.
 - **Next 16 vs Payload peer range** — see "Verify first" above.
 - **Theme editability scope**: full admin-editable `theme` global (assumed here) vs.
   config-only tokens defined in `payload.config.ts` with no admin UI.
+- **Media storage**: ✅ decided (2026-07-23) — start with **local disk storage** (Payload's
+  default upload handling, files under `media/` or similar, no extra adapter needed).
+  Migrate to S3 later via `@payloadcms/storage-s3`; keep upload field config
+  adapter-agnostic so the switch is a config change, not a content-model change.
