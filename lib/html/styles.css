@@ -260,12 +260,7 @@ ol {
     text-align: center;
     color: #fff;
 }
-.hub-banner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(20, 101, 190, 0.7);
-}
+
 .hub-banner__content {
     position: relative;
     z-index: 1;
@@ -1285,6 +1280,7 @@ ol {
     font-size: var(--text-body);
     font-weight: 600;
     color: var(--color-neutral-700);
+    white-space: nowrap;
 }
 .footer__contact-title {
     font-family: var(--font-display);
@@ -1299,6 +1295,7 @@ ol {
     gap: 8px;
     font-size: var(--text-body);
     color: var(--color-neutral-700);
+    max-width: 480px;
 }
 .footer__nav {
     display: grid;
