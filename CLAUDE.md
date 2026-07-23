@@ -77,6 +77,14 @@ The announcement bar, `header` (logo + nav + search + login), and `footer` (with
 `app/layout.tsx` so routes only render page content. The mobile menu toggle and search
 button need a small client component; keep the rest as Server Components.
 
+**Source of truth: `index.html`'s announcement bar, header, and footer** — all other
+mockup pages have been synced to those exact blocks (only the nav `active` class varies
+per page: about-* → "Бидний Тухай", news → "Мэдээ & Нийтлэл", membership* →
+"Гишүүнчлэл", departments/detail → "Үйлчлэлийн Албад"; hubs/login/profile have none).
+When porting, build `<AnnouncementBar>`, `<Header>`, `<Footer>` from `index.html`'s
+markup and derive the active nav state from the current route (e.g. `usePathname` or
+layout-level logic) instead of hardcoding it.
+
 ### Design system conversion
 
 - Port `lib/html/styles.css` tokens (`:root` custom properties: colors, `--font-*`,
