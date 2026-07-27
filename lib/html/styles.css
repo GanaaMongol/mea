@@ -700,13 +700,17 @@ ol {
 
 /* ===== FOOTER NEWSLETTER ===== */
 .join-our__newsletter {
-    background: var(--color-primary);
+    background: var(--color-neutral-50);
     border-radius: 16px;
     padding: 48px 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    /* same content width as .container (1360 - 2 * 40px padding) */
+    width: calc(100% - 80px);
+    max-width: calc(var(--container-max) - 80px);
+    margin-inline: auto;
     /* overlap the quote banner above by 40px */
     position: relative;
     z-index: 1;
