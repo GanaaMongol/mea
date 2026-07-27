@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="mn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Нүүр Хуудас — МЕА</title>
+        <link
+            rel="stylesheet"
+            href="styles.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet" />
+    </head>
+    <body>
+        <!-- ===== TOP BAR ===== -->
+        <div class="top-bar">
+            <div class="top-bar__inner">
+                <div class="top-bar__announcement">
+                    ЗАРЛАЛ: &nbsp;"Ээлжит бага хурал 2025.10.09-10нд УБ-д&nbsp;
+                    <a href="#">Бүртгүүлэх</a>
+                </div>
+                <div class="top-bar__links">
+                    <a href="#">Үйлчилгээ</a>
+                    <a href="#">Яв дагалдуул</a>
+                    <a href="#">Mongolian</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== HEADER / NAV ===== -->
+        <header class="header">
+            <div class="header__inner">
+                <a
+                    href="index.html"
+                    class="header__logo">
+                    <img
+                        src="images/logo.svg"
+                        alt="MEA Logo"
+                        width="170"
+                        height="48" />
+                </a>
+                <nav class="header__nav">
+                    <a href="about-vision.html">Бидний Тухай</a>
+                    <a href="news.html">Мэдээ &amp; Нийтлэл</a>
+                    <a href="membership.html">Гишүүнчлэл</a>
+                    <a href="departments.html">Үйлчлэлийн Албад</a>
+                    <a href="#">Donation</a>
+                    <a href="#">Холбоо Барих</a>
+                </nav>
+                <div class="header__actions">
+                    <button
+                        class="header__search-btn"
+                        aria-label="Хайх">
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2">
+                            <circle
+                                cx="9"
+                                cy="9"
+                                r="7" />
+                            <line
+                                x1="14"
+                                y1="14"
+                                x2="19"
+                                y2="19" />
+                        </svg>
+                    </button>
+                    <a
+                        href="login.html"
+                        class="btn btn--primary btn--sm"
+                        >Нэвтрэх</a
+                    >
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero">
+            <div class="hero__bg">
+                <img
+                    src="images/hero-bg.jpg"
+                    alt="Hero Background"
+                    class="hero__bg-img" />
+            </div>
+            <div class="hero__content">
+                <h1 class="hero__title">Together we're making Jesus known.</h1>
+                <p class="hero__desc">
+                    Монголын Эвангелийн Эвсэл нь чуулган, үйлчлэл, байгууллагуудыг нэгтгэн, эв нэгдэлтэйгээр сайн мэдээг түгээхийн төлөө оршдог. Бид ганцаараа биш, хамтдаа илүү
+                    ихийг бүтээнэ.
+                </p>
+                <div class="hero__cta">
+                    <a
+                        href="membership-join.html"
+                        class="btn btn--primary btn--lg"
+                        >Гишүүн Болох</a
+                    >
+                    <a
+                        href="about-vision.html"
+                        class="btn btn--outline-white btn--lg"
+                        >Бидний Тухай</a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MEMBERSHIP SECTION ===== -->
+        <section class="section section--warm">
+            <div class="container">
+                <div
+                    class="content-block__header"
+                    style="margin-bottom: 60px">
+                    <span class="content-block__label">ГИШҮҮНЧЛЭЛ</span>
+                    <h2 class="content-block__title">Эвслийн гишүүн болох</h2>
+                    <p class="content-block__desc">Гурван төрлийн гишүүнчлэл: хувь хүн, сүм чуулган, байгууллага. Танд аль нь тохирохыг сонгоно уу.</p>
+                </div>
+                <div class="info-cards">
+                    <!-- Card 1 - Featured (gradient) -->
+                    <div class="info-card info-card--featured">
+                        <img
+                            src="images/icon-pray.png"
+                            alt=""
+                            class="info-card__icon"
+                            width="50"
+                            height="50" />
+                        <span class="info-card__badge info-card__badge--light">01</span>
+                        <h3 class="info-card__title">ТОВЧ ТҮҮХ</h3>
+                        <p class="info-card__text">
+                            Монголын Эвангелийн Эвслийн (МЭЭ) анхны суурь 1992-1993 оны үеэс эхлэлтэй билээ. Тухайн үед байсан илгээлтийн байгууллагууд болон...
+                        </p>
+                        <a
+                            href="about-history.html"
+                            class="info-card__link info-card__link--white"
+                            >Дэлгэрэнгүй <span>&rarr;</span></a
+                        >
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="info-card">
+                        <img
+                            src="images/icon-christian.png"
+                            alt=""
+                            class="info-card__icon"
+                            width="48"
+                            height="48" />
+                        <span class="info-card__badge">02</span>
+                        <h3 class="info-card__title">МЭЭ-ийн ЗОРИЛГО</h3>
+                        <p class="info-card__text">Монгол чуулганы эв нэгдэл, хамтын ажиллагааг хангах Монгол чуулганыг гаж буруу урсгалаас хамгаалах</p>
+                        <a
+                            href="about-vision.html"
+                            class="info-card__link"
+                            >Дэлгэрэнгүй <span>&rarr;</span></a
+                        >
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="info-card">
+                        <img
+                            src="images/icon-bird.png"
+                            alt=""
+                            class="info-card__icon"
+                            width="48"
+                            height="48" />
+                        <span class="info-card__badge">03</span>
+                        <h3 class="info-card__title">ГИШҮҮНЧЛЭЛ</h3>
+                        <p class="info-card__text">
+                            Бурхан ертөнцийг үнэхээр хайрласан тул цорын ганц Хүүгээ өгсөн. Ингэснээр Хүүд итгэгч хэн ч мөхөхгүй, харин мөнх амьтай болох юм.
+                        </p>
+                        <a
+                            href="membership-join.html"
+                            class="info-card__link"
+                            >Дэлгэрэнгүй <span>&rarr;</span></a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== QUOTE BANNER ===== -->
+        <section class="quote-banner">
+            <div class="quote-banner__overlay"></div>
+            <div class="quote-banner__content">
+                <span class="quote-banner__caption">Caption</span>
+                <blockquote class="quote-banner__text">Бид нэг ЭЗЭН, нэг ИТГЭЛ, нэг СҮНСНИЙ эв нэгдлийг эрхэмлэнэ.</blockquote>
+            </div>
+        </section>
+
+        <!-- ===== 4 ACCELERATORS ===== -->
+        <section class="section section--warm">
+            <div class="container">
+                <div
+                    class="content-block__header content-block__header--center"
+                    style="margin-bottom: 60px">
+                    <span class="content-block__label">ДИЖИТАЛ СТРАТЕГИ</span>
+                    <h2 class="content-block__title">4 Хурдасгуур</h2>
+                    <p
+                        class="content-block__desc"
+                        style="margin-left: auto; margin-right: auto">
+                        Эвслийн зорилгыг урагшлуулах дөрвөн стратегийн чиглэл. Тус бүр дээр дарж дэлгэрэнгүй үзнэ үү.
+                    </p>
+                </div>
+                <div class="strategy-cards">
+                    <div class="strategy-card">
+                        <div class="strategy-card__image">
+                            <img
+                                src="images/strategy-1.jpg"
+                                alt="Хүүхэд / Гэр бүл" />
+                            <h3 class="strategy-card__title">Хүүхэд / Гэр бүл</h3>
+                        </div>
+                        <div class="strategy-card__info">
+                            <span class="strategy-card__badge">01</span>
+                            <p class="strategy-card__text">"Дараа үеийнхээ итгэлийн суурийг тавьж, гэр бүлийг бэхжүүлэх үйлчлэл."</p>
+                        </div>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="strategy-card__image">
+                            <img
+                                src="images/strategy-2.jpg"
+                                alt="Залуус" />
+                            <h3 class="strategy-card__title">Залуус</h3>
+                        </div>
+                        <div class="strategy-card__info">
+                            <span class="strategy-card__badge">02</span>
+                            <p class="strategy-card__text">"Дараа үеийнхээ итгэлийн суурийг тавьж, гэр бүлийг бэхжүүлэх үйлчлэл."</p>
+                        </div>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="strategy-card__image">
+                            <img
+                                src="images/strategy-3.jpg"
+                                alt="Илгээлт" />
+                            <h3 class="strategy-card__title">Илгээлт</h3>
+                        </div>
+                        <div class="strategy-card__info">
+                            <span class="strategy-card__badge">03</span>
+                            <p class="strategy-card__text">"Дараа үеийнхээ итгэлийн суурийг тавьж, гэр бүлийг бэхжүүлэх үйлчлэл."</p>
+                        </div>
+                    </div>
+                    <div class="strategy-card">
+                        <div class="strategy-card__image">
+                            <img
+                                src="images/strategy-4.jpg"
+                                alt="Дижитал / AI" />
+                            <h3 class="strategy-card__title">Дижитал / AI</h3>
+                        </div>
+                        <div class="strategy-card__info">
+                            <span class="strategy-card__badge">04</span>
+                            <p class="strategy-card__text">"Дараа үеийнхээ итгэлийн суурийг тавьж, гэр бүлийг бэхжүүлэх үйлчлэл."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== NEWS SECTION ===== -->
+        <section class="section section--white">
+            <div class="container">
+                <div
+                    class="content-block__header content-block__header--center"
+                    style="margin-bottom: 60px">
+                    <span class="content-block__label">МЭДЭЭ &amp; НИЙТЛЭЛ</span>
+                    <h2 class="content-block__title">Сүүлийн Үеийн Мэдээ Нийтлэлүүд</h2>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="cap-tabs">
+                    <a
+                        href="#"
+                        class="cap-tab cap-tab--active"
+                        >Мэдээ</a
+                    >
+                    <a
+                        href="#"
+                        class="cap-tab"
+                        >Нийтлэл</a
+                    >
+                </div>
+
+                <!-- News Cards -->
+                <div class="news-grid">
+                    <article class="news-card">
+                        <div class="news-card__image">
+                            <img
+                                src="images/news-1.jpg"
+                                alt="News" />
+                        </div>
+                        <div class="news-card__body">
+                            <span class="news-card__tag">Мэдээ</span>
+                            <h3 class="news-card__title">Орон нутгийн төлөөлөгчтэйгээ холбогдох 3 зөвлөгөө</h3>
+                            <p class="news-card__excerpt">Өөрийн бүсийн эвслийн төлөөлөгчтэй хэрхэн үр дүнтэй харилцах вэ — практик заавар.</p>
+                            <div class="news-card__footer">
+                                <span class="news-card__date">Date</span>
+                                <a
+                                    href="#"
+                                    class="news-card__read"
+                                    >Унших</a
+                                >
+                            </div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-card__image">
+                            <img
+                                src="images/news-2.jpg"
+                                alt="News" />
+                        </div>
+                        <div class="news-card__body">
+                            <span class="news-card__tag">Мэдээ</span>
+                            <h3 class="news-card__title">Хөдөө орон нутгийн чуулгануудын тэлэлт</h3>
+                            <p class="news-card__excerpt">Аймаг, сумдын чуулганууд хэрхэн бэхжиж, сайн мэдээг түгээж байгаа тухай.</p>
+                            <div class="news-card__footer">
+                                <span class="news-card__date">Date</span>
+                                <a
+                                    href="#"
+                                    class="news-card__read"
+                                    >Унших</a
+                                >
+                            </div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-card__image">
+                            <img
+                                src="images/news-3.jpg"
+                                alt="News" />
+                        </div>
+                        <div class="news-card__body">
+                            <span class="news-card__tag">Мэдээ</span>
+                            <h3 class="news-card__title">Cross Section подкаст: Итгэл ба соёл</h3>
+                            <p class="news-card__excerpt">Итгэл, соёл, орчин үеийн амьдралын уулзварын талаар удирдагчидтай ярилцлаа.</p>
+                            <div class="news-card__footer">
+                                <span class="news-card__date">Date</span>
+                                <a
+                                    href="#"
+                                    class="news-card__read"
+                                    >Унших</a
+                                >
+                            </div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-card__image">
+                            <img
+                                src="images/news-4.jpg"
+                                alt="News" />
+                        </div>
+                        <div class="news-card__body">
+                            <span class="news-card__tag">Мэдээ</span>
+                            <h3 class="news-card__title">Залбирлын нэгдсэн хөдөлгөөн эхэллээ</h3>
+                            <p class="news-card__excerpt">Монгол даяарх чуулганууд долоо хоног бүр хамтдаа залбирахаар нэгдэж байна.</p>
+                            <div class="news-card__footer">
+                                <span class="news-card__date">Date</span>
+                                <a
+                                    href="#"
+                                    class="news-card__read"
+                                    >Унших</a
+                                >
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="section__more">
+                    <a
+                        href="news.html"
+                        class="btn-more"
+                        >Дэлгэрэнгүй Харах <span>&rarr;</span></a
+                    >
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA BANNER ===== -->
+        <section class="cta-banner">
+            <div class="cta-banner__overlay"></div>
+            <div class="cta-banner__content">
+                <span class="cta-banner__subtitle">Бидэнтэй Нэгдэх үү?</span>
+                <h2 class="cta-banner__title">Христийн бие дотор сайн дурын үйлчлэгчдыг хайж байна</h2>
+                <a
+                    href="membership-join.html"
+                    class="btn btn--primary btn--lg"
+                    >Гишүүн Болох <span>&rarr;</span></a
+                >
+            </div>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer__inner">
+                <!-- Newsletter Banner -->
+                <div class="join-our__newsletter">
+                    <div class="join-our__newsletter-text">
+                        <h3 class="join-our__newsletter-title">Join Our Newsletter</h3>
+                        <p class="join-our__newsletter-desc">
+                            Receive fresh articles straight in your inbox, every Friday morning. I also share interesting finds from the internet!
+                        </p>
+                    </div>
+                    <div class="join-our__newsletter-form">
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            class="join-our__newsletter-input" />
+                        <button class="btn btn--primary btn--sm">Subscribe</button>
+                    </div>
+                </div>
+
+                <!-- Footer Top -->
+                <div class="footer__top">
+                    <div class="footer__logo">
+                        <img
+                            src="images/logo.svg"
+                            alt="MEA Logo"
+                            width="170"
+                            height="48" />
+                        <div class="footer__links-row">
+                            <a href="#">Яв Дагалдуул</a>
+                            <a href="#">Donation &amp; Fee</a>
+                            <a href="login.html">Нэвтрэх</a>
+                        </div>
+                    </div>
+                    <div class="footer__contact">
+                        <h3 class="footer__contact-title">Title</h3>
+                        <div class="footer__contact-info">
+                            <span>(+976) 9903-2010, 9015-2040</span>
+                            <span>info@mea.mn</span>
+                            <span>3345 Улаанбаатар хот, Баянзүрх дүүрэг, 4- хороо, 15-р хороолол, Энхтайвны тайвны өргөн чөлөө гудамж 4-р байр, 130 тоот</span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="footer__divider" />
+
+                <!-- Footer Nav -->
+                <nav class="footer__nav">
+                    <div>
+                        <h4 class="footer__nav-group-title">Гишүүнчлэл</h4>
+                        <ul class="footer__nav-list">
+                            <li><a href="membership-join.html">Гишүүнээр элсэх</a></li>
+                            <li><a href="#">Мэдээлэл Шинэчлэх</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer__nav-group-title">Бидний Тухай</h4>
+                        <ul class="footer__nav-list">
+                            <li><a href="news.html">Мэдээ Мэдээлэл</a></li>
+                            <li><a href="about-vision.html">Алсын Хараа</a></li>
+                            <li><a href="about-history.html">Түүх</a></li>
+                            <li><a href="about-board.html">Бүтэц</a></li>
+                            <li><a href="about-congress.html">Их Хурал</a></li>
+                            <li><a href="#">Бага Хурал</a></li>
+                            <li><a href="#">Удирдах Зөвлөл</a></li>
+                            <li><a href="#">Гүйцэтгэх Алба</a></li>
+                            <li><a href="about-creed.html">Итгэлийн Тунхаг</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer__nav-group-title">Үйлчилгээ</h4>
+                        <ul class="footer__nav-list">
+                            <li><a href="#">Тодорхойлолт Авах</a></li>
+                            <li><a href="#">Хуулийн Зөвлөгөө</a></li>
+                            <li><a href="#">Чуулган Байгуулах</a></li>
+                            <li><a href="#">Гишүүдийг Сэрэмжлүүлэх</a></li>
+                            <li><a href="#">Хамтын Ажиллагаа</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer__nav-group-title">ХАБ</h4>
+                        <ul class="footer__nav-list">
+                            <li><a href="hub-ulaanbaatar.html">Улаанбаатар хот</a></li>
+                            <li><a href="hub-21-aimag.html">21 Аймаг</a></li>
+                            <li><a href="hub-faith-orgs.html">Итгэл Суурьт Байгууллага</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer__nav-group-title">Албад</h4>
+                        <ul class="footer__nav-list">
+                            <li><a href="#">Хүүхдийн Алба</a></li>
+                            <li><a href="#">Өсвөр Залуучуудын Алба</a></li>
+                            <li><a href="#">Эрчүүдийн Алба</a></li>
+                            <li><a href="#">Эмэгтэйчүүдийн Алба</a></li>
+                            <li><a href="#">Ахмадын Алба</a></li>
+                            <li><a href="#">Илгээлтийн Алба</a></li>
+                            <li><a href="#">Судалгааны Алба</a></li>
+                            <li><a href="#">Залбирлын Алба</a></li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <hr class="footer__divider" />
+
+                <!-- Footer Bottom -->
+                <div class="footer__bottom">
+                    <span class="footer__copyright">MEA © 2026</span>
+                    <div class="footer__social">
+                        <a
+                            href="#"
+                            class="footer__social-icon"
+                            aria-label="Facebook">
+                            <svg
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a
+                            href="#"
+                            class="footer__social-icon"
+                            aria-label="Instagram">
+                            <svg
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            </svg>
+                        </a>
+                        <a
+                            href="#"
+                            class="footer__social-icon"
+                            aria-label="YouTube">
+                            <svg
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <a
+                        href="#"
+                        class="footer__legal"
+                        >Зар байршуулах / Лого татах</a
+                    >
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

@@ -1,447 +1,312 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="mn">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0" />
-        <title>Гишүүнээр Элсэх — MEA</title>
-        <link
-            rel="preconnect"
-            href="https://fonts.googleapis.com" />
-        <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-            rel="stylesheet" />
-        <link
-            rel="stylesheet"
-            href="styles.css" />
-    </head>
-    <body>
-        <div class="announcement-bar">
-            <div class="container">
-                <p class="announcement-bar__text">ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д <a href="#">Бүртгүүлэх</a></p>
-                <div class="announcement-bar__links">
-                    <a href="#">Үйлчилгээ</a><a href="#">Яв дагалдуул</a>
-                    <a href="#">
-                        <div class="lang-selector">
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2">
-                                <circle
-                                    cx="12"
-                                    cy="12"
-                                    r="10" />
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /></svg
-                            ><span>English</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Гишүүнчлэл — МЕА</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== ANNOUNCEMENT BAR ===== -->
+  <div class="announcement-bar">
+      <div class="container">
+          <p class="announcement-bar__text">ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д <a href="#">Бүртгүүлэх</a></p>
+          <div class="announcement-bar__links">
+              <a href="#">Үйлчилгээ</a><a href="#">Яв дагалдуул</a>
+              <a href="#">
+                  <div class="lang-selector">
+                      <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2">
+                          <circle
+                              cx="12"
+                              cy="12"
+                              r="10" />
+                          <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /></svg
+                      ><span>English</span>
+                  </div>
+              </a>
+          </div>
+      </div>
+  </div>
+
+  <!-- ===== HEADER / NAV ===== -->
+  <header class="header">
+      <div class="container">
+          <a
+              href="index.html"
+              class="header__logo"
+              ><img
+                  src="images/logo.svg"
+                  alt="MEA Logo"
+                  width="120"
+                  height="36"
+          /></a>
+          <nav class="header__nav">
+              <a href="#">Бидний Тухай</a><a href="news.html">Мэдээ &amp; Нийтлэл</a><a href="membership-join.html" class="active">Гишүүнчлэл</a><a href="departments.html">Үйлчлэлийн Албад</a
+              ><a href="#">Donation</a><a href="#">Холбоо Барих</a>
+          </nav>
+          <div class="header__actions">
+              <button
+                  class="header__search-btn"
+                  aria-label="Хайх">
+                  <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <circle
+                          cx="11"
+                          cy="11"
+                          r="8" />
+                      <line
+                          x1="21"
+                          y1="21"
+                          x2="16.65"
+                          y2="16.65" />
+                  </svg></button
+              ><a
+                  href="login.html"
+                  class="btn btn--primary btn--sm"
+                  >Нэвтрэх</a
+              >
+          </div>
+          <button
+              class="header__menu-toggle"
+              aria-label="Цэс">
+              <span></span>
+          </button>
+      </div>
+  </header>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hub-banner">
+    <div class="hub-banner__bg">
+      <svg class="hub-banner__watermark" viewBox="0 0 512 240" fill="rgba(255,255,255,0.08)">
+        <circle cx="256" cy="120" r="100" stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none"/>
+        <ellipse cx="256" cy="120" rx="200" ry="90" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+    <div class="hub-banner__content">
+      <span class="hub-banner__subtitle">Бидэнтэй Нэгдэх үү?</span>
+      <h1 class="hub-banner__title">Гишүүнчлэл</h1>
+    </div>
+  </section>
+
+  <!-- ===== TABS ===== -->
+  <div class="tab-bar">
+    <div class="tab-bar__inner">
+      <a href="membership-join.html" class="tab-bar__item">Гишүүнээр Элсэх</a>
+      <a href="membership.html" class="tab-bar__item tab-bar__item--active">Гишүүнчлэл</a>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="section" style="background:#FCfaf8;">
+    <div class="container">
+
+      <!-- Mongolia Map -->
+      <div class="map-block">
+        <img src="images/mongolia-map.svg" alt="Монгол газрын зураг" class="map-block__image">
+      </div>
+
+      <!-- SECTION: Сүм чуулган -->
+      <div class="content-block">
+        <div class="content-block__header">
+          <span class="content-block__label">БҮРТГЭЛ</span>
+          <h2 class="content-block__title">Сүм чуулган</h2>
+          <p class="content-block__desc">Сүм чуулганаа эвслийн гишүүнээр бүртгүүлэхийн тулд доорх мэдээллийг үнэн зөв бөглөнө үү. Байршил, холбоо барих мэдээлэл болон чуулганы үндсэн мэдээллийг оруулснаар бүртгэлийн хүсэлт илгээгдэнэ.</p>
         </div>
 
-        <header class="header">
-            <div class="container">
-                <a
-                    href="index.html"
-                    class="header__logo"
-                    ><img
-                        src="images/logo.svg"
-                        alt="MEA Logo"
-                        width="120"
-                        height="36"
-                /></a>
-                <nav class="header__nav">
-                    <a href="#">Бидний Тухай</a><a href="news.html">Мэдээ &amp; Нийтлэл</a><a class="active" href="membership.html">Гишүүнчлэл</a><a href="departments.html">Үйлчлэлийн Албад</a
-                    ><a href="#">Donation</a><a href="#">Холбоо Барих</a>
-                </nav>
-                <div class="header__actions">
-                    <button
-                        class="header__search-btn"
-                        aria-label="Хайх">
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle
-                                cx="11"
-                                cy="11"
-                                r="8" />
-                            <line
-                                x1="21"
-                                y1="21"
-                                x2="16.65"
-                                y2="16.65" />
-                        </svg></button
-                    ><a
-                        href="login.html"
-                        class="btn btn--primary btn--sm"
-                        >Нэвтрэх</a
-                    >
-                </div>
-                <button
-                    class="header__menu-toggle"
-                    aria-label="Цэс">
-                    <span></span>
-                </button>
+        <!-- Filters -->
+        <div class="filter-row">
+          <div class="filter-field">
+            <label class="filter-field__label">Аймаг Хот*</label>
+            <div class="filter-field__select">
+              <span>Жишээ нь Улаанбаатар</span>
+              <svg width="10" height="5" viewBox="0 0 10 5" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,1 5,4 9,1"/></svg>
             </div>
-        </header>
-
-        <section class="hub-banner">
-            <div class="container">
-                <p class="hub-banner__overline">Бидэнтэй Нэгдэхэд бэлэн үү?</p>
-                <h1 class="hub-banner__title">Гишүүнээр Элсэх</h1>
+          </div>
+          <div class="filter-field">
+            <label class="filter-field__label">Сум Дүүрэг*</label>
+            <div class="filter-field__select">
+              <span>Баянгол Дүүрэг</span>
+              <svg width="10" height="5" viewBox="0 0 10 5" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,1 5,4 9,1"/></svg>
             </div>
-        </section>
-
-        <div class="dept-tabs">
-            <div class="container">
-                <a
-                    href="membership-join.html"
-                    class="dept-tabs__tab dept-tabs__tab--active"
-                    >Гишүүнээр Элсэх</a
-                >
-                <a
-                    href="membership.html"
-                    class="dept-tabs__tab"
-                    >Гишүүнчлэл</a
-                >
+          </div>
+          <div class="filter-field">
+            <label class="filter-field__label">Хороо*</label>
+            <div class="filter-field__select">
+              <span>1-р хороо</span>
+              <svg width="10" height="5" viewBox="0 0 10 5" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1,1 5,4 9,1"/></svg>
             </div>
+          </div>
         </div>
 
-        <section class="about-content">
-            <div class="about-content__inner">
-                <div class="about-content__section">
-                    <p class="overline">ГИШҮҮНЧЛЭЛ</p>
-                    <h2>Гишүүнчлэлийн Төрлүүд</h2>
-                    <p>Эвслийн гишүүнчлэл нь дөрвөн төрөлтэй. Та өөрт тохирох гишүүнчлэлийн төрлийг сонгон бүртгүүлнэ үү.</p>
-                </div>
+        <!-- Table -->
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Чуулган</th>
+                <th>Урсгал</th>
+                <th>Холбогдох Утас</th>
+                <th>Байршил</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Итгэлийн гэрэл сүм</td>
+                <td>Пентекост</td>
+                <td>7711-0423</td>
+                <td>Чингэлтэй дүүрэг, 21-р хороо, Бага тойруу, Сүм-4 байр</td>
+              </tr>
+              <tr>
+                <td>Найдвар Библийн Сургууль</td>
+                <td>Баптист</td>
+                <td>9911-2040</td>
+                <td>Сүхбаатар дүүрэг, 8-р хороо, Их сургуулийн гудамж 12</td>
+              </tr>
+              <tr>
+                <td>Амьдралын Ус Чуулган</td>
+                <td>Евангелист</td>
+                <td>8850-7761</td>
+                <td>Баянзүрх дүүрэг, 15-р хороо, Нархан цогцолбор, 3-р байр</td>
+              </tr>
+              <tr>
+                <td>Хайрын Гэрэлт Гар ТББ</td>
+                <td>Пресвитериан</td>
+                <td>9010-3388</td>
+                <td>Хан-Уул дүүрэг, 11-р хороо, Чингисийн өргөн чөлөө 45</td>
+              </tr>
+              <tr>
+                <td>Шинэ Гэрээ Чуулган</td>
+                <td>Пентекост</td>
+                <td>8811-9922</td>
+                <td>Баянгол дүүрэг, 4-р хороо, Ард Аюушийн өргөн чөлөө 18</td>
+              </tr>
+              <tr>
+                <td>Тэнгэрийн Хаанчлал Сүм</td>
+                <td>Методист</td>
+                <td>9505-1247</td>
+                <td>Сонгинохайрхан дүүрэг, 23-р хороо, Барилгачдын гудамж 7</td>
+              </tr>
+              <tr>
+                <td>Мишээл Хүүхдийн Төв</td>
+                <td>Евангелист</td>
+                <td>7700-6015</td>
+                <td>Дархан-Уул аймаг, Дархан сум, 5-р баг, Гэгээрлийн гудамж</td>
+              </tr>
+              <tr>
+                <td>Гэрэлт Зам Номлолын Алба</td>
+                <td>Баптист</td>
+                <td>9919-8080</td>
+                <td>Орхон аймаг, Баян-Өндөр сум, Уртын гол, 2-р байр</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); margin-bottom: 64px">
-                    <div
-                        class="mission-card"
-                        style="text-align: center">
-                        <div class="mission-card__icon">
-                            <svg
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="var(--color-primary)"
-                                stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                                <circle
-                                    cx="12"
-                                    cy="7"
-                                    r="4" />
-                            </svg>
-                        </div>
-                        <h3 class="mission-card__title">Хувь хүн</h3>
-                        <p class="mission-card__text">Итгэгч хувь хүн гишүүнээр элсэх боломжтой.</p>
-                    </div>
-                    <div
-                        class="mission-card"
-                        style="text-align: center">
-                        <div class="mission-card__icon">
-                            <svg
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="var(--color-primary)"
-                                stroke-width="2">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                                <polyline points="9 22 9 12 15 12 15 22" />
-                            </svg>
-                        </div>
-                        <h3 class="mission-card__title">Сүм Чуулган</h3>
-                        <p class="mission-card__text">Сүм чуулганаа бүртгүүлэн гишүүн болох.</p>
-                    </div>
-                    <div
-                        class="mission-card"
-                        style="text-align: center">
-                        <div class="mission-card__icon">
-                            <svg
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="var(--color-primary)"
-                                stroke-width="2">
-                                <rect
-                                    x="2"
-                                    y="7"
-                                    width="20"
-                                    height="14"
-                                    rx="2"
-                                    ry="2" />
-                                <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
-                            </svg>
-                        </div>
-                        <h3 class="mission-card__title">Байгууллага</h3>
-                        <p class="mission-card__text">Итгэл суурьт байгууллага гишүүнээр элсэх.</p>
-                    </div>
-                    <div
-                        class="mission-card"
-                        style="text-align: center">
-                        <div class="mission-card__icon">
-                            <svg
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="var(--color-primary)"
-                                stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                                <circle
-                                    cx="9"
-                                    cy="7"
-                                    r="4" />
-                                <path d="M23 21v-2a4 4 0 00-3-3.87" />
-                                <path d="M16 3.13a4 4 0 010 7.75" />
-                            </svg>
-                        </div>
-                        <h3 class="mission-card__title">Ажилтан</h3>
-                        <p class="mission-card__text">Эвслийн ажилтнаар бүртгүүлэх.</p>
-                    </div>
-                </div>
+      </div>
 
-                <div class="about-content__section">
-                    <p class="overline">БҮРТГЭЛИЙН ЖУРАМ</p>
-                    <h2>Элсэх Үйл Явц</h2>
-                    <p>Гишүүнээр элсэхийн тулд доорх алхмуудыг дагана уу.</p>
-                </div>
+    </div>
+  </main>
 
-                <div style="max-width: 720px">
-                    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px">
-                        <span
-                            style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 40px;
-                                height: 40px;
-                                border-radius: 50%;
-                                background: var(--color-primary);
-                                color: #fff;
-                                font-weight: 700;
-                                font-size: var(--text-body);
-                                flex-shrink: 0;
-                            "
-                            >1</span
-                        >
-                        <div>
-                            <h3 style="font-size: var(--text-h4); font-weight: 600; color: var(--color-neutral-800); margin-bottom: 4px">Бүртгэлийн маягт бөглөх</h3>
-                            <p style="font-size: var(--text-body); color: var(--color-neutral-500)">Онлайн бүртгэлийн маягтыг үнэн зөв бөглөнө үү.</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px">
-                        <span
-                            style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 40px;
-                                height: 40px;
-                                border-radius: 50%;
-                                background: var(--color-primary);
-                                color: #fff;
-                                font-weight: 700;
-                                font-size: var(--text-body);
-                                flex-shrink: 0;
-                            "
-                            >2</span
-                        >
-                        <div>
-                            <h3 style="font-size: var(--text-h4); font-weight: 600; color: var(--color-neutral-800); margin-bottom: 4px">Бичиг баримт бүрдүүлэх</h3>
-                            <p style="font-size: var(--text-body); color: var(--color-neutral-500)">Шаардлагатай бичиг баримтыг хавсаргана.</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px">
-                        <span
-                            style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 40px;
-                                height: 40px;
-                                border-radius: 50%;
-                                background: var(--color-primary);
-                                color: #fff;
-                                font-weight: 700;
-                                font-size: var(--text-body);
-                                flex-shrink: 0;
-                            "
-                            >3</span
-                        >
-                        <div>
-                            <h3 style="font-size: var(--text-h4); font-weight: 600; color: var(--color-neutral-800); margin-bottom: 4px">Хүсэлт илгээх</h3>
-                            <p style="font-size: var(--text-body); color: var(--color-neutral-500)">Бөглөсөн маягтаа илгээнэ үү.</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px">
-                        <span
-                            style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 40px;
-                                height: 40px;
-                                border-radius: 50%;
-                                background: var(--color-primary);
-                                color: #fff;
-                                font-weight: 700;
-                                font-size: var(--text-body);
-                                flex-shrink: 0;
-                            "
-                            >4</span
-                        >
-                        <div>
-                            <h3 style="font-size: var(--text-h4); font-weight: 600; color: var(--color-neutral-800); margin-bottom: 4px">Хянах</h3>
-                            <p style="font-size: var(--text-body); color: var(--color-neutral-500)">Эвслийн зөвлөл хүсэлтийг хянаж батална.</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px">
-                        <span
-                            style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 40px;
-                                height: 40px;
-                                border-radius: 50%;
-                                background: var(--color-primary);
-                                color: #fff;
-                                font-weight: 700;
-                                font-size: var(--text-body);
-                                flex-shrink: 0;
-                            "
-                            >5</span
-                        >
-                        <div>
-                            <h3 style="font-size: var(--text-h4); font-weight: 600; color: var(--color-neutral-800); margin-bottom: 4px">Мэдэгдэл хүлээн авах</h3>
-                            <p style="font-size: var(--text-body); color: var(--color-neutral-500)">Батлагдсан тохиолдолд мэдэгдэл илгээгдэнэ.</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px">
-                        <span
-                            style="
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                width: 40px;
-                                height: 40px;
-                                border-radius: 50%;
-                                background: var(--color-primary);
-                                color: #fff;
-                                font-weight: 700;
-                                font-size: var(--text-body);
-                                flex-shrink: 0;
-                            "
-                            >6</span
-                        >
-                        <div>
-                            <h3 style="font-size: var(--text-h4); font-weight: 600; color: var(--color-neutral-800); margin-bottom: 4px">Гишүүнчлэл идэвхжих</h3>
-                            <p style="font-size: var(--text-body); color: var(--color-neutral-500)">Та эвслийн гишүүний бүх эрхийг эдлэх боломжтой болно.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+      <div class="footer__inner">
+          <div class="footer__top">
+              <div>
+                  <a
+                      href="index.html"
+                      class="footer__logo"
+                      ><img
+                          src="images/logo.svg"
+                          alt="MEA Logo"
+                          width="120"
+                          height="36"
+                  /></a>
+                  <div class="footer__links-row"><a href="#">Яв Дагалдуул</a><a href="#">Donation &amp; Fee</a><a href="login.html">Нэвтрэх</a></div>
+              </div>
+              <div>
+                  <p class="footer__contact-title">Холбоо барих</p>
+                  <div class="footer__contact-info">
+                      <span>(+976) 9903-2010, 9015-2040</span><a href="mailto:info@mea.mn">info@mea.mn</a
+                      ><span>3345 Улаанбаатар хот, Баянзүрх дүүрэг, 4-хороо, 15-р хороолол, Энхтайвны тайвны өргөн чөлөө гудамж 4-р байр, 130 тоот</span>
+                  </div>
+              </div>
+          </div>
+          <nav class="footer__nav">
+              <div>
+                  <p class="footer__nav-group-title">Бидний Тухай</p>
+                  <ul class="footer__nav-list">
+                      <li><a href="about-vision.html">Алсын хараа</a></li>
+                      <li><a href="about-history.html">Түүх</a></li>
+                      <li><a href="#">Бүтэц</a></li>
+                      <li><a href="about-congress.html">Их Хурал</a></li>
+                      <li><a href="#">Бага Хурал</a></li>
+                      <li><a href="about-board.html">Удирдах Зөвлөл</a></li>
+                      <li><a href="#">Гүйцэтгэх Алба</a></li>
+                      <li><a href="about-creed.html">Итгэлийн Тунхаг</a></li>
+                  </ul>
+              </div>
+              <div>
+                  <p class="footer__nav-group-title">Гишүүнчлэл</p>
+                  <ul class="footer__nav-list">
+                      <li><a href="#">Гишүүнээр элсэх</a></li>
+                      <li><a href="#">Мэдээлэл Шинэчлэх</a></li>
+                  </ul>
+              </div>
+              <div>
+                  <p class="footer__nav-group-title">Үйлчилгээ</p>
+                  <ul class="footer__nav-list">
+                      <li><a href="#">Тодорхойлолт Авах</a></li>
+                      <li><a href="#">Хуулийн Зөвлөгөө</a></li>
+                      <li><a href="#">Чуулган Байгуулах</a></li>
+                      <li><a href="#">Гишүүдийг Сэрэмжлүүлэх</a></li>
+                      <li><a href="#">Хамтын Ажиллагаа</a></li>
+                  </ul>
+              </div>
+              <div>
+                  <p class="footer__nav-group-title">ХАБ</p>
+                  <ul class="footer__nav-list">
+                      <li><a href="hub-ulaanbaatar.html">Улаанбаатар хот</a></li>
+                      <li><a href="hub-21-aimag.html">21 Аймаг</a></li>
+                      <li><a href="hub-faith-orgs.html">Итгэл Суурьт Байгууллага</a></li>
+                  </ul>
+              </div>
+              <div>
+                  <p class="footer__nav-group-title">Албад</p>
+                  <ul class="footer__nav-list">
+                      <li><a href="#">Хүүхдийн Алба</a></li>
+                      <li><a href="#">Өсвөр Залуучуудын Алба</a></li>
+                      <li><a href="#">Эрчүүдийн Алба</a></li>
+                      <li><a href="#">Эмэгтэйчүүдийн Алба</a></li>
+                      <li><a href="#">Ахмадын Алба</a></li>
+                      <li><a href="#">Илгээлтийн Алба</a></li>
+                      <li><a href="#">Судалгааны Алба</a></li>
+                      <li><a href="#">Залбирлын Алба</a></li>
+                  </ul>
+              </div>
+          </nav>
+          <div class="footer__bottom">
+              <p class="footer__copyright">MEA &copy; 2026</p>
+              <span class="footer__legal-link">Зар байршуулах / Лого татах</span>
+          </div>
+      </div>
+  </footer>
 
-        <footer class="footer">
-            <div class="footer__inner">
-                <div class="footer__top">
-                    <div>
-                        <a
-                            href="index.html"
-                            class="footer__logo"
-                            ><img
-                                src="images/logo.svg"
-                                alt="MEA Logo"
-                                width="120"
-                                height="36"
-                        /></a>
-                        <div class="footer__links-row"><a href="#">Яв Дагалдуул</a><a href="#">Donation &amp; Fee</a><a href="login.html">Нэвтрэх</a></div>
-                    </div>
-                    <div>
-                        <p class="footer__contact-title">Холбоо барих</p>
-                        <div class="footer__contact-info">
-                            <span>(+976) 9903-2010, 9015-2040</span><a href="mailto:info@mea.mn">info@mea.mn</a
-                            ><span>3345 Улаанбаатар хот, Баянзүрх дүүрэг, 4-хороо, 15-р хороолол, Энхтайвны тайвны өргөн чөлөө гудамж 4-р байр, 130 тоот</span>
-                        </div>
-                    </div>
-                </div>
-                <nav class="footer__nav">
-                    <div>
-                        <p class="footer__nav-group-title">Бидний Тухай</p>
-                        <ul class="footer__nav-list">
-                            <li><a href="about-vision.html">Алсын хараа</a></li>
-                            <li><a href="about-history.html">Түүх</a></li>
-                            <li><a href="#">Бүтэц</a></li>
-                            <li><a href="about-congress.html">Их Хурал</a></li>
-                            <li><a href="#">Бага Хурал</a></li>
-                            <li><a href="about-board.html">Удирдах Зөвлөл</a></li>
-                            <li><a href="#">Гүйцэтгэх Алба</a></li>
-                            <li><a href="about-creed.html">Итгэлийн Тунхаг</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <p class="footer__nav-group-title">Гишүүнчлэл</p>
-                        <ul class="footer__nav-list">
-                            <li><a href="#">Гишүүнээр элсэх</a></li>
-                            <li><a href="#">Мэдээлэл Шинэчлэх</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <p class="footer__nav-group-title">Үйлчилгээ</p>
-                        <ul class="footer__nav-list">
-                            <li><a href="#">Тодорхойлолт Авах</a></li>
-                            <li><a href="#">Хуулийн Зөвлөгөө</a></li>
-                            <li><a href="#">Чуулган Байгуулах</a></li>
-                            <li><a href="#">Гишүүдийг Сэрэмжлүүлэх</a></li>
-                            <li><a href="#">Хамтын Ажиллагаа</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <p class="footer__nav-group-title">ХАБ</p>
-                        <ul class="footer__nav-list">
-                            <li><a href="hub-ulaanbaatar.html">Улаанбаатар хот</a></li>
-                            <li><a href="hub-21-aimag.html">21 Аймаг</a></li>
-                            <li><a href="hub-faith-orgs.html">Итгэл Суурьт Байгууллага</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <p class="footer__nav-group-title">Албад</p>
-                        <ul class="footer__nav-list">
-                            <li><a href="#">Хүүхдийн Алба</a></li>
-                            <li><a href="#">Өсвөр Залуучуудын Алба</a></li>
-                            <li><a href="#">Эрчүүдийн Алба</a></li>
-                            <li><a href="#">Эмэгтэйчүүдийн Алба</a></li>
-                            <li><a href="#">Ахмадын Алба</a></li>
-                            <li><a href="#">Илгээлтийн Алба</a></li>
-                            <li><a href="#">Судалгааны Алба</a></li>
-                            <li><a href="#">Залбирлын Алба</a></li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="footer__bottom">
-                    <p class="footer__copyright">MEA &copy; 2026</p>
-                    <span class="footer__legal-link">Зар байршуулах / Лого татах</span>
-                </div>
-            </div>
-        </footer>
-    </body>
+</body>
 </html>

@@ -5,7 +5,10 @@
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0" />
-        <title>Гишүүнчлэл — MEA</title>
+        <title>Гишүүнээр Элсэх — МЕА</title>
+        <link
+            rel="stylesheet"
+            href="styles.css" />
         <link
             rel="preconnect"
             href="https://fonts.googleapis.com" />
@@ -14,13 +17,11 @@
             href="https://fonts.gstatic.com"
             crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet" />
-        <link
-            rel="stylesheet"
-            href="styles.css" />
     </head>
     <body>
+        <!-- ===== ANNOUNCEMENT BAR ===== -->
         <div class="announcement-bar">
             <div class="container">
                 <p class="announcement-bar__text">ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д <a href="#">Бүртгүүлэх</a></p>
@@ -47,6 +48,7 @@
             </div>
         </div>
 
+        <!-- ===== HEADER / NAV ===== -->
         <header class="header">
             <div class="container">
                 <a
@@ -59,8 +61,12 @@
                         height="36"
                 /></a>
                 <nav class="header__nav">
-                    <a href="#">Бидний Тухай</a><a href="news.html">Мэдээ &amp; Нийтлэл</a><a class="active" href="membership.html">Гишүүнчлэл</a><a href="departments.html">Үйлчлэлийн Албад</a
-                    ><a href="#">Donation</a><a href="#">Холбоо Барих</a>
+                    <a href="#">Бидний Тухай</a><a href="news.html">Мэдээ &amp; Нийтлэл</a
+                    ><a
+                        href="membership-join.html"
+                        class="active"
+                        >Гишүүнчлэл</a
+                    ><a href="departments.html">Үйлчлэлийн Албад</a><a href="#">Donation</a><a href="#">Холбоо Барих</a>
                 </nav>
                 <div class="header__actions">
                     <button
@@ -99,87 +105,122 @@
             </div>
         </header>
 
+        <!-- ===== HERO BANNER ===== -->
         <section class="hub-banner">
-            <div class="container">
-                <p class="hub-banner__overline">Бидэнтэй Нэгдэх үү?</p>
-                <h1 class="hub-banner__title">Гишүүнчлэл</h1>
+            <div class="hub-banner__bg">
+                <div class="hub-banner__watermark"></div>
             </div>
         </section>
 
-        <div class="dept-tabs">
-            <div class="container">
+        <!-- ===== TABS ===== -->
+        <div class="tab-bar">
+            <div class="tab-bar__inner">
                 <a
                     href="membership-join.html"
-                    class="dept-tabs__tab"
+                    class="tab-bar__item tab-bar__item--active"
                     >Гишүүнээр Элсэх</a
                 >
                 <a
                     href="membership.html"
-                    class="dept-tabs__tab dept-tabs__tab--active"
+                    class="tab-bar__item"
                     >Гишүүнчлэл</a
                 >
             </div>
         </div>
 
-        <section class="about-content">
-            <div class="about-content__inner">
-                <div class="about-content__section">
-                    <p class="overline">БҮРТГЭЛ</p>
-                    <h2>Сүм чуулган</h2>
-                    <p>
-                        Сүм чуулганаа эвслийн гишүүнээр бүртгүүлэхийн тулд доорх мэдээллийг үнэн зөв бөглөнө үү. Бүртгэлийн хүсэлтийг хянаж, батлагдсаны дараа танд мэдэгдэл
-                        илгээгдэх болно.
-                    </p>
+        <!-- ===== MAIN CONTENT ===== -->
+        <main
+            class="section"
+            style="background: #fcfaf8">
+            <div class="container">
+                <!-- SECTION 1: Бүрдүүлэх материал -->
+                <div class="content-block">
+                    <div class="content-block__header">
+                        <span class="content-block__label">ЗААВАР</span>
+                        <h2 class="content-block__title">Бүрдүүлэх материал</h2>
+                        <p class="content-block__desc">
+                            Эвслийн гишүүн болох болон үйлчилгээ авахад шаардлагатай бичиг баримт, материалын жагсаалт. Доорх зааврыг дагаж, шаардлагатай материалаа бүрдүүлээрэй.
+                        </p>
+                    </div>
+
+                    <div class="step-cards">
+                        <div class="step-card">
+                            <span class="step-card__badge">02</span>
+                            <h3 class="step-card__title">Алхам 1</h3>
+                            <p class="step-card__text">Гишүүнээр элсэх тухай чуулган, байгууллагын өргөдөл</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-card__badge">02</span>
+                            <h3 class="step-card__title">Алхам 2</h3>
+                            <p class="step-card__text">Өөрсдийн итгэлийн тунхагийг нэг хувь хавсаргах</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-card__badge">02</span>
+                            <h3 class="step-card__title">Алхам 3</h3>
+                            <p class="step-card__text">Харъяа байгаа бүс, дүүргийн зохицуулагчийн тодорхойлолт</p>
+                        </div>
+                        <div class="step-card">
+                            <span class="step-card__badge">03</span>
+                            <h3 class="step-card__title">Алхам 4</h3>
+                            <p class="step-card__text">Анкет бөглөх (Ажлын албанаас авна)</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="about-content__section">
-                    <div class="data-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>Чуулган</th>
-                                    <th>Урсгал</th>
-                                    <th>Холбогдох Утас</th>
-                                    <th>Байршил</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Итгэлийн гэрэл сүм</td>
-                                    <td>Пентекост</td>
-                                    <td>7711-0423</td>
-                                    <td>Чингэлтэй дүүрэг, 21-р хороо</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Найдвар Библийн Сургууль</td>
-                                    <td>Баптист</td>
-                                    <td>9911-2040</td>
-                                    <td>Сүхбаатар дүүрэг, 8-р хороо</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Амьдралын Ус Чуулган</td>
-                                    <td>Евангелист</td>
-                                    <td>8850-7761</td>
-                                    <td>Баянзүрх дүүрэг, 15-р хороо</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Хайрын Гэрэлт Гар ТББ</td>
-                                    <td>Пресвитериан</td>
-                                    <td>9010-3388</td>
-                                    <td>Хан-Уул дүүрэг, 11-р хороо</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- SECTION 2: Үйл явц -->
+                <div class="content-block">
+                    <div class="content-block__header">
+                        <span class="content-block__label">ЗААВАР</span>
+                        <h2 class="content-block__title">Үйл явц</h2>
+                        <p class="content-block__desc">
+                            Эвслийн гишүүн болох болон үйлчилгээ авахад шаардлагатай бичиг баримт, материалын жагсаалт. Доорх зааврыг дагаж, шаардлагатай материалаа бүрдүүлээрэй.
+                        </p>
+                    </div>
+
+                    <div class="process-steps">
+                        <div class="process-steps__row">
+                            <div class="process-step">
+                                <div class="process-step__number">1</div>
+                                <p class="process-step__text">Та материалаа бүрдүүлж өгөхдөө материал хүлээлгэн өгсөнийг батлах баримтанд гарын үсэг зурах ёстой.</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="process-step__number">2</div>
+                                <p class="process-step__text">Таны материалын бүрдлийг нарийн бичиг шалгаж хэрэгтэй заавар зөвлөгөөг өгнө</p>
+                            </div>
+                        </div>
+                        <div class="process-steps__row">
+                            <div class="process-step">
+                                <div class="process-step__number">3</div>
+                                <p class="process-step__text">
+                                    Таны хүлээлгэн өгсөн материалыг ажлын алба хүлээн аваад Ажлын албаны дотоод журмын дагуу ээлжит удирдах зөвлөлийн хурлаар хэлэлцүүлнэ.
+                                </p>
+                            </div>
+                            <div class="process-step">
+                                <div class="process-step__number">4</div>
+                                <p class="process-step__text">
+                                    Удирдах зөвлөл цуглаан байгууллагын өргөдлийг авч хэлэлцээд гишүүнээр элсүүлэх, эс элсүүлэх тухай шийдвэрийг гаргана.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="process-steps__row">
+                            <div class="process-step">
+                                <div class="process-step__number">5</div>
+                                <p class="process-step__text">Ажлын алба танай цуглаан байгууллагыг гишүүнээр хүлээн авсан, эс авсан талаар танд мэдэгдэнэ.</p>
+                            </div>
+                            <div class="process-step">
+                                <div class="process-step__number">6</div>
+                                <p class="process-step__text">
+                                    Гишүүнээр элссэн цуглаан байгууллага ажлын албанд биеэр хүрэлцэн ирж гишүүний батламж гэрчилгээг гардан авах ба тухайн жилээс гишүүний
+                                    хураамжийг тогтсон журмын дагуу төлнө.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </main>
 
+        <!-- ===== FOOTER ===== -->
         <footer class="footer">
             <div class="footer__inner">
                 <div class="footer__top">
