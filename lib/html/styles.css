@@ -707,6 +707,10 @@ ol {
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    /* overlap the quote banner above by 40px */
+    position: relative;
+    z-index: 1;
+    margin-top: -40px;
     margin-bottom: 60px;
 }
 .join-our__newsletter-title {
