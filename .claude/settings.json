@@ -17,7 +17,9 @@
       "Bash(curl -sL -o hub-ub-gallery-1.tmp \"https://www.figma.com/api/mcp/asset/6a480bb9-3284-4011-a741-45d49e764193\")",
       "Bash(curl -sL -o hub-ub-gallery-2.tmp \"https://www.figma.com/api/mcp/asset/4d7f8a39-1305-422a-80d4-8e8d9fbac0a7\")",
       "Bash(curl -sL -o hub-ub-gallery-3.tmp \"https://www.figma.com/api/mcp/asset/d220ffb8-b73e-4498-8e5b-ca5078ab8452\")",
-      "Bash(open /Users/ganaa/payload/lib/html/hub-ub.html)"
+      "Bash(open /Users/ganaa/payload/lib/html/hub-ub.html)",
+      "Bash(which google-chrome *)",
+      "Read(//Applications/**)"
     ],
     "defaultMode": "acceptEdits"
   },

@@ -76,3 +76,10 @@
         padding-bottom: 32px;
     }
 }
+
+/* Figma's tab row is centered, not left-aligned like the shared .dept-tabs default */
+.dept-tabs--center .container {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+}
