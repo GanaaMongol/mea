@@ -1,57 +1,63 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "permissions": {
-        "defaultMode": "acceptEdits",
-        "allow": [
-            "Skill(frontend-design:frontend-design)",
-            "Skill(run)",
-            "Skill(claude-in-chrome)",
-            "Bash(export PATH=/Users/ganaa/.nvm/versions/node/*)",
-            "Bash(git *)",
-            "Bash(pnpm *)",
-            "Bash(npx *)",
-            "Bash(node *)",
-            "Bash(curl -s http://127.0.0.1:*)",
-            "Bash(curl -s http://localhost:*)"
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "permissions": {
+    "allow": [
+      "Skill(frontend-design:frontend-design)",
+      "Skill(run)",
+      "Skill(claude-in-chrome)",
+      "Bash(export PATH=/Users/ganaa/.nvm/versions/node/*)",
+      "Bash(git *)",
+      "Bash(pnpm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(curl -s http://127.0.0.1:*)",
+      "Bash(curl -s http://localhost:*)",
+      "Bash(curl -sL -o hub-ub-banner.tmp \"https://www.figma.com/api/mcp/asset/ea8d207d-f67a-4d21-b83a-0d94084e3768\")",
+      "Bash(curl -sL -o hub-ub-vector.tmp \"https://www.figma.com/api/mcp/asset/8a9a6da4-6c42-4f15-a650-9c27ff09128b\")",
+      "Bash(curl -sL -o hub-ub-gallery-1.tmp \"https://www.figma.com/api/mcp/asset/6a480bb9-3284-4011-a741-45d49e764193\")",
+      "Bash(curl -sL -o hub-ub-gallery-2.tmp \"https://www.figma.com/api/mcp/asset/4d7f8a39-1305-422a-80d4-8e8d9fbac0a7\")",
+      "Bash(curl -sL -o hub-ub-gallery-3.tmp \"https://www.figma.com/api/mcp/asset/d220ffb8-b73e-4498-8e5b-ca5078ab8452\")",
+      "Bash(open /Users/ganaa/payload/lib/html/hub-ub.html)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read -r f; case \"$f\" in *.tsx) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"Reminder: this project runs Next.js 16.2.11 (React 19.2, Tailwind v4). Before writing framework code, read the relevant guide under node_modules/next/dist/docs/01-app/ — do not rely on remembered Next.js APIs (AGENTS.md).\"}}' ;; esac; }",
+            "statusMessage": "Checking Next.js docs reminder..."
+          }
         ]
-    },
-    "hooks": {
-        "PreToolUse": [
-            {
-                "matcher": "Write|Edit",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "jq -r '.tool_input.file_path' | { read -r f; case \"$f\" in *.tsx) echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"additionalContext\":\"Reminder: this project runs Next.js 16.2.11 (React 19.2, Tailwind v4). Before writing framework code, read the relevant guide under node_modules/next/dist/docs/01-app/ — do not rely on remembered Next.js APIs (AGENTS.md).\"}}' ;; esac; }",
-                        "statusMessage": "Checking Next.js docs reminder..."
-                    }
-                ]
-            }
-        ],
-        "PostToolUse": [
-            {
-                "matcher": "Write|Edit",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; case \"$f\" in *.ts|*.tsx) npx eslint --fix \"$f\" ;; esac; } 2>/dev/null || true",
-                        "statusMessage": "eslint --fix...",
-                        "timeout": 60
-                    }
-                ]
-            }
-        ],
-        "Stop": [
-            {
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "git add -A && (git diff --cached --quiet || git commit -m \"wip: $(date +%Y-%m-%dT%H:%M)\" --no-verify) 2>/dev/null || true",
-                        "statusMessage": "git commit...",
-                        "timeout": 30
-                    }
-                ]
-            }
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; case \"$f\" in *.ts|*.tsx) npx eslint --fix \"$f\" ;; esac; } 2>/dev/null || true",
+            "timeout": 60,
+            "statusMessage": "eslint --fix..."
+          }
         ]
-    }
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git add -A && (git diff --cached --quiet || git commit -m \"wip: $(date +%Y-%m-%dT%H:%M)\" --no-verify) 2>/dev/null || true",
+            "timeout": 30,
+            "statusMessage": "git commit..."
+          }
+        ]
+      }
+    ]
+  }
 }
