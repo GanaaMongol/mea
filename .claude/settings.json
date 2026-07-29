@@ -19,7 +19,8 @@
       "Bash(curl -sL -o hub-ub-gallery-3.tmp \"https://www.figma.com/api/mcp/asset/d220ffb8-b73e-4498-8e5b-ca5078ab8452\")",
       "Bash(open /Users/ganaa/payload/lib/html/hub-ub.html)",
       "Bash(which google-chrome *)",
-      "Read(//Applications/**)"
+      "Read(//Applications/**)",
+      "Bash(curl -sL -o org-hero-wave.tmp \"https://www.figma.com/api/mcp/asset/42c75ac8-a303-46bf-9cdc-403562ca2067\")"
     ],
     "defaultMode": "acceptEdits"
   },
