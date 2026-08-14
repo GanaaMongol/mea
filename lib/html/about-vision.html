@@ -23,11 +23,19 @@
     <body>
         <div class="announcement-bar">
             <div class="container">
-                <p class="announcement-bar__text">ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д <a href="#">Бүртгүүлэх</a></p>
-                <div class="announcement-bar__links">
-                    <a href="#">Үйлчилгээ</a><a href="#">Яв дагалдуул</a>
-                    <a href="#">
-                        <div class="lang-selector">
+                <p class="announcement-bar__text">
+                    ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д
+                    <a href="#">Бүртгүүлэх</a>
+                </p>
+            </div>
+            <div class="right-container">
+                <ul class="announcement-bar__links">
+                    <li><a href="#">Үйл явдал</a></li>
+                    <li><a href="#">Залбирал</a></li>
+                    <li class="lang-selector">
+                        <button
+                            type="button"
+                            class="lang-selector__toggle">
                             <svg
                                 width="16"
                                 height="16"
@@ -39,14 +47,34 @@
                                     cx="12"
                                     cy="12"
                                     r="10" />
-                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" /></svg
-                            ><span>English</span>
-                        </div>
-                    </a>
-                </div>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                            </svg>
+                            <span>English</span>
+                            <svg
+                                class="lang-selector__chevron"
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <ul class="lang-selector__menu">
+                            <li>
+                                <a
+                                    href="#"
+                                    class="is-active"
+                                    >English</a
+                                >
+                            </li>
+                            <li><a href="#">Монгол</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
-
         <header class="header">
             <div class="container">
                 <a
