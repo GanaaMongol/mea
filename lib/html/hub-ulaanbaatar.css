@@ -1,12 +1,12 @@
 /* ========================================
-   HUB — ULAANBAATAR PAGE (hub-ub.html)
+   HUB — ULAANBAATAR PAGE (hub-ulaanbaatar.html)
    Figma: ХАБ/ Улаанбаатар (node 203:2833)
    New page-specific styles only — styles.css is untouched,
    since other pages already depend on it.
    ======================================== */
 
 /* --- Photo hero (full-bleed image + dark overlay + bottom wave) --- */
-.hub-ub-hero {
+.hub-ulaanbaatar-hero {
     position: relative;
     height: 540px;
     display: flex;
@@ -16,24 +16,24 @@
     padding-bottom: 64px;
     overflow: hidden;
 }
-.hub-ub-hero__bg {
+.hub-ulaanbaatar-hero__bg {
     position: absolute;
     inset: 0;
     z-index: 0;
 }
-.hub-ub-hero__bg img {
+.hub-ulaanbaatar-hero__bg img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.hub-ub-hero__overlay {
+.hub-ulaanbaatar-hero__overlay {
     position: absolute;
     inset: 0;
     z-index: 0;
     background: rgba(26, 24, 18, 0.4);
 }
-.hub-ub-hero__wave {
+.hub-ulaanbaatar-hero__wave {
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -44,7 +44,7 @@
     pointer-events: none;
     z-index: 0;
 }
-.hub-ub-hero__content {
+.hub-ulaanbaatar-hero__content {
     position: relative;
     z-index: 1;
     display: flex;
@@ -53,7 +53,7 @@
     gap: 16px;
     text-align: center;
 }
-.hub-ub-hero__overline {
+.hub-ulaanbaatar-hero__overline {
     font-family: var(--font-body);
     font-weight: 600;
     font-size: var(--text-caption);
@@ -61,7 +61,7 @@
     text-transform: uppercase;
     color: var(--color-neutral-150);
 }
-.hub-ub-hero__title {
+.hub-ulaanbaatar-hero__title {
     margin: 0;
     font-family: var(--font-display);
     font-weight: 700;
@@ -71,7 +71,7 @@
 }
 
 @media (max-width: 768px) {
-    .hub-ub-hero {
+    .hub-ulaanbaatar-hero {
         height: 360px;
         padding-bottom: 32px;
     }
