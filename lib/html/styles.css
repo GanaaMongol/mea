@@ -3705,3 +3705,283 @@ ol {
         grid-template-columns: 1fr;
     }
 }
+
+/* =========================================================================
+   About → Алсын Хараа (Figma: MEA / node 270:2564 "Hero")
+   The page previously reused .hub-banner / .mission-* / .values-list, none of
+   which matched this frame, so it gets its own scoped block. Values below are
+   the literal Figma measurements; colours map onto the existing :root tokens.
+   ========================================================================= */
+
+/* --- Banner: 540px, photo + 45% #1a1812 scrim, centred copy --- */
+.vision-banner {
+    position: relative;
+    height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px;
+    overflow: hidden;
+    background-image: url("images/vision-banner.jpg");
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+.vision-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 24, 18, 0.45);
+}
+.vision-banner__watermark {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 512px;
+    transform: translateX(-50%);
+    opacity: 0.05;
+    pointer-events: none;
+}
+.vision-banner__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    max-width: 720px;
+}
+.vision-banner__overline {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+    color: var(--color-neutral-150);
+}
+.vision-banner__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 700;
+    line-height: 38px;
+    color: #fff;
+}
+
+/* --- Tab row: this frame has no red accent rule above it, unlike the shared
+       .dept-tabs default, and sits on white rather than the page ground --- */
+.dept-tabs--plain {
+    /* full-bleed white strip: the shared .dept-tabs caps its width at the
+       container, but the Figma Tab frame spans the whole viewport */
+    max-width: none;
+    background: #fff;
+    border-bottom: 0;
+}
+.dept-tabs--plain::before {
+    display: none;
+}
+
+/* --- Mission: centred heading + 576px lede, then three 12px-radius cards --- */
+.vision-mission {
+    padding: var(--section-pad) 0;
+    background: var(--color-neutral-50);
+}
+.vision-mission .container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.vision-mission__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+}
+.vision-mission__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 700;
+    line-height: 38px;
+    color: var(--color-neutral-700);
+}
+.vision-mission__desc {
+    /* Figma constrains the lede to 576px, narrower than the 1360px container */
+    max-width: 576px;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--color-neutral-500);
+}
+.vision-mission__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gutter);
+}
+.vision-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-lg);
+    padding: var(--padding-lg);
+    background: #fff;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.vision-card__watermark {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 298px;
+    opacity: 0.85;
+    pointer-events: none;
+}
+.vision-card__icon {
+    position: relative;
+    z-index: 1;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+.vision-card__title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    line-height: 26px;
+    color: var(--color-neutral-700);
+}
+
+/* --- Goal banner: full-bleed opaque blue gradient (the Figma image fill sits
+       under a 100%-opacity gradient, so only the gradient is visible) --- */
+.vision-goal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--section-pad) 64px;
+    min-height: 380px;
+    overflow: hidden;
+    text-align: center;
+    background: linear-gradient(90deg, #1465be 0%, #092f58 100%);
+}
+.vision-goal__watermark {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 597px;
+    transform: translateX(-50%);
+    opacity: 0.08;
+    pointer-events: none;
+}
+.vision-goal__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    max-width: 720px;
+}
+.vision-goal__overline {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+    color: var(--color-neutral-150);
+}
+.vision-goal__title {
+    margin: 0;
+    font-family: var(--font-display);
+    /* regular weight here, unlike the 700 used elsewhere on this page */
+    font-weight: 400;
+    font-size: var(--text-h1);
+    line-height: 38px;
+    color: #fff;
+}
+
+/* --- Values: fixed 480px title column + flexible list, blue check bullets --- */
+.vision-values {
+    padding: var(--section-pad) 0;
+    background: var(--color-neutral-50);
+}
+.vision-values__grid {
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    gap: 60px;
+    align-items: start;
+}
+.vision-values__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 700;
+    line-height: 38px;
+    color: var(--color-neutral-700);
+}
+.vision-values__body {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.vision-values__verse {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--color-neutral-500);
+}
+.vision-values__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.vision-values__item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+}
+.vision-values__check {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+}
+.vision-values__item p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--color-neutral-700);
+}
+
+@media (max-width: 900px) {
+    .vision-banner {
+        height: 420px;
+        padding: 40px 24px;
+    }
+    .vision-mission__cards {
+        grid-template-columns: 1fr;
+    }
+    .vision-goal {
+        padding: 64px 24px;
+    }
+    .vision-values__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
