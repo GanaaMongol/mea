@@ -3634,6 +3634,12 @@ ol {
     width: 100%;
     margin: 0 auto;
 }
+/* The other .data-table variant (membership-detail.html) forces a 360px
+   first column for its long org-name column — wrong for this table's "№"
+   column, which was blowing up to 360px and squeezing the rest. */
+.hub-ub-table th:first-child {
+    width: auto;
+}
 
 /* --- Team section: Figma's "Feature Card" is borderless (photo + name + role
    stacked directly on the page), unlike the shared bordered/boxed .team-card --- */
