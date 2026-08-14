@@ -3628,6 +3628,12 @@ ol {
 .hub-ub-table thead th {
     background: #e8e3d8;
 }
+/* The shared .data-table width:100% rule targets the wrapper div, not the
+   <table> itself — center it explicitly so it fills the content column. */
+.hub-ub-table table {
+    width: 100%;
+    margin: 0 auto;
+}
 
 /* --- Team section: Figma's "Feature Card" is borderless (photo + name + role
    stacked directly on the page), unlike the shared bordered/boxed .team-card --- */
