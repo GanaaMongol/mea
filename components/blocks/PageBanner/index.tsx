@@ -88,7 +88,12 @@ export function PageBanner({
       {watermark ? (
         <MediaImage media={watermark} className={`${base}__watermark`} alt="" />
       ) : null}
-      <div className={variant === 'vision' ? `${base}__content` : 'container'}>
+      {/*
+        The mockups centre a banner by swapping `.container` for the banner's own
+        `__content` box (index.html) and keep `.container` for the left-aligned
+        about/department banners.
+      */}
+      <div className={variant === 'vision' || align === 'center' ? `${base}__content` : 'container'}>
         {overline ? <p className={`${base}__overline`}>{overline}</p> : null}
         {title ? <h1 className={`${base}__title`}>{title}</h1> : null}
         {subtitle ? <p className={`${base}__subtitle`}>{subtitle}</p> : null}

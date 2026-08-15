@@ -170,7 +170,18 @@ export interface Page {
   /**
    * Хэсэг нэмэх, чирж дараалал солих, устгах боломжтой.
    */
-  layout?: (PageBannerBlock | SectionTabsBlock | RichTextBlock)[] | null;
+  layout?:
+    | (
+        | PageBannerBlock
+        | SectionTabsBlock
+        | RichTextBlock
+        | CardGridBlock
+        | QuoteBannerBlock
+        | AcceleratorsBlock
+        | PostsFeedBlock
+        | GalleryBlock
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -202,7 +213,7 @@ export interface PageBannerBlock {
     | {
         type?: ('reference' | 'custom') | null;
         newTab?: boolean | null;
-        label: string;
+        label?: string | null;
         reference?:
           | ({
               relationTo: 'pages';
@@ -300,25 +311,21 @@ export interface Post {
    * Жагсаалтын картад харагдана.
    */
   excerpt?: string | null;
-  body?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   /**
-   * Текстийн доор нэмэх хэсгүүд (жишээ нь зургийн цомог).
+   * Нийтлэлийн бие. Текст, зургийн цомог зэргийг чирж дараалуулна.
    */
-  layout?: (PageBannerBlock | SectionTabsBlock | RichTextBlock)[] | null;
+  layout?:
+    | (
+        | PageBannerBlock
+        | SectionTabsBlock
+        | RichTextBlock
+        | CardGridBlock
+        | QuoteBannerBlock
+        | AcceleratorsBlock
+        | PostsFeedBlock
+        | GalleryBlock
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -333,7 +340,7 @@ export interface SectionTabsBlock {
     | {
         type?: ('reference' | 'custom') | null;
         newTab?: boolean | null;
-        label: string;
+        label?: string | null;
         reference?:
           | ({
               relationTo: 'pages';
@@ -385,7 +392,18 @@ export interface Department {
    */
   excerpt?: string | null;
   image?: (number | null) | Media;
-  layout?: (PageBannerBlock | SectionTabsBlock | RichTextBlock)[] | null;
+  layout?:
+    | (
+        | PageBannerBlock
+        | SectionTabsBlock
+        | RichTextBlock
+        | CardGridBlock
+        | QuoteBannerBlock
+        | AcceleratorsBlock
+        | PostsFeedBlock
+        | GalleryBlock
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -424,6 +442,59 @@ export interface RichTextBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardGridBlock".
+ */
+export interface CardGridBlock {
+  variant: 'info' | 'mission' | 'ack' | 'step';
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  items?:
+    | {
+        icon?: (number | null) | Media;
+        title: string;
+        text?: string | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          label?: string | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'departments';
+                value: number | Department;
+              } | null)
+            | ({
+                relationTo: 'hubs';
+                value: number | Hub;
+              } | null)
+            | ({
+                relationTo: 'membershipTiers';
+                value: number | MembershipTier;
+              } | null);
+          url?: string | null;
+          id?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  background?: ('warm' | 'white') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cardGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "hubs".
  */
 export interface Hub {
@@ -434,10 +505,64 @@ export interface Hub {
    */
   slug: string;
   region?: string | null;
-  layout?: (PageBannerBlock | SectionTabsBlock | RichTextBlock)[] | null;
+  layout?:
+    | (
+        | PageBannerBlock
+        | SectionTabsBlock
+        | RichTextBlock
+        | CardGridBlock
+        | QuoteBannerBlock
+        | AcceleratorsBlock
+        | PostsFeedBlock
+        | GalleryBlock
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBannerBlock".
+ */
+export interface QuoteBannerBlock {
+  variant: 'quote' | 'cta' | 'dept';
+  overline?: string | null;
+  title: string;
+  author?: string | null;
+  background?: (number | null) | Media;
+  cta?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    label?: string | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'departments';
+          value: number | Department;
+        } | null)
+      | ({
+          relationTo: 'hubs';
+          value: number | Hub;
+        } | null)
+      | ({
+          relationTo: 'membershipTiers';
+          value: number | MembershipTier;
+        } | null);
+    url?: string | null;
+    appearance?: ('default' | 'primary' | 'outline') | null;
+    id?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'quoteBanner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -468,9 +593,149 @@ export interface MembershipTier {
       }[]
     | null;
   order?: number | null;
-  layout?: (PageBannerBlock | SectionTabsBlock | RichTextBlock)[] | null;
+  layout?:
+    | (
+        | PageBannerBlock
+        | SectionTabsBlock
+        | RichTextBlock
+        | CardGridBlock
+        | QuoteBannerBlock
+        | AcceleratorsBlock
+        | PostsFeedBlock
+        | GalleryBlock
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AcceleratorsBlock".
+ */
+export interface AcceleratorsBlock {
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  items?:
+    | {
+        image?: (number | null) | Media;
+        title: string;
+        text?: string | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          label?: string | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null)
+            | ({
+                relationTo: 'departments';
+                value: number | Department;
+              } | null)
+            | ({
+                relationTo: 'hubs';
+                value: number | Hub;
+              } | null)
+            | ({
+                relationTo: 'membershipTiers';
+                value: number | MembershipTier;
+              } | null);
+          url?: string | null;
+          id?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  numbered?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accelerators';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostsFeedBlock".
+ */
+export interface PostsFeedBlock {
+  variant: 'plain' | 'bordered';
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  source: 'auto' | 'manual';
+  limit?: number | null;
+  kind?: ('all' | 'news' | 'article') | null;
+  manual?: (number | Post)[] | null;
+  filter?: {
+    enabled?: boolean | null;
+    style?: ('buttons' | 'tabs') | null;
+    items?:
+      | {
+          label: string;
+          kind: 'all' | 'news' | 'article';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  moreLink?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    label?: string | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'departments';
+          value: number | Department;
+        } | null)
+      | ({
+          relationTo: 'hubs';
+          value: number | Hub;
+        } | null)
+      | ({
+          relationTo: 'membershipTiers';
+          value: number | MembershipTier;
+        } | null);
+    url?: string | null;
+    id?: string | null;
+  };
+  readLabel?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'postsFeed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock".
+ */
+export interface GalleryBlock {
+  variant: 'mosaic' | 'carousel' | 'grid';
+  items?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'gallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -670,6 +935,11 @@ export interface PagesSelect<T extends boolean = true> {
         pageBanner?: T | PageBannerBlockSelect<T>;
         sectionTabs?: T | SectionTabsBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        quoteBanner?: T | QuoteBannerBlockSelect<T>;
+        accelerators?: T | AcceleratorsBlockSelect<T>;
+        postsFeed?: T | PostsFeedBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
       };
   meta?:
     | T
@@ -752,6 +1022,162 @@ export interface RichTextBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardGridBlock_select".
+ */
+export interface CardGridBlockSelect<T extends boolean = true> {
+  variant?: T;
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              label?: T;
+              reference?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  background?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBannerBlock_select".
+ */
+export interface QuoteBannerBlockSelect<T extends boolean = true> {
+  variant?: T;
+  overline?: T;
+  title?: T;
+  author?: T;
+  background?: T;
+  cta?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        label?: T;
+        reference?: T;
+        url?: T;
+        appearance?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AcceleratorsBlock_select".
+ */
+export interface AcceleratorsBlockSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
+  items?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        text?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              label?: T;
+              reference?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  numbered?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PostsFeedBlock_select".
+ */
+export interface PostsFeedBlockSelect<T extends boolean = true> {
+  variant?: T;
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
+  source?: T;
+  limit?: T;
+  kind?: T;
+  manual?: T;
+  filter?:
+    | T
+    | {
+        enabled?: T;
+        style?: T;
+        items?:
+          | T
+          | {
+              label?: T;
+              kind?: T;
+              id?: T;
+            };
+      };
+  moreLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        label?: T;
+        reference?: T;
+        url?: T;
+        id?: T;
+      };
+  readLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryBlock_select".
+ */
+export interface GalleryBlockSelect<T extends boolean = true> {
+  variant?: T;
+  items?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -761,13 +1187,17 @@ export interface PostsSelect<T extends boolean = true> {
   publishedAt?: T;
   cover?: T;
   excerpt?: T;
-  body?: T;
   layout?:
     | T
     | {
         pageBanner?: T | PageBannerBlockSelect<T>;
         sectionTabs?: T | SectionTabsBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        quoteBanner?: T | QuoteBannerBlockSelect<T>;
+        accelerators?: T | AcceleratorsBlockSelect<T>;
+        postsFeed?: T | PostsFeedBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -790,6 +1220,11 @@ export interface DepartmentsSelect<T extends boolean = true> {
         pageBanner?: T | PageBannerBlockSelect<T>;
         sectionTabs?: T | SectionTabsBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        quoteBanner?: T | QuoteBannerBlockSelect<T>;
+        accelerators?: T | AcceleratorsBlockSelect<T>;
+        postsFeed?: T | PostsFeedBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -809,6 +1244,11 @@ export interface HubsSelect<T extends boolean = true> {
         pageBanner?: T | PageBannerBlockSelect<T>;
         sectionTabs?: T | SectionTabsBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        quoteBanner?: T | QuoteBannerBlockSelect<T>;
+        accelerators?: T | AcceleratorsBlockSelect<T>;
+        postsFeed?: T | PostsFeedBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -857,6 +1297,11 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         pageBanner?: T | PageBannerBlockSelect<T>;
         sectionTabs?: T | SectionTabsBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        quoteBanner?: T | QuoteBannerBlockSelect<T>;
+        accelerators?: T | AcceleratorsBlockSelect<T>;
+        postsFeed?: T | PostsFeedBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1059,16 +1504,16 @@ export interface Theme {
  */
 export interface SiteSetting {
   id: number;
-  announcement: {
+  announcement?: {
     enabled?: boolean | null;
     /**
      * Жишээ: ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д
      */
     text?: string | null;
-    cta: {
+    cta?: {
       type?: ('reference' | 'custom') | null;
       newTab?: boolean | null;
-      label: string;
+      label?: string | null;
       reference?:
         | ({
             relationTo: 'pages';
@@ -1097,7 +1542,7 @@ export interface SiteSetting {
       | {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          label: string;
+          label?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -1125,13 +1570,13 @@ export interface SiteSetting {
       | null;
     showLanguageSwitcher?: boolean | null;
   };
-  header: {
+  header?: {
     logo?: (number | null) | Media;
     nav?:
       | {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          label: string;
+          label?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -1158,10 +1603,10 @@ export interface SiteSetting {
         }[]
       | null;
     showSearch?: boolean | null;
-    loginLink: {
+    loginLink?: {
       type?: ('reference' | 'custom') | null;
       newTab?: boolean | null;
-      label: string;
+      label?: string | null;
       reference?:
         | ({
             relationTo: 'pages';
@@ -1200,7 +1645,7 @@ export interface SiteSetting {
       | {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          label: string;
+          label?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';
@@ -1246,7 +1691,7 @@ export interface SiteSetting {
             | {
                 type?: ('reference' | 'custom') | null;
                 newTab?: boolean | null;
-                label: string;
+                label?: string | null;
                 reference?:
                   | ({
                       relationTo: 'pages';
@@ -1280,7 +1725,7 @@ export interface SiteSetting {
       | {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
-          label: string;
+          label?: string | null;
           reference?:
             | ({
                 relationTo: 'pages';

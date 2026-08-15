@@ -28,7 +28,14 @@ npm run start                # serve the production build
 npm run lint                 # eslint (flat config, eslint 9)
 npm run generate:types       # payload-types.ts (run after every schema change)
 npm run generate:importmap   # app/(payload)/admin/importMap.js
+npm run seed                 # idempotent local-API seed (admin user, theme, chrome, content)
 ```
+
+**Never run `npx payload …`.** npx reaches out to the registry for a `payload` binary it
+thinks is missing; a failed fetch has already wiped `next`, `payload` and `@payloadcms/*`
+out of `node_modules` once, requiring a full `npm install`. Use `npm run <script>` — the
+package scripts resolve the local binary. `package.json` also needs `"type": "module"`, or
+the Payload CLI cannot load `payload.config.ts` (lexical uses top-level await).
 
 There is no test setup. Verification = `npm run build`, `npm run lint`, and visual comparison
 of each route against its `lib/html/` mockup.

@@ -6,6 +6,7 @@ import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { getPageBySlug, getPageSlugs } from '@/lib/queries'
 
 type Params = { slug: string[] }
+type Search = { [key: string]: string | string[] | undefined }
 
 export async function generateStaticParams() {
   try {
@@ -34,13 +35,29 @@ export async function generateMetadata({
   }
 }
 
-export default async function CatchAllPage({ params }: { params: Promise<Params> }) {
-  const [{ slug }, headerList] = await Promise.all([params, headers()])
+export default async function CatchAllPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<Params>
+  searchParams: Promise<Search>
+}) {
+  const [{ slug }, search, headerList] = await Promise.all([
+    params,
+    searchParams,
+    headers(),
+  ])
   const page = await getPageBySlug(slug.join('/'))
 
   if (!page) notFound()
 
+  const kind = typeof search.kind === 'string' ? search.kind : undefined
+
   return (
-    <RenderBlocks blocks={page.layout} pathname={headerList.get('x-pathname') ?? '/'} />
+    <RenderBlocks
+      blocks={page.layout}
+      pathname={headerList.get('x-pathname') ?? `/${slug.join('/')}`}
+      activeKind={kind}
+    />
   )
 }

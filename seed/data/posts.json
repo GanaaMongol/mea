@@ -1,0 +1,110 @@
+[
+  {
+    "slug": "oron-nutgiin-toloologchteigee-holbogdoh-3-zovlogoo",
+    "title": "Орон нутгийн төлөөлөгчтэйгээ холбогдох 3 зөвлөгөө",
+    "kind": "news",
+    "excerpt": "Өөрийн бүсийн эвслийн төлөөлөгчтэй хэрхэн үр дүнтэй харилцах вэ — практик заавар.",
+    "publishedAt": "2026-06-28",
+    "image": "news2-01.png",
+    "alt": "Орон нутгийн төлөөлөгчтэйгээ холбогдох 3 зөвлөгөө"
+  },
+  {
+    "slug": "hodoo-oron-nutgiin-chuulganuudyn-telelt",
+    "title": "Хөдөө орон нутгийн чуулгануудын тэлэлт",
+    "kind": "news",
+    "excerpt": "Аймаг, сумдын чуулганууд хэрхэн бэхжиж, сайн мэдээг түгээж байгаа тухай.",
+    "publishedAt": "2026-06-24",
+    "image": "news2-02.jpg",
+    "alt": "Хөдөө орон нутгийн чуулгануудын тэлэлт"
+  },
+  {
+    "slug": "cross-section-podkast-itgel-ba-soyol",
+    "title": "Cross Section подкаст: Итгэл ба соёл",
+    "kind": "article",
+    "excerpt": "Итгэл, соёл, орчин үеийн амьдралын уулзварын талаар удирдагчидтай ярилцлаа.",
+    "publishedAt": "2026-06-20",
+    "image": "news2-03.png",
+    "alt": "Cross Section подкаст: Итгэл ба соёл"
+  },
+  {
+    "slug": "zalbirlyn-negdsen-hodolgoon-ehellee",
+    "title": "Залбирлын нэгдсэн хөдөлгөөн эхэллээ",
+    "kind": "news",
+    "excerpt": "Монгол даяарх чуулганууд долоо хоног бүр хамтдаа залбирахаар нэгдэж байна.",
+    "publishedAt": "2026-06-15",
+    "image": "news2-04.png",
+    "alt": "Залбирлын нэгдсэн хөдөлгөөн эхэллээ"
+  },
+  {
+    "slug": "gishuunchleliin-shine-davuu-taluud",
+    "title": "Гишүүнчлэлийн шинэ давуу талууд",
+    "kind": "news",
+    "excerpt": "2026 онд эвслийн гишүүдэд зориулсан сургалт, нөөцийн хөтөлбөр өргөжлөө.",
+    "publishedAt": "2026-06-10",
+    "image": "news2-05.jpg",
+    "alt": "Гишүүнчлэлийн шинэ давуу талууд"
+  },
+  {
+    "slug": "nuudelchdiin-dund-hiih-uilchlel",
+    "title": "Нүүдэлчдийн дунд хийх үйлчлэл",
+    "kind": "news",
+    "excerpt": "Малчид, нүүдлийн амьдралтай өрхүүдэд сайн мэдээг хүргэх шинэ арга барил.",
+    "publishedAt": "2026-06-05",
+    "image": "news2-06.jpg",
+    "alt": "Нүүдэлчдийн дунд хийх үйлчлэл"
+  },
+  {
+    "slug": "cross-section-zaluu-manlailagchid",
+    "title": "Cross Section: Залуу манлайлагчид",
+    "kind": "article",
+    "excerpt": "Дараа үеийн итгэлийн манлайлагчдыг хэрхэн бэлтгэх талаар нээлттэй яриа.",
+    "publishedAt": "2026-05-29",
+    "image": "news2-07.jpg",
+    "alt": "Cross Section: Залуу манлайлагчид"
+  },
+  {
+    "slug": "daruu-baidal-ba-udirdlagyn-tuhai",
+    "title": "Даруу байдал ба удирдлагын тухай",
+    "kind": "news",
+    "excerpt": "Христэд итгэгч удирдагчийн зүрх сэтгэлийн талаарх эргэцүүлэл, сургаал.",
+    "publishedAt": "2026-05-22",
+    "image": "news2-08.jpg",
+    "alt": "Даруу байдал ба удирдлагын тухай"
+  },
+  {
+    "slug": "huuhed-ger-buliin-uilchleliin-seminar",
+    "title": "Хүүхэд гэр бүлийн үйлчлэлийн семинар",
+    "kind": "news",
+    "excerpt": "Дараа үеийнхээ итгэлийн суурийг тавих гэр бүлд зориулсан сургалт болно.",
+    "publishedAt": "2026-05-16",
+    "image": "news2-09.jpg",
+    "alt": "Хүүхэд гэр бүлийн үйлчлэлийн семинар"
+  },
+  {
+    "slug": "ilgeeltiin-bag-tov-azid-ajillana",
+    "title": "Илгээлтийн баг Төв Азид ажиллана",
+    "kind": "news",
+    "excerpt": "Монголоос эхтэй номлолын хөдөлгөөн хил давж, шинэ бүс рүү тэлж байна.",
+    "publishedAt": "2026-05-09",
+    "image": "news2-10.jpg",
+    "alt": "Илгээлтийн баг Төв Азид ажиллана"
+  },
+  {
+    "slug": "cross-section-dijital-erin-ba-chuulgan",
+    "title": "Cross Section: Дижитал эрин ба чуулган",
+    "kind": "article",
+    "excerpt": "Технологи, AI-г сайн мэдээнд хэрхэн ашиглах талаар мэргэжилтнүүд ярилцав.",
+    "publishedAt": "2026-05-02",
+    "image": "news2-11.jpg",
+    "alt": "Cross Section: Дижитал эрин ба чуулган"
+  },
+  {
+    "slug": "jiliin-etssiin-talarhlyn-tsuglaan",
+    "title": "Жилийн эцсийн талархлын цуглаан",
+    "kind": "news",
+    "excerpt": "Өнгөрсөн жилийн ерөөл, хамтын ажиллагааны үр дүнг дүгнэх онцгой цуглаан.",
+    "publishedAt": "2026-04-25",
+    "image": "news2-12.jpg",
+    "alt": "Жилийн эцсийн талархлын цуглаан"
+  }
+]

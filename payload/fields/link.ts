@@ -43,9 +43,11 @@ export const linkFields: Field[] = [
     ],
   },
   {
+    // Not required: `link()` is also used for optional groups (e.g. a block's
+    // "more" link), where an empty group must stay valid. Components skip a
+    // link with no label.
     name: 'label',
     type: 'text',
-    required: true,
     localized: true,
   },
   {

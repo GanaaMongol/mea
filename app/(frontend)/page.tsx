@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { getPageBySlug } from '@/lib/queries'
 
+type Search = { [key: string]: string | string[] | undefined }
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPageBySlug('home')
   if (!page) return {}
@@ -14,10 +16,20 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function HomePage() {
-  const page = await getPageBySlug('home')
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<Search>
+}) {
+  const [page, search] = await Promise.all([getPageBySlug('home'), searchParams])
 
   if (!page) notFound()
 
-  return <RenderBlocks blocks={page.layout} pathname="/" />
+  return (
+    <RenderBlocks
+      blocks={page.layout}
+      pathname="/"
+      activeKind={typeof search.kind === 'string' ? search.kind : undefined}
+    />
+  )
 }

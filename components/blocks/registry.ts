@@ -1,6 +1,11 @@
 import type { ComponentType } from 'react'
 
+import { Accelerators } from './Accelerators'
+import { CardGrid } from './CardGrid'
+import { Gallery } from './Gallery'
 import { PageBanner } from './PageBanner'
+import { PostsFeed } from './PostsFeed'
+import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
 import { SectionTabs } from './SectionTabs'
 
@@ -14,4 +19,9 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   pageBanner: PageBanner,
   sectionTabs: SectionTabs,
   richText: RichTextBlock,
+  cardGrid: CardGrid,
+  quoteBanner: QuoteBanner,
+  accelerators: Accelerators,
+  postsFeed: PostsFeed,
+  gallery: Gallery,
 }

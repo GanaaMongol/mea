@@ -66,17 +66,14 @@ export const Posts: CollectionConfig = {
       admin: { description: 'Жагсаалтын картад харагдана.' },
     },
     {
-      name: 'body',
-      type: 'richText',
-      localized: true,
-      label: 'Үндсэн текст',
-    },
-    {
       name: 'layout',
       type: 'blocks',
-      label: 'Нэмэлт хэсгүүд',
+      label: 'Нийтлэлийн хэсгүүд',
       blocks: layoutBlocks,
-      admin: { description: 'Текстийн доор нэмэх хэсгүүд (жишээ нь зургийн цомог).' },
+      admin: {
+        description:
+          'Нийтлэлийн бие. Текст, зургийн цомог зэргийг чирж дараалуулна.',
+      },
     },
   ],
 }

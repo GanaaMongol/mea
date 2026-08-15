@@ -39,12 +39,26 @@
 - [x] **Алхам 3** — `pageBanner`, `sectionTabs`, `richText` block; `RenderBlocks` + `registry`;
       `pages` collection + `app/(frontend)/[...slug]` + `/`; seed script
       (`npm run seed` — админ, theme, chrome, нүүр хуудас).
-- [ ] **Алхам 4** — 19 хуудсыг хөрвүүлэх (дараагийн ажил).
+- [~] **Алхам 4** — 19-өөс **3 хуудас** дууссан:
+      - `news2.html` → `/news` — `postsFeed` block (12 карт, таб шүүлтүүр ажиллаж байна:
+        `?kind=article` → 3 карт), 12 `posts` seed хийсэн.
+      - `news-detail.html` → `/news/[slug]` — нийтлэлийн бие нь блокоор
+        (`richText` → `gallery` мозайк → `richText`), доор нь "Төстэй мэдээнүүд".
+      - `index.html` → `/` — `pageBanner` + `cardGrid` + `quoteBanner` + `accelerators`
+        + `postsFeed` + `quoteBanner`(cta).
+
+      **Бэлэн болсон block: 8** — `pageBanner`, `sectionTabs`, `richText`, `cardGrid`,
+      `quoteBanner`, `accelerators`, `postsFeed`, `gallery`.
+
+      Үлдсэн: departments, organization, hubs×3, about×5, membership×3, login/profile.
 
 **Шалгасан:** `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ ·
-`/` 200 (chrome + banner + token инжекц ажиллаж байна) · `/admin` 200.
+`/`, `/news`, `/news?kind=article`, `/news/[slug]`, `/admin` бүгд 200.
 
 Админ: `admin@mea.mn` / `changeme123` (`SEED_ADMIN_EMAIL|PASSWORD`-оор солино).
+
+⚠️ **`npx payload …` бүү ажиллуул** — registry-рүү залгаж, амжилтгүй болбол `node_modules`-ыг
+эвдэнэ (нэг удаа `next`, `payload`, `@payloadcms/*`-г устгасан). Зөвхөн `npm run <script>`.
 
 ---
 
