@@ -1,0 +1,168 @@
+/* ========================================
+   Responsive Breakpoints
+   ======================================== */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 24px;
+    }
+    .announcement-bar {
+        padding-inline: 24px;
+    }
+    .history-grid {
+        grid-template-columns: 1fr;
+    }
+    .acknowledgment-grid {
+        grid-template-columns: 1fr;
+    }
+    .timeline__content {
+        grid-template-columns: 1fr;
+    }
+    .mission-cards {
+        grid-template-columns: 1fr;
+    }
+    .values-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .board-grid {
+        grid-template-columns: repeat(2, 240px);
+    }
+    .hub-intro {
+        grid-template-columns: 1fr;
+    }
+    .dept-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer__nav {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .dept-detail-text-grid {
+        grid-template-columns: 1fr;
+    }
+    .hub-carousel__slide--main {
+        width: 100%;
+    }
+    .hub-carousel__slide--side {
+        display: none;
+    }
+    .creed-parchment {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 816/678;
+    }
+    .profile-section {
+        padding: 120px 40px 0;
+    }
+    .profile-layout {
+        flex-direction: column;
+    }
+    .profile-menu {
+        width: 100%;
+        flex-direction: row;
+        gap: 12px;
+    }
+    .profile-divider {
+        width: 100%;
+        height: 1px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --section-pad: 64px;
+        --text-display: 36px;
+        --text-h1: 28px;
+        --text-h2: 22px;
+    }
+    .announcement-bar__links {
+        display: none;
+    }
+    .header__nav {
+        display: none;
+    }
+    .header__menu-toggle {
+        display: block;
+    }
+    .hub-banner {
+        height: 400px;
+    }
+    .dept-tabs {
+        padding: 0 16px;
+    }
+    .dept-tab {
+        padding: 12px 16px;
+        font-size: var(--text-caption);
+    }
+    .board-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .board-card__photo {
+        width: 100%;
+        height: 280px;
+    }
+    .footer__top {
+        flex-direction: column;
+        gap: 32px;
+    }
+    .footer__nav {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer__bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    .dept-grid {
+        grid-template-columns: 1fr;
+    }
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .login-section {
+        padding: 40px 20px 0;
+    }
+    .profile-section {
+        padding: 80px 20px 0;
+    }
+    .profile-menu {
+        flex-direction: column;
+    }
+    .profile-field-row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --section-pad: 48px;
+        --text-display: 28px;
+        --text-h1: 24px;
+        --text-h2: 20px;
+    }
+    .hub-banner {
+        height: 300px;
+    }
+    .hub-banner__title {
+        font-size: var(--text-h2);
+    }
+    .board-grid {
+        grid-template-columns: 1fr;
+    }
+    .stats-row {
+        flex-direction: column;
+        gap: 24px;
+    }
+    .footer__nav {
+        grid-template-columns: 1fr;
+    }
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    .login-card {
+        width: 100%;
+    }
+}
+

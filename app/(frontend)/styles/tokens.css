@@ -1,0 +1,59 @@
+/* ========================================
+    Design System — styles.css
+   ======================================== */
+
+/* --- Design Tokens --- */
+:root {
+    /* Primary */
+    --color-primary: #1465be;
+    --color-primary-dark: #10539b;
+    --color-primary-light: #3461e3;
+
+    /* Warm Neutrals */
+    --color-neutral-0: #fff;
+    --color-neutral-50: #fcfaf8;
+    --color-neutral-100: #f7f7f7;
+    --color-neutral-150: #f3f0e9;
+    --color-neutral-200: #e5e4e1;
+    --color-neutral-300: #d1d1d1;
+    --color-neutral-400: #7d7869;
+    --color-neutral-500: #5c584c;
+    --color-neutral-600: #2a2a2a;
+    --color-neutral-700: #1a1812;
+    --color-neutral-800: #171a20;
+    --color-neutral-900: #0d0d0d;
+
+    /* Borders */
+    --border-medium: #d4d3cf;
+
+    /* Accent */
+    --color-accent-red: #e53935;
+    --color-link: #3461e3;
+
+    /* Typography */
+    --font-display: "Playfair", Georgia, serif;
+    --font-body: "Manrope", system-ui, sans-serif;
+    --font-ui: "Inter", system-ui, sans-serif;
+
+    --text-display: 48px;
+    --text-h1: 32px;
+    --text-h2: 24px;
+    --text-h3: 20px;
+    --text-h4: 18px;
+    --text-body: 16px;
+    --text-sm: 14px;
+    --text-caption: 12px;
+
+    /* Spacing */
+    --section-pad: 96px;
+    --gutter: 24px;
+    --container-max: 1360px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    --padding-md: 16px;
+    --padding-lg: 24px;
+}

@@ -4,6 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 @AGENTS.md
 
+> **[plan.md](plan.md) is the source of truth for this build.** It holds the ordered task
+> list, the full block catalogue, and the current progress. This file mirrors its rules and
+> decisions — if the two disagree, `plan.md` is right and this file must be corrected.
+> Read `plan.md` before starting any task in this repo.
+
 ## Critical: verify against bundled docs before writing code
 
 This project runs **Next.js 16.2.11** (with React 19.2 and Tailwind CSS v4). This is newer than most training data and has breaking API/convention changes. Before writing or changing framework code, read the relevant guide under `node_modules/next/dist/docs/` — do not rely on remembered Next.js APIs.
@@ -12,217 +17,259 @@ This project runs **Next.js 16.2.11** (with React 19.2 and Tailwind CSS v4). Thi
 - `node_modules/next/dist/docs/03-architecture/` — internals/architecture
 - `node_modules/next/dist/docs/index.md` — entry point
 
+Same rule for Payload 3: it is installed at `node_modules/payload` and `node_modules/@payloadcms/*` — check the actual exports and `peerDependencies` rather than recalling Payload 2 APIs.
+
 ## Commands
 
 ```bash
-npm run dev     # start dev server at http://localhost:3000
-npm run build   # production build
-npm run start   # serve the production build
-npm run lint    # eslint (flat config, eslint 9)
+npm run dev                  # dev server at http://localhost:3000
+npm run build                # production build
+npm run start                # serve the production build
+npm run lint                 # eslint (flat config, eslint 9)
+npm run generate:types       # payload-types.ts (run after every schema change)
+npm run generate:importmap   # app/(payload)/admin/importMap.js
 ```
 
-There is no test setup in this project.
+There is no test setup. Verification = `npm run build`, `npm run lint`, and visual comparison
+of each route against its `lib/html/` mockup.
+
+Local Postgres: Postgres.app 16 on `127.0.0.1:5432`, database `mea`. `psql` is not on PATH —
+use `/Applications/Postgres.app/Contents/Versions/16/bin/psql`.
 
 ## Architecture
 
-Next.js **App Router** project. All routes and UI live under `app/`:
+Next.js **App Router** + Payload CMS 3 installed *into* the same app (not a separate server).
 
-- `app/layout.tsx` — root layout; loads Geist fonts via `next/font/google` and exposes them as CSS variables (`--font-geist-sans`, `--font-geist-mono`), and sets base `<html>`/`<body>` classes.
-- `app/page.tsx` — the `/` route.
-- `app/globals.css` — global styles. Tailwind v4 is imported with `@import "tailwindcss"` (no `tailwind.config.js`); theme tokens are defined in CSS via `@theme inline` and `:root` custom properties. Dark mode uses `prefers-color-scheme`.
-- `public/` — static assets served at the root path.
+- `app/(payload)/` — Payload admin + API routes (generated boilerplate). **No site UI here.**
+- `app/(frontend)/` — every site route plus the shared-chrome `layout.tsx`. Route groups do
+  not affect URLs, so `/news` stays `/news`.
+- `payload.config.ts` — repo root. `@payload-config` and `@/*` aliases are set in `tsconfig.json`.
+- `payload/` — collections, globals, blocks, fields, access, hooks.
+- `components/blocks/` — one React component per Payload block + `RenderBlocks` + `registry.ts`.
+- `components/chrome/` — AnnouncementBar, Header, Footer, Newsletter.
+- `app/(frontend)/styles/` — the ported `lib/html/styles.css` design system.
+- `seed/` — local-API seed scripts.
+- `media/` — local disk uploads (gitignored).
 
 Notable config:
 
-- TypeScript path alias `@/*` maps to the repo root (`tsconfig.json`).
-- Tailwind v4 is wired through PostCSS (`postcss.config.mjs`, `@tailwindcss/postcss`) — configuration is CSS-first, not JS-based.
-- ESLint uses the flat-config format (`eslint.config.mjs`) extending `eslint-config-next`.
+- Tailwind v4 through PostCSS (`postcss.config.mjs`) — CSS-first, no `tailwind.config.js`.
+- ESLint flat config (`eslint.config.mjs`) extending `eslint-config-next`.
 
-## Build task: migrate the MEA static mockups into the App Router
+## The build task: MEA mockups → block-driven Payload site
 
-The design source of truth is the static HTML in `lib/html/` (17 pages + a shared
-`lib/html/styles.css` design system). This is a full marketing/membership site for
-**MEA — Монголын Эвангелийн Эвсэл** (Mongolian Evangelical Alliance), UI language is
-Mongolian (`lang="mn"`). The goal is to reproduce these pages faithfully as Next.js 16
-App Router routes, then delete `lib/html/` once every page is ported.
+The design source of truth is the static HTML in `lib/html/` — **19 pages**, a shared
+`styles.css` (3987-line BEM design system), two page-level stylesheets (`news-detail.css`,
+`organization.css`), and `lib/html/images/`. This is a marketing/membership site for
+**MEA — Монголын Эвангелийн Эвсэл** (Mongolian Evangelical Alliance); UI language is Mongolian
+(`lang="mn"`). The mockups contain **zero JavaScript** — every page is server-renderable markup.
 
-The current `app/about`, `app/blog`, `app/quotes` scaffold does **not** match this site
-and should be replaced by the routes below.
+Goal: reproduce these pages as App Router routes where **every section is an admin-editable
+Payload block**, then delete `lib/html/`.
 
-### Route map (HTML file → route)
+### Core rule: everything is a block
 
-| HTML mockup | Route | Notes |
+1. **A page is a `pages` document**, whose `layout` field is an array of blocks. Pages are not
+   hand-built in `page.tsx`.
+2. **Every `<section>` / named `div` in the mockups is a block type.** The catalogue in
+   `plan.md` §2 was derived by scanning all 19 files — do not invent block types.
+3. **No hardcoded text, image, or link inside a block component.** Everything visible is a
+   field. Only layout and CSS class names stay in code.
+4. **A block is three files**: `payload/blocks/<Name>/config.ts` (schema),
+   `components/blocks/<Name>/index.tsx` (component), and one line in
+   `components/blocks/registry.ts`.
+5. **Reuse via `variant`, not new blocks.** Six banner styles = one `pageBanner` block with a
+   `variant` select, not six blocks.
+6. Two kinds of block: **self-contained** (`richText`, `quoteBanner`) and **collection-driven**
+   (`postsFeed`, `departmentGrid`, `peopleGrid`) where the editor configures filter/limit/order.
+7. **Chrome is editable too** — announcement bar, header nav, footer groups, and the newsletter
+   strip come from the `siteSettings` global (not blocks; they are identical on every page).
+
+Block component props come from `payload-types.ts` via each block's `interfaceName` — never
+hand-write those types.
+
+### Per-page conversion recipe (mandatory order)
+
+Writing a field before looking at the markup is forbidden. For each page:
+
+1. **Move the markup** — HTML `<body>` → JSX with content temporarily hardcoded.
+   `class`→`className`, self-close tags, `<img>`→`next/image`. Verify visual parity first.
+2. **Componentize** — each section becomes `components/blocks/<Name>` taking **props**. Every
+   hardcoded value must surface as a prop; anything left inline is a bug.
+3. **Derive the schema** — write the block fields *from those props*, then `npm run generate:types`.
+4. **Seed** — move the values into `seed/` (local API).
+5. **Wire up** — the route reads via `payload.find(...)` and renders
+   `<RenderBlocks blocks={doc.layout} />`; delete the hardcoded copy.
+
+Page order and which blocks each page yields: `plan.md` §8 Алхам 4.
+
+### Route map (19 mockups)
+
+| HTML mockup | Route | Source |
 | --- | --- | --- |
-| `index.html` | `/` | home: hero, "4 хурдасгуур", membership teaser, news grid, CTA |
-| `news.html` | `/news` | news + article list, filter tabs (Мэдээ / Нийтлэл) |
-| `membership.html` | `/membership` | 3 membership types |
-| `membership-join.html` | `/membership/join` | join form (client component) |
-| `departments.html` | `/departments` | department (Албад) listing |
-| `department-detail.html` | `/departments/[slug]` | dynamic department detail |
-| `login.html` | `/login` | login form (client component) |
-| `user-profile.html` | `/profile` | member profile |
-| `about-vision.html` | `/about/vision` | |
-| `about-history.html` | `/about/history` | |
-| `about-congress.html` | `/about/congress` | has an image slider |
-| `about-board.html` | `/about/board` | leadership cards |
-| `about-creed.html` | `/about/creed` | statement of faith |
-| `hub-ulaanbaatar.html` | `/hubs/ulaanbaatar` | |
-| `hub-21-aimag.html` | `/hubs/aimag` | |
-| `hub-faith-orgs.html` | `/hubs/faith-orgs` | |
+| `index.html` | `/` | `pages` (slug `home`) |
+| `news2.html` | `/news` | `pages` + `postsFeed` block |
+| `news-detail.html` | `/news/[slug]` | `posts` |
+| `membership.html` | `/membership` | `pages` + `membershipTiers` |
+| `membership-detail.html` | `/membership/[slug]` | `membershipTiers` |
+| `membership-join.html` | `/membership/join` | form (server action) |
+| `departments.html` | `/departments` | `pages` + `departmentGrid` block |
+| `department-detail.html` | `/departments/[slug]` | `departments` |
+| `organization.html` | `/organization` ⚠️ route unconfirmed | `pages` |
+| `hub-ulaanbaatar.html` | `/hubs/ulaanbaatar` | `hubs` |
+| `hub-21-aimag.html` | `/hubs/aimag` | `hubs` |
+| `hub-faith-orgs.html` | `/hubs/faith-orgs` | `hubs` |
+| `about-vision.html` | `/about/vision` | `pages` |
+| `about-history.html` | `/about/history` | `pages` |
+| `about-congress.html` | `/about/congress` | `pages` |
+| `about-board.html` | `/about/board` | `pages` + `peopleGrid` block |
+| `about-creed.html` | `/about/creed` | `pages` |
+| `login.html` | `/login` | `members` auth |
+| `user-profile.html` | `/profile` | `members` |
 
-### Shared chrome → components + layout
+There is **no `news.html`** — the news list mockup is `news2.html`.
 
-The announcement bar, `header` (logo + nav + search + login), and `footer` (with its
-5 nav groups) repeat on every page. Extract them into `components/` and render them from
-`app/layout.tsx` so routes only render page content. The mobile menu toggle and search
-button need a small client component; keep the rest as Server Components.
+Detail collections (`posts`, `departments`, `hubs`) also carry a `layout: blocks[]` field, so
+detail pages are assembled from blocks too; only their first few fields are fixed.
 
-**Source of truth: `index.html`'s announcement bar, header, and footer** — all other
-mockup pages have been synced to those exact blocks (only the nav `active` class varies
-per page: about-* → "Бидний Тухай", news → "Мэдээ & Нийтлэл", membership* →
-"Гишүүнчлэл", departments/detail → "Үйлчлэлийн Албад"; hubs/login/profile have none).
-When porting, build `<AnnouncementBar>`, `<Header>`, `<Footer>` from `index.html`'s
-markup and derive the active nav state from the current route (e.g. `usePathname` or
-layout-level logic) instead of hardcoding it.
+`login`, `profile`, and the join form are **not** blocks — they are auth-driven app UI with
+their labels sourced from `siteSettings`.
 
-### Design system conversion
+### Shared chrome
 
-- Port `lib/html/styles.css` tokens (`:root` custom properties: colors, `--font-*`,
-  `--text-*`, spacing) into `app/globals.css` under Tailwind v4's `@theme inline` /
-  `:root` — CSS-first, no `tailwind.config.js`. Do **not** keep the standalone
-  `styles.css`; the design tokens live in `globals.css`.
-- Fonts: the mockups use **Playfair** (display), **Manrope** (body), **Inter** (ui).
-  Load them via `next/font/google` in `app/layout.tsx` (replacing the current Geist
-  fonts) and wire them to the `--font-display` / `--font-body` / `--font-ui` variables.
-- The mockups use heavy inline `style="..."`. When porting, prefer Tailwind utility
-  classes / the token variables over copying inline styles verbatim.
+The announcement bar, header (logo + nav + search + login), footer (5 nav groups), and the
+`join-our__newsletter` strip repeat on **every** mockup. **Source of truth: `index.html`'s
+blocks** — the other pages are synced to them and differ only in which nav link carries
+`active` (about-* → "Бидний Тухай", news → "Мэдээ & Нийтлэл", membership* → "Гишүүнчлэл",
+departments/detail → "Үйлчлэлийн Албад"; hubs/login/profile have none).
 
-### Data
+Build them as `components/chrome/*`, render from `app/(frontend)/layout.tsx`, take their
+content from `siteSettings`, and derive active nav from the route **on the server**. Only the
+mobile menu toggle and the search button need a small client component.
 
-Model repeated content (news articles, departments, hub entries, board members,
-membership tiers) as typed data in `lib/` (follow the existing `lib/*.ts` pattern) and
-map over it, rather than hardcoding each card in JSX. Dynamic routes
-(`/news/[slug]`, `/departments/[slug]`) read from these.
+### Design system: keep `styles.css`, do not rewrite it in Tailwind
 
-### Assets (currently missing)
+The mockups are clean BEM (`.header__nav`, `.board-card__photo`, `.dept-tab`) backed by a
+complete design system. Converting it to utility classes destroys pixel parity for no gain.
 
-The mockups reference `images/*` (38 files: `logo.svg`, `hero-bg.jpg`, `news-*.jpg`,
-`leader-*.jpg`, `hub-*.jpg`, etc.) and none exist in `public/`. Create `public/images/`.
-Until real assets arrive, use placeholders and load photos through `next/image`.
+- Port `styles.css` **nearly verbatim** into `app/(frontend)/styles/` split by concern
+  (`tokens.css`, `base.css`, `chrome.css`, `blocks.css`, `pages/*.css`), imported from
+  `globals.css`. Class names stay identical so copied markup renders correctly on arrival.
+- `news-detail.css` and `organization.css` go under `styles/pages/`.
+- `globals.css` keeps `@import "tailwindcss"` and `@theme inline` exposing the `:root` tokens.
+  Use **Tailwind only for new UI** that has no mockup equivalent.
+- Fonts: **Playfair** (display), **Manrope** (body), **Inter** (ui) via `next/font/google`,
+  wired to `--font-display` / `--font-body` / `--font-ui`. Drop the mockups' Google Fonts `<link>`.
+
+### Design tokens driven by Payload
+
+1. **`theme` global**: `colors` (primary/-dark/-light, neutral-0…900, border-medium, accent-red,
+   link), `typography` (font family names + `--text-display|h1|h2|h3|h4|body|sm|caption`),
+   `spacing` (`section-pad`, `gutter`, `container-max`, `radius-sm|md|lg|2xl|full`,
+   `padding-md|lg`). Seed the **exact** values from `lib/html/styles.css:6-59`.
+2. `app/(frontend)/layout.tsx` fetches the global server-side and renders
+   `<style id="theme-tokens">:root{ … }</style>` using the same variable names the CSS uses.
+3. The `:root` block in `globals.css` stays as a build-time / DB-unavailable fallback.
+4. `next/font` loads the font *files* at build; the global controls variable wiring and sizes.
+
+### Content model
+
+| Entity | Type | Role |
+| --- | --- | --- |
+| `pages` | collection | every static page — `title`, `slug`, `layout: blocks[]`, SEO, drafts |
+| `posts` | collection | `/news`, `/news/[slug]` — kind (Мэдээ/Нийтлэл), excerpt, cover, body, publishedAt |
+| `departments` | collection | `/departments/[slug]` |
+| `hubs` | collection | `/hubs/*` |
+| `boardMembers` | collection | feeds `peopleGrid` (group: board / team / region) |
+| `membershipTiers` | collection | `/membership/[slug]` |
+| `media` | collection (upload) | content images, local disk |
+| `users` | collection (auth) | **admin panel only** |
+| `members` | collection (auth) | public site accounts — separate from `users` |
+| `theme` | global | design tokens |
+| `siteSettings` | global | announcement bar, nav, footer groups, newsletter |
+
+Read via the local API in Server Components:
+`const payload = await getPayload({ config }); await payload.find({ collection: 'posts' })`.
+Dynamic routes resolve slugs via `payload.find({ where: { slug: { equals } } })`.
+`getPayload` is **server-only** — never import it into a client component.
+
+### Localization
+
+`localization: { locales: ['mn','en'], defaultLocale: 'mn', fallback: true }` **from day one** —
+the announcement bar already ships an English switcher, and retrofitting rewrites every schema.
+Every visible text field is `localized: true`; `slug` is **not** localized (stable URLs).
+
+### Auth
+
+`users` = admin panel; `members` = public accounts (membership type, organization, status).
+Never merge them — a public signup must not be able to widen CMS access. `/membership/join`
+submits via a Server Action → `payload.create({ collection: 'members' })` with server-side
+validation and basic abuse protection (honeypot / rate limit).
+
+### Drafts, caching, revalidation
+
+- `versions: { drafts: true }` on `pages`, `posts`, `departments`, `hubs`; plus Next `draftMode`
+  and Payload Live Preview.
+- **Do not enable `cacheComponents` / `'use cache'`** — untested with Payload 3's RSC
+  integration. Use `01-app/02-guides/caching-without-cache-components.md`.
+- Call `revalidatePath`/`revalidateTag` from `afterChange`/`afterDelete` hooks; `theme` and
+  `siteSettings` revalidate `('/', 'layout')`. `revalidateTag`/`updateTag` semantics changed in
+  Next 16 — read `02-guides/upgrading/version-16.md` §"Caching APIs" first.
+
+### Rich text
+
+Convert `news-detail.html`'s article body with `@payloadcms/richtext-lexical`'s HTML→Lexical
+converter inside the seed script (needs JSDOM). Never hand-author Lexical JSON.
+
+### Assets
+
+- **→ `media` collection**: anything an editor should swap — post covers, people photos,
+  department images, galleries, banners.
+- **→ `public/images/`**: design assets — `logo.svg`, `main-logo.jpeg`, `arrow.svg`, `bird.svg`,
+  `pray.svg`, `harvest.svg`, `vision-check.svg`, `*-watermark-*.svg`, `icon-*.png`.
+- All photos render through `next/image`.
+
+### Anti-patterns (do not do these)
+
+1. A hardcoded `page.tsx` or a per-page global instead of `pages` + blocks.
+2. Hardcoded text/image/link left inside a block component.
+3. Designing schema before reading the markup → props first, fields second.
+4. A new block for every similar section → use a `variant` field.
+5. Hand-writing block prop types instead of using `interfaceName` + `payload-types.ts`.
+6. Every image into `media` → decorative SVGs belong in `public/`.
+7. "We'll add localization later" → it rewrites the whole schema.
+8. Rewriting `styles.css` as Tailwind utilities → parity loss.
+9. Calling `getPayload` from a client component.
+10. Shipping without revalidation hooks → admin edits appear not to work.
+11. Putting site UI inside `app/(payload)/`.
 
 ### Definition of done
 
-Every route above renders, shared chrome comes from `layout.tsx`, tokens/fonts live in
-`globals.css` + `next/font`, `npm run build` and `npm run lint` pass, and `lib/html/`
-is removed.
+`/admin` authenticates; all 19 routes render from Payload data; **every section of every page is
+editable in admin** (text, image, link, order); an editor can assemble a new page from blocks
+without writing code; the `theme` global drives the site's CSS custom properties; visual parity
+with the mockups on desktop **and** mobile; `payload-types.ts` committed; `npm run build` +
+`npm run lint` pass; `.env.example` documented; `lib/html/` and static `lib/*.ts` removed.
 
-## Build task (phase 2): move the site onto Payload CMS 3
+## Decisions
 
-Once the App Router port (phase 1 above) is in place, migrate the site so that content
-**and the design-system tokens** are served from **Payload CMS 3**. Payload 3 installs
-*into* this Next.js app (it is not a separate server): its admin panel and REST/local
-API mount as App Router routes, and Server Components read content through Payload's
-local API. The static `lib/*.ts` data becomes editable Payload collections/globals.
+Settled (see `plan.md` §11 for dates and rationale):
 
-### Verify first (Next 16 compatibility)
+- **Next 16 ↔ Payload** ✅ — `@payloadcms/next@3.86.0` supports `next >=16.2.6 <17.0.0`. Next
+  16.2.11 is inside the range; no override, no waiting.
+- **DB adapter** ✅ — `@payloadcms/db-postgres`, local Postgres.app, database `mea`.
+- **Media storage** ✅ — local disk (`/media`); swap to `@payloadcms/storage-s3` later as a
+  config-only change.
+- **Theme editability** ✅ — fully admin-editable `theme` global.
+- **Build order** ✅ — Payload first, single pass. (The old phase 1 → phase 2 split is cancelled;
+  it meant writing all 19 pages twice.)
+- **`styles.css`** ✅ — ported as CSS, not converted to Tailwind utilities.
+- **Block-first** ✅ — every section is a block; all content admin-editable.
 
-Payload 3 targets Next.js 15 App Router; this repo runs **Next 16.2.11**, which is newer
-than Payload's documented peer range. **Before installing, verify compatibility** — check
-Payload's `peerDependencies` for `next`, and re-read the App Router conventions under
-`node_modules/next/dist/docs/01-app/` (route groups, `next.config` wrappers, dynamic
-params). If Payload pins `next@15`, decide between an install override vs. holding phase 2
-until a Next 16-compatible Payload release. Record the outcome here before proceeding.
+Open — ask before the step that needs them:
 
-### Install & scaffold
-
-- Add `payload`, `@payloadcms/next`, `@payloadcms/richtext-lexical`, `@payloadcms/db-*`
-  (adapter — see decisions), and `sharp` (image processing).
-- Wrap the Next config with `withPayload(...)` (config is `next.config.ts`/`.mjs` here).
-- Add env: `PAYLOAD_SECRET` and the DB connection string (`.env`, plus `.env.example`).
-- Add npm scripts as needed (`payload` CLI, `generate:types`, `generate:importmap`).
-
-### Directory restructure (route groups)
-
-Payload owns `/admin` and `/api`, so the existing site routes must move out of their way
-using **route groups** (folders in parens don't affect the URL):
-
-- `app/(payload)/` — Payload's admin + API routes (generated/boilerplate). Do not put
-  site UI here.
-- `app/(frontend)/` — move **all** phase-1 routes here (`page.tsx`, `layout.tsx`, `news/`,
-  `membership/`, `about/`, `departments/`, `hubs/`, `login/`, `profile/`). URLs are
-  unchanged (`/news` stays `/news`). Shared chrome layout moves to
-  `app/(frontend)/layout.tsx`.
-- `payload.config.ts` at repo root (collections, globals, db adapter, lexical editor,
-  `secret`, `sharp`). Keep the `@/*` alias working for imports.
-
-### Content model (collections & globals)
-
-Map phase-1 typed data and the route map onto Payload:
-
-| Payload entity | Type | Replaces / feeds | Notes |
-| --- | --- | --- | --- |
-| `posts` | collection | `lib/posts.ts`, `/news`, `/news/[slug]` | fields: title, slug, kind (Мэдээ/Нийтлэл), excerpt, cover (upload), body (lexical), publishedAt |
-| `departments` | collection | `/departments`, `/departments/[slug]` | slug, name, lead, body, image |
-| `hubs` | collection | `/hubs/*` | region, body, images |
-| `boardMembers` | collection | `about-board` | name, role, photo |
-| `membershipTiers` | collection | `/membership` | name, price, benefits[] |
-| `media` | collection (upload) | all `images/*` | replaces `public/images` placeholders |
-| `users` | collection (auth) | `/login`, `/profile` | Payload auth; powers header login |
-| `pages` | global(s) or collection | `about-*`, static copy | for editable long-form pages |
-| `theme` | global | **the design system** | see next section |
-| `siteSettings` | global | announcement bar, nav, footer groups | editable shared chrome |
-
-Frontend reads via the local API in Server Components:
-`const payload = await getPayload({ config }); await payload.find({ collection: 'posts' })`
-and `payload.findGlobal({ slug: 'theme' })`. Dynamic routes resolve slugs through
-`payload.find({ where: { slug: { equals } } })`.
-
-### Design system driven by Payload config (the CSS ← Payload part)
-
-Goal: the `styles.css`/`globals.css` design tokens are **managed through Payload**, not
-hardcoded — so colors/typography/spacing are editable in the admin and applied site-wide.
-
-1. **`theme` global** (`payload.config.ts`): grouped fields mirroring the current
-   `:root` tokens — `colors` (primary, primary-dark, primary-light, neutral-50…900,
-   accent-red, link), `typography` (font-family names for display/body/ui + the
-   `--text-*` sizes), `spacing` (section-pad, gutter, container-max, radius-sm/md/full).
-   Seed defaults to the exact values already in `lib/html/styles.css`.
-2. **Inject as CSS variables at runtime**: in `app/(frontend)/layout.tsx`, fetch the
-   `theme` global server-side and render an inline
-   `<style id="theme-tokens">:root{ --color-primary: …; --font-display: …; … }</style>`
-   using the **same variable names** the components already use. Values now come from
-   Payload; keep the current `:root` values in `globals.css` as static fallbacks for
-   build time / DB-unavailable.
-3. **Tailwind stays CSS-first**: `globals.css` keeps `@import "tailwindcss"` and
-   `@theme inline` mapping Tailwind utilities → those CSS custom properties. No
-   `tailwind.config.js`. Editing the theme in Payload re-colors utilities automatically.
-4. **Fonts**: `next/font/google` (Playfair/Manrope/Inter) still loads the font *files*
-   at build (runtime font swapping isn't possible); the `theme` global controls the
-   `--font-*` *variable wiring* and sizes, not the loaded font binaries.
-
-### Data migration
-
-- Write a seed script (Payload local API, run via the `payload` CLI/Node) that imports
-  the existing `lib/posts.ts` / `lib/about.ts` content and the `theme` defaults from
-  `styles.css`, so the DB starts populated and pages render identically to phase 1.
-- After parity is confirmed, `lib/*.ts` static data and any remaining `lib/html/` files
-  are removed (phase-1 `lib/html/` removal still applies).
-
-### Definition of done (phase 2)
-
-`/admin` loads and authenticates; every phase-1 route renders from Payload data; the
-`theme` global drives the site's CSS custom properties (change a color in admin →
-frontend updates); `generate:types` types are committed; `npm run build` + `npm run lint`
-pass; env is documented in `.env.example`; static `lib/*.ts` content is removed.
-
-### Decisions to confirm before starting
-
-- **DB adapter**: `@payloadcms/db-sqlite` (zero-infra local dev, recommended to start)
-  vs. `@payloadcms/db-postgres` (prod) vs. `@payloadcms/db-mongodb`.
-- **Next 16 vs Payload peer range** — see "Verify first" above.
-- **Theme editability scope**: full admin-editable `theme` global (assumed here) vs.
-  config-only tokens defined in `payload.config.ts` with no admin UI.
-- **Media storage**: ✅ decided (2026-07-23) — start with **local disk storage** (Payload's
-  default upload handling, files under `media/` or similar, no extra adapter needed).
-  Migrate to S3 later via `@payloadcms/storage-s3`; keep upload field config
-  adapter-agnostic so the switch is a config change, not a content-model change.
+- **English locale** — real EN translation, or is the switcher decorative?
+- **`organization.html`** — which route? `/organization` is a guess.
+- **Membership signup** — real member logins, or an application form an admin approves?
+- **Shared blocks** — should a block repeated across pages pull from one reusable source, or is
+  copying per page acceptable?

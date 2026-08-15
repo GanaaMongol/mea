@@ -1,0 +1,105 @@
+import type { PageBannerBlock as PageBannerProps } from '@/payload-types'
+
+import { MediaImage, asMedia } from '@/components/ui/MediaImage'
+import { SiteLink } from '@/components/ui/SiteLink'
+
+/**
+ * Class names come straight from `styles.css` so each variant keeps the mockup's
+ * appearance; only the content is data.
+ */
+const VARIANT_CLASS: Record<NonNullable<PageBannerProps['variant']>, string> = {
+  hub: 'hub-banner',
+  vision: 'vision-banner',
+  dept: 'dept-banner',
+  deptDetail: 'dept-detail-banner',
+  news: 'news-banner',
+  region: 'hub-region-hero',
+  imageOnly: 'news-detail-hero',
+}
+
+export function PageBanner({
+  variant,
+  overline,
+  title,
+  subtitle,
+  tag,
+  background,
+  watermark,
+  height,
+  align,
+  overlay,
+  links,
+}: PageBannerProps) {
+  const base = VARIANT_CLASS[variant] ?? 'hub-banner'
+  const backgroundDoc = asMedia(background)
+
+  if (variant === 'imageOnly') {
+    return (
+      <section className={base}>
+        <MediaImage media={background} priority sizes="100vw" />
+      </section>
+    )
+  }
+
+  if (variant === 'news') {
+    return (
+      <section className={base}>
+        <div className="container news-banner__inner">
+          <div className="news-banner__media">
+            <MediaImage media={background} alt={title ?? ''} priority sizes="(max-width: 900px) 100vw, 50vw" />
+          </div>
+          <div className="news-banner__text">
+            <div className="news-banner__heading">
+              {tag ? <span className="news-banner__tag">{tag}</span> : null}
+              {title ? <h1 className="news-banner__title">{title}</h1> : null}
+            </div>
+            {links?.[0] ? <SiteLink link={links[0]} className="news-banner__link" /> : null}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (variant === 'region') {
+    return (
+      <section className={base}>
+        <div className={`${base}__bg`}>
+          <MediaImage media={background} priority fill sizes="100vw" />
+        </div>
+        {overlay ? <div className={`${base}__overlay`} /> : null}
+        {watermark ? <MediaImage media={watermark} className={`${base}__wave`} alt="" /> : null}
+        <div className={`container ${base}__content`}>
+          {overline ? <span className={`${base}__overline`}>{overline}</span> : null}
+          {title ? <h1 className={`${base}__title`}>{title}</h1> : null}
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <section
+      className={base}
+      style={{
+        ...(backgroundDoc?.url ? { backgroundImage: `url("${backgroundDoc.url}")` } : {}),
+        ...(height ? { height: `${height}px` } : {}),
+        ...(align === 'center' ? { textAlign: 'center' } : {}),
+      }}
+    >
+      {watermark ? (
+        <MediaImage media={watermark} className={`${base}__watermark`} alt="" />
+      ) : null}
+      <div className={variant === 'vision' ? `${base}__content` : 'container'}>
+        {overline ? <p className={`${base}__overline`}>{overline}</p> : null}
+        {title ? <h1 className={`${base}__title`}>{title}</h1> : null}
+        {subtitle ? <p className={`${base}__subtitle`}>{subtitle}</p> : null}
+        {links?.length ? (
+          <div className={`${base}__actions`}>
+            {links.map((link, index) => (
+              <SiteLink key={link.id ?? index} link={link} className="btn--lg" />
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </section>
+  )
+}

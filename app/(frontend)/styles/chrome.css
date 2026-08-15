@@ -1,0 +1,389 @@
+/* --- Announcement Bar --- */
+.announcement-bar {
+    color: var(--color-neutral-200);
+    background: var(--color-neutral-50);
+    border-bottom: 1px solid var(--color-neutral-200);
+    line-height: var(--line-height-caption, 16px); /* 123.077% */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    /* дэвсгэр нь бүтэн өргөнөөр, мөр нь .container-тай нэг шугамд */
+    padding: 8px max(40px, calc((100% - var(--container-max)) / 2 + 40px));
+}
+.announcement-bar .container,
+.announcement-bar .right-container {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+.announcement-bar .container {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--color-neutral-700);
+    min-width: 0;
+}
+.announcement-bar .right-container {
+    flex-shrink: 0;
+    font-family: var(--font-body);
+    margin-right: 50px;
+}
+.announcement-bar__text {
+    color: var(--color-neutral-700);
+}
+.announcement-bar__text a {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+.announcement-bar__links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    line-height: var(--wp--preset--font-size--small, 13px);
+}
+.announcement-bar__links > li {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+/* сүүлчийнхээс бусад li-ийн төгсгөлд босоо тусгаарлагч зураас */
+.announcement-bar__links > li:not(:last-child)::after {
+    content: "";
+    width: 1px;
+    height: 24px;
+    background: var(--border-medium, #d4d3cf);
+}
+.announcement-bar__links a {
+    color: var(--color-neutral-700);
+}
+/* --- Хэлний сонголт (dropdown) --- */
+.lang-selector {
+    position: relative;
+}
+.lang-selector__toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-neutral-700);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+.lang-selector__chevron {
+    transition: transform 0.15s ease;
+}
+.lang-selector__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 200;
+    display: none;
+    min-width: 140px;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid var(--border-medium, #d4d3cf);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+.lang-selector:hover .lang-selector__menu,
+.lang-selector:focus-within .lang-selector__menu {
+    display: block;
+}
+.lang-selector:hover .lang-selector__chevron,
+.lang-selector:focus-within .lang-selector__chevron {
+    transform: rotate(180deg);
+}
+.lang-selector__menu a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--color-neutral-700);
+    white-space: nowrap;
+}
+.lang-selector__menu a:hover,
+.lang-selector__menu a:focus-visible {
+    background: var(--color-neutral-100);
+}
+.lang-selector__menu a.is-active {
+    color: var(--color-primary);
+}
+
+/* --- Header --- */
+.header {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--color-neutral-200);
+}
+.header .container {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    gap: 32px;
+}
+.header__logo img {
+    height: 48px;
+    width: auto;
+}
+.header__nav {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+.header__nav a {
+    color: var(--color-neutral-700);
+    padding: 4px 0;
+    font: var(--font-body);
+    font-size: var(--font-size-body-sm, 14px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: var(--line-height-body-sm, 20px); /* 142.857% */
+}
+.header__nav a.active {
+    color: var(--color-primary);
+}
+.header__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+.header__search-btn {
+    /* inline-flex — svg-г baseline-д биш, товчны голд байрлуулна */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-neutral-700);
+    padding: 4px;
+}
+.header__menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+.header__menu-toggle span,
+.header__menu-toggle span::before,
+.header__menu-toggle span::after {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-neutral-700);
+    position: absolute;
+    left: 4px;
+}
+.header__menu-toggle span {
+    top: 15px;
+}
+.header__menu-toggle span::before {
+    content: "";
+    top: -7px;
+}
+.header__menu-toggle span::after {
+    content: "";
+    top: 7px;
+}
+
+/* /Header --- */
+.digital_strategy {
+    background: var(--color-neutral-50);
+    padding: var(--section-pad) 0;
+}
+
+.digital_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.digital_header .title {
+    color: var(--color-primary);
+    font-family: Manrope;
+    font-size: var(--font-size-caption, 12px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: var(--line-height-caption, 16px);
+    letter-spacing: 0.96px;
+}
+
+.digital_header h2 {
+    color: var(--color-neutral-700);
+    text-align: center;
+    /* Heading/H1 */
+    font-family: var(--font-display);
+    font-size: var(--font-size-h1, 32px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--line-height-h1, 38px); /* 118.75% */
+}
+
+.digital_header p {
+    color: var(--color-neutral-500);
+    text-align: center;
+    /* Body/Default */
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+/* 4 хурдасгуур: hover үед карт 2 картын өргөн болж, зураг нь анхны хэмжээгээрээ
+   үлдэж, хажууд нь НЭГ картын өргөнтэй цэнхэр самбар нээгдэнэ.
+   Бусад картууд нуугдахгүй, зөвхөн шахагдана. */
+.digital_strategy_container {
+    /* .container-ийн доторх өргөн: min(100vw - 2*40px, 1360 - 80) */
+    --content: min(100vw - 80px, 1280px);
+    --col: calc((var(--content) - 3 * var(--gutter)) / 4);
+    display: flex;
+    align-items: stretch;
+    gap: var(--gutter);
+    /* багана нь зургийн харьцаагаар (322 x 580) — hover үед өндөр өөрчлөгдөхгүй */
+    height: calc(var(--col) * 580 / 322);
+}
+.accel-card {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    /* зураг 90% болж жижгэрэхэд эргэн тойрон нь цэнхэр харагдана
+       (энгийн үед зураг бүрэн бүрхэж байдаг тул нуугдана) */
+    background: linear-gradient(180deg, #479af3 0%, #10539b 100%);
+    transition: flex-grow 0.4s ease;
+}
+/* hover: 3 (бусад нь 1) -> 50% / 16.6% / 16.6% / 16.6%.
+   50% = яг 2 картын өргөн, тэгэхээр зураг нь анхны хэмжээгээрээ үлдэнэ. */
+.accel-card:hover,
+.accel-card:focus-within {
+    flex-grow: 3;
+}
+.accel-card__frame {
+    position: relative;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* бүх зураг дээр бага зэрэг харанхуй давхарга */
+.accel-card__frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+    transition:
+        inset 0.4s ease,
+        border-radius 0.4s ease;
+}
+.accel-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+        width 0.4s ease,
+        height 0.4s ease,
+        border-radius 0.4s ease;
+}
+/* hover: зураг 90% x 90% болж, эргэн тойрон нь цэнхэр үлдэнэ */
+.accel-card:hover .accel-card__image,
+.accel-card:focus-within .accel-card__image {
+    width: 90%;
+    height: 90%;
+    border-radius: var(--radius-md);
+}
+.accel-card:hover .accel-card__frame::after,
+.accel-card:focus-within .accel-card__frame::after {
+    inset: 5%;
+    border-radius: var(--radius-md);
+}
+.accel-card__panel {
+    flex: 0 0 0%;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 0;
+    background: linear-gradient(180deg, #479af3 0%, #10539b 100%);
+    color: #fff;
+    opacity: 0;
+    transition:
+        flex-basis 0.4s ease,
+        padding 0.4s ease,
+        opacity 0.3s ease;
+}
+/* өргөссөн картын хагас = шахагдсан картын өргөнтэй тэнцүү */
+.accel-card:hover .accel-card__panel,
+.accel-card:focus-within .accel-card__panel {
+    flex-basis: 50%;
+    padding: 24px;
+    opacity: 1;
+}
+.accel-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+}
+.accel-card__text {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Жижиг дэлгэц / hover байхгүй төхөөрөмж: багана болгож, текстийг шууд харуулна */
+@media (max-width: 1024px), (hover: none) {
+    .digital_strategy_container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: auto;
+    }
+    .accel-card {
+        display: block;
+    }
+    .accel-card__frame {
+        aspect-ratio: 322 / 580;
+    }
+    .accel-card__panel {
+        opacity: 1;
+        padding: 20px;
+    }
+}
+@media (max-width: 640px) {
+    .digital_strategy_container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- /Digital Strategy */
+

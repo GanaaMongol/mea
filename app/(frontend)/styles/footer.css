@@ -1,0 +1,111 @@
+/* --- Footer --- */
+.footer {
+    background: var(--color-neutral-50);
+    padding: 60px 0 0;
+}
+.footer__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    border-radius: var(--radius-sm);
+    padding: 48px 40px 24px;
+}
+.footer__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--color-neutral-200);
+}
+.footer__logo img {
+    height: 48px;
+    width: auto;
+    margin-bottom: 16px;
+}
+.footer__links-row {
+    display: flex;
+    gap: 24px;
+    font-size: var(--text-body);
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    white-space: nowrap;
+    color: var(--Text-Primary, #1a1812);
+    line-height: var(--line-height-body, 24px); /* 150% */
+    text-transform: uppercase;
+}
+.footer__contact-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-neutral-900);
+    margin-bottom: 16px;
+}
+.footer__contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: var(--text-body);
+    color: var(--color-neutral-700);
+    max-width: 480px;
+}
+.footer__nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--gutter);
+    padding: 40px 0;
+    border-bottom: 1px solid var(--color-neutral-200);
+}
+.footer__nav-group-title {
+    color: var(--Neutral-500, #7d7869);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-neutral-400);
+    margin-bottom: 16px;
+}
+.footer__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.footer__nav-list li a {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-neutral-700);
+}
+.footer__nav-list li a:hover {
+    color: var(--color-primary);
+}
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.footer__copyright {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-neutral-800);
+}
+.footer__social {
+    display: flex;
+    gap: 12px;
+}
+.footer__social-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-neutral-700);
+    transition: border-color 0.2s;
+}
+.footer__social-link:hover {
+    border-color: var(--color-primary);
+}
+.footer__legal-link {
+    font-size: var(--text-sm);
+    color: var(--color-neutral-700);
+}
+

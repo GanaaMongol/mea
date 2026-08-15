@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/*
+ * The MEA design system, ported from lib/html/styles.css. The files below are
+ * that stylesheet split at its own section boundaries and imported in the
+ * original order — concatenating them reproduces the source byte for byte, so
+ * the cascade is unchanged and the mockups' BEM class names keep working.
+ *
+ * Do not convert these to Tailwind utilities. Tailwind is for new UI only.
+ */
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/home.css";
+@import "./styles/chrome.css";
+@import "./styles/about.css";
+@import "./styles/pages/login.css";
+@import "./styles/footer.css";
+@import "./styles/pages/profile.css";
+@import "./styles/responsive.css";
+@import "./styles/pages/membership.css";
+@import "./styles/pages/news.css";
+@import "./styles/pages/hub-region.css";
+@import "./styles/pages/vision.css";
+@import "./styles/pages/news-detail.css";
+@import "./styles/pages/organization.css";
+
+/*
+ * Expose the design tokens to Tailwind utilities. The values resolve through the
+ * same custom properties the ported CSS uses, so editing the `theme` global in
+ * Payload re-colors both at once.
+ */
+@theme inline {
+    --color-primary: var(--color-primary);
+    --color-primary-dark: var(--color-primary-dark);
+    --color-primary-light: var(--color-primary-light);
+    --color-neutral-0: var(--color-neutral-0);
+    --color-neutral-50: var(--color-neutral-50);
+    --color-neutral-100: var(--color-neutral-100);
+    --color-neutral-150: var(--color-neutral-150);
+    --color-neutral-200: var(--color-neutral-200);
+    --color-neutral-300: var(--color-neutral-300);
+    --color-neutral-400: var(--color-neutral-400);
+    --color-neutral-500: var(--color-neutral-500);
+    --color-neutral-600: var(--color-neutral-600);
+    --color-neutral-700: var(--color-neutral-700);
+    --color-neutral-800: var(--color-neutral-800);
+    --color-neutral-900: var(--color-neutral-900);
+    --color-accent-red: var(--color-accent-red);
+    --color-link: var(--color-link);
+
+    --font-display: var(--font-display);
+    --font-body: var(--font-body);
+    --font-ui: var(--font-ui);
+
+    --text-display: var(--text-display);
+    --text-h1: var(--text-h1);
+    --text-h2: var(--text-h2);
+    --text-h3: var(--text-h3);
+    --text-h4: var(--text-h4);
+    --text-body: var(--text-body);
+    --text-sm: var(--text-sm);
+    --text-caption: var(--text-caption);
+
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-2xl: var(--radius-2xl);
+    --radius-full: var(--radius-full);
+}
