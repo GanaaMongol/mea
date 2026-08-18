@@ -188,6 +188,8 @@ export interface Page {
         | CarouselBlock
         | PeopleGridBlock
         | CreedBlock
+        | SectionIntroBlock
+        | DataTableBlock
       )[]
     | null;
   meta?: {
@@ -340,6 +342,8 @@ export interface Post {
         | CarouselBlock
         | PeopleGridBlock
         | CreedBlock
+        | SectionIntroBlock
+        | DataTableBlock
       )[]
     | null;
   updatedAt: string;
@@ -427,6 +431,8 @@ export interface Department {
         | CarouselBlock
         | PeopleGridBlock
         | CreedBlock
+        | SectionIntroBlock
+        | DataTableBlock
       )[]
     | null;
   updatedAt: string;
@@ -548,6 +554,8 @@ export interface Hub {
         | CarouselBlock
         | PeopleGridBlock
         | CreedBlock
+        | SectionIntroBlock
+        | DataTableBlock
       )[]
     | null;
   updatedAt: string;
@@ -645,6 +653,8 @@ export interface MembershipTier {
         | CarouselBlock
         | PeopleGridBlock
         | CreedBlock
+        | SectionIntroBlock
+        | DataTableBlock
       )[]
     | null;
   updatedAt: string;
@@ -885,10 +895,12 @@ export interface CarouselBlock {
  * via the `definition` "PeopleGridBlock".
  */
 export interface PeopleGridBlock {
+  variant?: ('board' | 'regionTeam') | null;
   title?: string | null;
   description?: string | null;
   source?: ('group' | 'manual') | null;
   group?: ('leadership' | 'board' | 'team' | 'region') | null;
+  hub?: (number | null) | Hub;
   people?: (number | BoardMember)[] | null;
   limit?: number | null;
   id?: string | null;
@@ -923,6 +935,44 @@ export interface CreedBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'creed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionIntroBlock".
+ */
+export interface SectionIntroBlock {
+  title: string;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'sectionIntro';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DataTableBlock".
+ */
+export interface DataTableBlock {
+  variant?: ('region' | 'plain') | null;
+  columns?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  rows?:
+    | {
+        cells?:
+          | {
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'dataTable';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1119,6 +1169,8 @@ export interface PagesSelect<T extends boolean = true> {
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
         creed?: T | CreedBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        dataTable?: T | DataTableBlockSelect<T>;
       };
   meta?:
     | T
@@ -1457,10 +1509,12 @@ export interface CarouselBlockSelect<T extends boolean = true> {
  * via the `definition` "PeopleGridBlock_select".
  */
 export interface PeopleGridBlockSelect<T extends boolean = true> {
+  variant?: T;
   title?: T;
   description?: T;
   source?: T;
   group?: T;
+  hub?: T;
   people?: T;
   limit?: T;
   id?: T;
@@ -1475,6 +1529,42 @@ export interface CreedBlockSelect<T extends boolean = true> {
   intro?: T;
   background?: T;
   text?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionIntroBlock_select".
+ */
+export interface SectionIntroBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DataTableBlock_select".
+ */
+export interface DataTableBlockSelect<T extends boolean = true> {
+  variant?: T;
+  columns?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  rows?:
+    | T
+    | {
+        cells?:
+          | T
+          | {
+              value?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1508,6 +1598,8 @@ export interface PostsSelect<T extends boolean = true> {
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
         creed?: T | CreedBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        dataTable?: T | DataTableBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1543,6 +1635,8 @@ export interface DepartmentsSelect<T extends boolean = true> {
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
         creed?: T | CreedBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        dataTable?: T | DataTableBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1575,6 +1669,8 @@ export interface HubsSelect<T extends boolean = true> {
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
         creed?: T | CreedBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        dataTable?: T | DataTableBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1636,6 +1732,8 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
         creed?: T | CreedBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        dataTable?: T | DataTableBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

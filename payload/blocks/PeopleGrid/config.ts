@@ -10,6 +10,15 @@ export const PeopleGridBlock: Block = {
   interfaceName: 'PeopleGridBlock',
   labels: { singular: 'Хүмүүсийн тор', plural: 'Хүмүүсийн тор' },
   fields: [
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'board',
+      options: [
+        { label: 'Удирдах зөвлөл (гарчгийн баганатай)', value: 'board' },
+        { label: 'Бүсийн баг (4 багана, бүтэн өргөн)', value: 'regionTeam' },
+      ],
+    },
     { name: 'title', type: 'text', localized: true },
     { name: 'description', type: 'textarea', localized: true },
     {
@@ -33,6 +42,12 @@ export const PeopleGridBlock: Block = {
         { label: 'Бүсийн баг', value: 'region' },
       ],
       admin: { condition: (_, s) => s?.source !== 'manual' },
+    },
+    {
+      name: 'hub',
+      type: 'relationship',
+      relationTo: 'hubs',
+      admin: { condition: (_, s) => s?.source !== 'manual' && s?.group === 'region' },
     },
     {
       name: 'people',

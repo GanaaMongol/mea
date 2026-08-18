@@ -4,6 +4,7 @@ import { Accelerators } from './Accelerators'
 import { CardGrid } from './CardGrid'
 import { Carousel } from './Carousel'
 import { Creed } from './Creed'
+import { DataTable } from './DataTable'
 import { Gallery } from './Gallery'
 import { HighlightedText } from './HighlightedText'
 import { HistoryGrid } from './HistoryGrid'
@@ -12,6 +13,7 @@ import { PeopleGrid } from './PeopleGrid'
 import { PostsFeed } from './PostsFeed'
 import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
+import { SectionIntro } from './SectionIntro'
 import { SectionTabs } from './SectionTabs'
 import { StatsRow } from './StatsRow'
 import { Timeline } from './Timeline'
@@ -40,4 +42,6 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   carousel: Carousel,
   peopleGrid: PeopleGrid,
   creed: Creed,
+  sectionIntro: SectionIntro,
+  dataTable: DataTable,
 }

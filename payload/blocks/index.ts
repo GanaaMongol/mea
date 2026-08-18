@@ -4,6 +4,7 @@ import { AcceleratorsBlock } from './Accelerators/config'
 import { CardGridBlock } from './CardGrid/config'
 import { CarouselBlock } from './Carousel/config'
 import { CreedBlock } from './Creed/config'
+import { DataTableBlock } from './DataTable/config'
 import { GalleryBlock } from './Gallery/config'
 import { HighlightedTextBlock } from './HighlightedText/config'
 import { HistoryGridBlock } from './HistoryGrid/config'
@@ -12,6 +13,7 @@ import { PeopleGridBlock } from './PeopleGrid/config'
 import { PostsFeedBlock } from './PostsFeed/config'
 import { QuoteBannerBlock } from './QuoteBanner/config'
 import { RichTextBlock } from './RichText/config'
+import { SectionIntroBlock } from './SectionIntro/config'
 import { SectionTabsBlock } from './SectionTabs/config'
 import { StatsRowBlock } from './StatsRow/config'
 import { TimelineBlock } from './Timeline/config'
@@ -39,6 +41,8 @@ export const layoutBlocks: Block[] = [
   CarouselBlock,
   PeopleGridBlock,
   CreedBlock,
+  SectionIntroBlock,
+  DataTableBlock,
 ]
 
 export {
@@ -58,4 +62,6 @@ export {
   CarouselBlock,
   PeopleGridBlock,
   CreedBlock,
+  SectionIntroBlock,
+  DataTableBlock,
 }

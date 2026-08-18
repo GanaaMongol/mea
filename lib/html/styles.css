@@ -1421,15 +1421,15 @@ ol {
     margin: 0 auto;
     position: relative;
 }
-/* .dept-tabs::before {
+.dept-tabs::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    /* height: 3px; */
-    /* background: var(--color-accent-red); */
-} */
+    height: 3px;
+    background: var(--color-accent-red);
+}
 .dept-tab {
     padding: 16px 24px;
     font-size: var(--text-sm);
@@ -1580,8 +1580,7 @@ ol {
     pointer-events: none;
     z-index: 2;
     background:
-        linear-gradient(to right, var(--color-neutral-50) 0, rgba(252, 250, 248, 0) 184px),
-        linear-gradient(to left, var(--color-neutral-50) 0, rgba(252, 250, 248, 0) 184px);
+        linear-gradient(to right, var(--color-neutral-50) 0, rgba(252, 250, 248, 0) 184px), linear-gradient(to left, var(--color-neutral-50) 0, rgba(252, 250, 248, 0) 184px);
 }
 .timeline__points {
     position: absolute;
