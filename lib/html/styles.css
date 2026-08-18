@@ -28,6 +28,7 @@
 
     /* Accent */
     --color-accent-red: #e53935;
+    --color-accent-yellow: #ffe3a3;
     --color-link: #3461e3;
 
     /* Typography */
@@ -4607,10 +4608,10 @@ ol {
         stroke 0.2s ease;
     outline: none;
 }
-/* Hover: тухайн аймаг цагаан болж, хүрээ нь цэнхэрээр тодорно */
+/* Hover: тухайн аймаг цайвар шар болж тодорно */
 .region-map__svg path[data-region]:hover,
 .region-map__svg path[data-region]:focus-visible {
-    fill: var(--color-neutral-0);
+    fill: var(--color-accent-yellow);
     stroke: var(--color-primary);
     stroke-width: 1.5;
 }
@@ -4622,15 +4623,16 @@ ol {
 .region-map__svg[data-selected] path[data-region] {
     opacity: 0.45;
 }
+/* Сонгосны дараа тухайн аймаг шараараа үлдэнэ */
 .region-map__svg[data-selected] path[data-region][data-active='true'] {
     opacity: 1;
-    fill: var(--color-neutral-0);
+    fill: var(--color-accent-yellow);
     stroke: var(--color-primary);
     stroke-width: 1.5;
 }
 .region-map__svg[data-selected] path[data-region]:hover {
     opacity: 1;
-    fill: var(--color-neutral-0);
+    fill: var(--color-accent-yellow);
 }
 
 .region-map__tip {
