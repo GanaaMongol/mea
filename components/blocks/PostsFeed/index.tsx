@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import type { Post, PostsFeedBlock as PostsFeedProps } from '@/payload-types'
 
+import { ArrowUpRight } from '@/components/ui/ArrowUpRight'
 import { SiteLink } from '@/components/ui/SiteLink'
 import { getPayloadClient } from '@/lib/payload'
 import { NewsCard } from './NewsCard'
@@ -108,7 +109,10 @@ export async function PostsFeed(props: Props) {
 
         {moreLink?.label ? (
           <div className="news-more">
-            <SiteLink link={moreLink} className="news-more__link" />
+            <SiteLink link={moreLink} className="news-more__link">
+              <span className="news-more__label">{moreLink.label}</span>
+              <ArrowUpRight className="news-more__icon" />
+            </SiteLink>
           </div>
         ) : null}
       </div>
