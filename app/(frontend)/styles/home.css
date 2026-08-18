@@ -734,6 +734,10 @@
 .content-block__header[data-align="center"] .content-block__desc {
     margin-inline: auto;
 }
+/* index.html: төвлөрсөн header дээр inline `margin-bottom: 60px` */
+.content-block__header[data-align="center"] {
+    margin-bottom: 60px;
+}
 .content-block__header--center .content-block__label,
 .content-block__header--center .content-block__title {
     color: var(--color-neutral-700);

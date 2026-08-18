@@ -357,6 +357,10 @@
     max-width: 600px;
     padding-top: 16px;
 }
+/* Mockup дээр энэ зай нь index.html-д inline `style="margin-top: 16px"` байсан. */
+.quote-banner__content .btn {
+    margin-top: 16px;
+}
 
 /* --- Values Section (Vision page) --- */
 .values-section {

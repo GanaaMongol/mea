@@ -1154,7 +1154,7 @@ ol {
     line-height: var(--line-height-h1, 38px); /* 118.75% */
 }
 
-.digital_header p {
+.digital_header p:not(.title) {
     color: var(--color-neutral-500);
     text-align: center;
     /* Body/Default */
@@ -1163,7 +1163,8 @@ ol {
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
-    margin-bottom: var(--gutter);
+    /* index.html: inline `margin-bottom: 40px` */
+    margin-bottom: 40px;
 }
 
 /* 4 Хурдасгуур — hover: карт зөөлөн өргөсч, зураг бага зэрэг ойртож, доод самбарт
@@ -1676,6 +1677,10 @@ ol {
     line-height: 40px; /* 118.75% */
     max-width: 600px;
     padding-top: 16px;
+}
+/* Mockup дээр энэ зай нь index.html-д inline `style="margin-top: 16px"` байсан. */
+.quote-banner__content .btn {
+    margin-top: 16px;
 }
 
 /* --- Values Section (Vision page) --- */
@@ -3208,13 +3213,19 @@ ol {
     text-align: center;
     padding-top: 100px;
 }
+/* index.html: гарчгийн ДООРХ тайлбар мөр (inline style байсан).
+   Гарчгийн дээрх жижиг eyebrow нь `.hub-banner__overline` — тэр тусдаа. */
 .hub-banner__subtitle {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: #f3f0e9;
-    letter-spacing: 0.05em;
-    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 16px;
+}
+.hub-banner__actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
 }
 .hub-banner__title {
     font-family: var(--font-display);
