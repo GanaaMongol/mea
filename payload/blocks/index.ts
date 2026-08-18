@@ -8,6 +8,7 @@ import { PostsFeedBlock } from './PostsFeed/config'
 import { QuoteBannerBlock } from './QuoteBanner/config'
 import { RichTextBlock } from './RichText/config'
 import { SectionTabsBlock } from './SectionTabs/config'
+import { ValuesListBlock } from './ValuesList/config'
 
 /**
  * Blocks available to any page-like `layout` field. Adding a block = one file
@@ -23,6 +24,7 @@ export const layoutBlocks: Block[] = [
   AcceleratorsBlock,
   PostsFeedBlock,
   GalleryBlock,
+  ValuesListBlock,
 ]
 
 export {
@@ -34,4 +36,5 @@ export {
   QuoteBannerBlock,
   RichTextBlock,
   SectionTabsBlock,
+  ValuesListBlock,
 }

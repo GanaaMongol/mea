@@ -180,6 +180,7 @@ export interface Page {
         | AcceleratorsBlock
         | PostsFeedBlock
         | GalleryBlock
+        | ValuesListBlock
       )[]
     | null;
   meta?: {
@@ -324,6 +325,7 @@ export interface Post {
         | AcceleratorsBlock
         | PostsFeedBlock
         | GalleryBlock
+        | ValuesListBlock
       )[]
     | null;
   updatedAt: string;
@@ -367,6 +369,7 @@ export interface SectionTabsBlock {
       }[]
     | null;
   align?: ('left' | 'center') | null;
+  plain?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'sectionTabs';
@@ -402,6 +405,7 @@ export interface Department {
         | AcceleratorsBlock
         | PostsFeedBlock
         | GalleryBlock
+        | ValuesListBlock
       )[]
     | null;
   updatedAt: string;
@@ -515,6 +519,7 @@ export interface Hub {
         | AcceleratorsBlock
         | PostsFeedBlock
         | GalleryBlock
+        | ValuesListBlock
       )[]
     | null;
   updatedAt: string;
@@ -526,11 +531,12 @@ export interface Hub {
  * via the `definition` "QuoteBannerBlock".
  */
 export interface QuoteBannerBlock {
-  variant: 'quote' | 'cta' | 'dept';
+  variant: 'quote' | 'cta' | 'dept' | 'visionGoal';
   overline?: string | null;
   title: string;
   author?: string | null;
   background?: (number | null) | Media;
+  watermark?: (number | null) | Media;
   cta?: {
     type?: ('reference' | 'custom') | null;
     newTab?: boolean | null;
@@ -603,6 +609,7 @@ export interface MembershipTier {
         | AcceleratorsBlock
         | PostsFeedBlock
         | GalleryBlock
+        | ValuesListBlock
       )[]
     | null;
   updatedAt: string;
@@ -736,6 +743,23 @@ export interface GalleryBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'gallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesListBlock".
+ */
+export interface ValuesListBlock {
+  title: string;
+  verse?: string | null;
+  items?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'valuesList';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -940,6 +964,7 @@ export interface PagesSelect<T extends boolean = true> {
         accelerators?: T | AcceleratorsBlockSelect<T>;
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
+        valuesList?: T | ValuesListBlockSelect<T>;
       };
   meta?:
     | T
@@ -998,6 +1023,7 @@ export interface SectionTabsBlockSelect<T extends boolean = true> {
         id?: T;
       };
   align?: T;
+  plain?: T;
   id?: T;
   blockName?: T;
 }
@@ -1066,6 +1092,7 @@ export interface QuoteBannerBlockSelect<T extends boolean = true> {
   title?: T;
   author?: T;
   background?: T;
+  watermark?: T;
   cta?:
     | T
     | {
@@ -1178,6 +1205,22 @@ export interface GalleryBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ValuesListBlock_select".
+ */
+export interface ValuesListBlockSelect<T extends boolean = true> {
+  title?: T;
+  verse?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1198,6 +1241,7 @@ export interface PostsSelect<T extends boolean = true> {
         accelerators?: T | AcceleratorsBlockSelect<T>;
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
+        valuesList?: T | ValuesListBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1225,6 +1269,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         accelerators?: T | AcceleratorsBlockSelect<T>;
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
+        valuesList?: T | ValuesListBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1249,6 +1294,7 @@ export interface HubsSelect<T extends boolean = true> {
         accelerators?: T | AcceleratorsBlockSelect<T>;
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
+        valuesList?: T | ValuesListBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1302,6 +1348,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         accelerators?: T | AcceleratorsBlockSelect<T>;
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
+        valuesList?: T | ValuesListBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

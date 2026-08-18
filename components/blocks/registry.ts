@@ -8,6 +8,7 @@ import { PostsFeed } from './PostsFeed'
 import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
 import { SectionTabs } from './SectionTabs'
+import { ValuesList } from './ValuesList'
 
 /**
  * blockType → component. Adding a block means: a config under
@@ -24,4 +25,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   accelerators: Accelerators,
   postsFeed: PostsFeed,
   gallery: Gallery,
+  valuesList: ValuesList,
 }

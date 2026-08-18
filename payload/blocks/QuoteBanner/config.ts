@@ -17,6 +17,7 @@ export const QuoteBannerBlock: Block = {
         { label: 'Ишлэл', value: 'quote' },
         { label: 'Уриалга (CTA)', value: 'cta' },
         { label: 'Албаны ишлэл', value: 'dept' },
+        { label: 'Бидний зорилт (vision-goal)', value: 'visionGoal' },
       ],
     },
     {
@@ -40,6 +41,14 @@ export const QuoteBannerBlock: Block = {
       name: 'background',
       type: 'upload',
       relationTo: 'media',
+      admin: { condition: (_, s) => s?.variant !== 'visionGoal' },
+    },
+    {
+      name: 'watermark',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Ус тэмдэг (чимэглэл)',
+      admin: { condition: (_, s) => s?.variant === 'visionGoal' },
     },
     link({ name: 'cta', label: 'Товч' }),
   ],

@@ -14,8 +14,11 @@ export const slugify = (value: string): string =>
     .split('')
     .map((char) => (char in CYRILLIC_MAP ? CYRILLIC_MAP[char] : char))
     .join('')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    // `/` survives so nested pages keep real URLs (`about/vision` → /about/vision).
+    .replace(/[^a-z0-9/]+/g, '-')
+    .replace(/-*\/-*/g, '/')
+    .replace(/\/{2,}/g, '/')
+    .replace(/^[-/]+|[-/]+$/g, '')
 
 /**
  * Fills `slug` from `sourceField` when it is left empty. Not localized — one URL

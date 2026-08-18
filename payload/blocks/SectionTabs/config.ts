@@ -38,5 +38,12 @@ export const SectionTabsBlock: Block = {
         { label: 'Төв', value: 'center' },
       ],
     },
+    {
+      name: 'plain',
+      type: 'checkbox',
+      label: 'Улаан зураасгүй, цагаан дэвсгэр (dept-tabs--plain)',
+      defaultValue: false,
+      admin: { condition: (_, s) => s?.variant === 'dept' },
+    },
   ],
 }
