@@ -68,7 +68,7 @@ export async function DepartmentGrid(props: DepartmentGridProps) {
                 </div>
                 <div className="accel-card__panel">
                   <h3 className="accel-card__title">
-                    <Link href={`/departments/${department.slug}`}>{department.name}</Link>
+                    <Link href={`/ministries/${department.slug}`}>{department.name}</Link>
                   </h3>
                   {department.excerpt ? (
                     <p className="accel-card__text">{department.excerpt}</p>
