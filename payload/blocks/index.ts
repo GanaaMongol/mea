@@ -3,6 +3,7 @@ import type { Block } from 'payload'
 import { AcceleratorsBlock } from './Accelerators/config'
 import { CardGridBlock } from './CardGrid/config'
 import { CarouselBlock } from './Carousel/config'
+import { ContactBoxBlock } from './ContactBox/config'
 import { CreedBlock } from './Creed/config'
 import { DataTableBlock } from './DataTable/config'
 import { DepartmentGridBlock } from './DepartmentGrid/config'
@@ -47,6 +48,7 @@ export const layoutBlocks: Block[] = [
   DataTableBlock,
   MediaCardBlock,
   DepartmentGridBlock,
+  ContactBoxBlock,
 ]
 
 export {
@@ -70,4 +72,5 @@ export {
   DataTableBlock,
   MediaCardBlock,
   DepartmentGridBlock,
+  ContactBoxBlock,
 }

@@ -2217,6 +2217,124 @@ ol {
     color: var(--color-neutral-600);
 }
 
+/* --- Contact box (алба бүрийн төгсгөл) ---
+   Дизайн системийн товч/картын хэв маягаар: цагаан карт, дулаан хүрээ,
+   дүрс тэмдэг нь primary өнгийн зөөлөн дэвсгэр дээр. --- */
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    background: var(--color-neutral-0);
+}
+.contact-box__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.contact-box__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    line-height: 26px;
+    color: var(--color-neutral-700);
+}
+.contact-box__person {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 20px;
+    color: var(--color-neutral-500);
+}
+.contact-box__role {
+    color: var(--color-neutral-400);
+}
+.contact-box__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.contact-box__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 260px;
+    padding: 16px 20px;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+    background: var(--color-neutral-0);
+    color: inherit;
+    text-decoration: none;
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+.contact-box__item:hover,
+.contact-box__item:focus-visible {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(20, 101, 190, 0.12);
+}
+.contact-box__item:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+.contact-box__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: rgba(20, 101, 190, 0.08);
+    color: var(--color-primary);
+    transition: background 0.25s ease;
+}
+.contact-box__item:hover .contact-box__icon {
+    background: var(--color-primary);
+    color: var(--color-neutral-0);
+}
+.contact-box__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.contact-box__label {
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+    color: var(--color-neutral-400);
+}
+.contact-box__value {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 600;
+    line-height: 24px;
+    color: var(--color-neutral-700);
+    word-break: break-word;
+}
+.contact-box__item:hover .contact-box__value {
+    color: var(--color-primary);
+}
+
+@media (max-width: 640px) {
+    .contact-box {
+        padding: 24px;
+    }
+    .contact-box__item {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
 /* --- Hub Content --- */
 .hub-content {
     padding: var(--section-pad) 0;

@@ -192,6 +192,7 @@ export interface Page {
         | DataTableBlock
         | MediaCardBlock
         | DepartmentGridBlock
+        | ContactBoxBlock
       )[]
     | null;
   meta?: {
@@ -348,6 +349,7 @@ export interface Post {
         | DataTableBlock
         | MediaCardBlock
         | DepartmentGridBlock
+        | ContactBoxBlock
       )[]
     | null;
   updatedAt: string;
@@ -439,6 +441,7 @@ export interface Department {
         | DataTableBlock
         | MediaCardBlock
         | DepartmentGridBlock
+        | ContactBoxBlock
       )[]
     | null;
   updatedAt: string;
@@ -564,6 +567,7 @@ export interface Hub {
         | DataTableBlock
         | MediaCardBlock
         | DepartmentGridBlock
+        | ContactBoxBlock
       )[]
     | null;
   updatedAt: string;
@@ -665,6 +669,7 @@ export interface MembershipTier {
         | DataTableBlock
         | MediaCardBlock
         | DepartmentGridBlock
+        | ContactBoxBlock
       )[]
     | null;
   updatedAt: string;
@@ -1016,6 +1021,20 @@ export interface DepartmentGridBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBoxBlock".
+ */
+export interface ContactBoxBlock {
+  title: string;
+  personName?: string | null;
+  personRole?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactBox';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -1213,6 +1232,7 @@ export interface PagesSelect<T extends boolean = true> {
         dataTable?: T | DataTableBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
+        contactBox?: T | ContactBoxBlockSelect<T>;
       };
   meta?:
     | T
@@ -1642,6 +1662,19 @@ export interface DepartmentGridBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBoxBlock_select".
+ */
+export interface ContactBoxBlockSelect<T extends boolean = true> {
+  title?: T;
+  personName?: T;
+  personRole?: T;
+  phone?: T;
+  email?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1674,6 +1707,7 @@ export interface PostsSelect<T extends boolean = true> {
         dataTable?: T | DataTableBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
+        contactBox?: T | ContactBoxBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1713,6 +1747,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         dataTable?: T | DataTableBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
+        contactBox?: T | ContactBoxBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1749,6 +1784,7 @@ export interface HubsSelect<T extends boolean = true> {
         dataTable?: T | DataTableBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
+        contactBox?: T | ContactBoxBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1814,6 +1850,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         dataTable?: T | DataTableBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
+        contactBox?: T | ContactBoxBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

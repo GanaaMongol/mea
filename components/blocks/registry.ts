@@ -3,6 +3,7 @@ import type { ComponentType } from 'react'
 import { Accelerators } from './Accelerators'
 import { CardGrid } from './CardGrid'
 import { Carousel } from './Carousel'
+import { ContactBox } from './ContactBox'
 import { Creed } from './Creed'
 import { DataTable } from './DataTable'
 import { DepartmentGrid } from './DepartmentGrid'
@@ -48,4 +49,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   dataTable: DataTable,
   mediaCard: MediaCard,
   departmentGrid: DepartmentGrid,
+  contactBox: ContactBox,
 }
