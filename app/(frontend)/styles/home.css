@@ -513,8 +513,8 @@
     z-index: 0;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 26px;
+    gap: 8px;
+    padding: 10px 24px;
     overflow: hidden;
     border: 1px solid var(--color-border-medium, #d8dee6);
     border-radius: var(--radius-full);
