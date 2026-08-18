@@ -97,7 +97,13 @@ export function PageBanner({
         `__content` box (index.html) and keep `.container` for the left-aligned
         about/department banners.
       */}
-      <div className={variant === 'vision' || align === 'center' ? `${base}__content` : 'container'}>
+      <div
+        className={
+          variant === 'vision' || variant === 'hubGradient' || align === 'center'
+            ? `${base}__content`
+            : 'container'
+        }
+      >
         {overline ? <p className={`${base}__overline`}>{overline}</p> : null}
         {title ? <h1 className={`${base}__title`}>{title}</h1> : null}
         {subtitle ? <p className={`${base}__subtitle`}>{subtitle}</p> : null}
