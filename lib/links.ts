@@ -51,6 +51,19 @@ export const linkClassName = (link: LinkLike | null | undefined): string | undef
   }
 }
 
+/**
+ * Header nav only: a top-level item stays lit across its whole area, so
+ * "Бидний Тухай" (`/about/vision`) is active on `/about/history` too. Section
+ * tabs keep using `isActivePath`, which matches a single page.
+ */
+export const isActiveSection = (href: string, pathname: string): boolean => {
+  if (href === '/') return pathname === '/'
+  if (!href.startsWith('/')) return false
+
+  const section = href.split('/')[1]
+  return Boolean(section) && pathname.split('/')[1] === section
+}
+
 /** True when `href` is the current route or one of its ancestors. */
 export const isActivePath = (href: string, pathname: string): boolean => {
   if (href === '/') return pathname === '/'

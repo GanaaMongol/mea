@@ -1461,6 +1461,26 @@ ol {
     flex-direction: column;
     gap: 80px;
 }
+/* Хэсэг бүр өөрийн `about-content` бүрхүүлтэй блок тул дараалан
+   өрөгдөхөд mockup-ийн `gap: 80px` хэмнэлийг сэргээнэ. */
+.about-content + .about-content {
+    padding-top: 0;
+}
+.about-content:has(+ .about-content) {
+    padding-bottom: 80px;
+}
+/* Mockup-уудад (about-*, departments) хэрэглэгддэг ч дизайн системд
+   тодорхойлогдоогүй үлдсэн жижиг шошго. */
+.overline {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
 
 /* --- History Grid (shared: History, Board, Congress) --- */
 .history-grid {

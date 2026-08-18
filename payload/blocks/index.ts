@@ -3,11 +3,15 @@ import type { Block } from 'payload'
 import { AcceleratorsBlock } from './Accelerators/config'
 import { CardGridBlock } from './CardGrid/config'
 import { GalleryBlock } from './Gallery/config'
+import { HighlightedTextBlock } from './HighlightedText/config'
+import { HistoryGridBlock } from './HistoryGrid/config'
 import { PageBannerBlock } from './PageBanner/config'
 import { PostsFeedBlock } from './PostsFeed/config'
 import { QuoteBannerBlock } from './QuoteBanner/config'
 import { RichTextBlock } from './RichText/config'
 import { SectionTabsBlock } from './SectionTabs/config'
+import { StatsRowBlock } from './StatsRow/config'
+import { TimelineBlock } from './Timeline/config'
 import { ValuesListBlock } from './ValuesList/config'
 
 /**
@@ -25,6 +29,10 @@ export const layoutBlocks: Block[] = [
   PostsFeedBlock,
   GalleryBlock,
   ValuesListBlock,
+  HistoryGridBlock,
+  StatsRowBlock,
+  HighlightedTextBlock,
+  TimelineBlock,
 ]
 
 export {
@@ -37,4 +45,8 @@ export {
   RichTextBlock,
   SectionTabsBlock,
   ValuesListBlock,
+  HistoryGridBlock,
+  StatsRowBlock,
+  HighlightedTextBlock,
+  TimelineBlock,
 }

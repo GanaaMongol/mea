@@ -4,7 +4,7 @@ import type { SiteSetting } from '@/payload-types'
 
 import { MediaImage } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
-import { isActivePath, resolveHref } from '@/lib/links'
+import { isActiveSection, resolveHref } from '@/lib/links'
 import { MenuToggle, SearchButton } from './HeaderActions'
 
 type Props = {
@@ -32,7 +32,7 @@ export function Header({ header, pathname }: Props) {
               <SiteLink
                 key={item.id ?? index}
                 link={item}
-                className={isActivePath(href, pathname) ? 'active' : undefined}
+                className={isActiveSection(href, pathname) ? 'active' : undefined}
               />
             )
           })}

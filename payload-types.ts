@@ -181,6 +181,10 @@ export interface Page {
         | PostsFeedBlock
         | GalleryBlock
         | ValuesListBlock
+        | HistoryGridBlock
+        | StatsRowBlock
+        | HighlightedTextBlock
+        | TimelineBlock
       )[]
     | null;
   meta?: {
@@ -326,6 +330,10 @@ export interface Post {
         | PostsFeedBlock
         | GalleryBlock
         | ValuesListBlock
+        | HistoryGridBlock
+        | StatsRowBlock
+        | HighlightedTextBlock
+        | TimelineBlock
       )[]
     | null;
   updatedAt: string;
@@ -406,6 +414,10 @@ export interface Department {
         | PostsFeedBlock
         | GalleryBlock
         | ValuesListBlock
+        | HistoryGridBlock
+        | StatsRowBlock
+        | HighlightedTextBlock
+        | TimelineBlock
       )[]
     | null;
   updatedAt: string;
@@ -520,6 +532,10 @@ export interface Hub {
         | PostsFeedBlock
         | GalleryBlock
         | ValuesListBlock
+        | HistoryGridBlock
+        | StatsRowBlock
+        | HighlightedTextBlock
+        | TimelineBlock
       )[]
     | null;
   updatedAt: string;
@@ -610,6 +626,10 @@ export interface MembershipTier {
         | PostsFeedBlock
         | GalleryBlock
         | ValuesListBlock
+        | HistoryGridBlock
+        | StatsRowBlock
+        | HighlightedTextBlock
+        | TimelineBlock
       )[]
     | null;
   updatedAt: string;
@@ -760,6 +780,69 @@ export interface ValuesListBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'valuesList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HistoryGridBlock".
+ */
+export interface HistoryGridBlock {
+  overline?: string | null;
+  title: string;
+  paragraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'historyGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsRowBlock".
+ */
+export interface StatsRowBlock {
+  items?:
+    | {
+        number: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statsRow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HighlightedTextBlock".
+ */
+export interface HighlightedTextBlock {
+  text: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'highlightedText';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock".
+ */
+export interface TimelineBlock {
+  overline?: string | null;
+  title?: string | null;
+  items?:
+    | {
+        year: string;
+        title: string;
+        text?: string | null;
+        active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timeline';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -965,6 +1048,10 @@ export interface PagesSelect<T extends boolean = true> {
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
         valuesList?: T | ValuesListBlockSelect<T>;
+        historyGrid?: T | HistoryGridBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        highlightedText?: T | HighlightedTextBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
       };
   meta?:
     | T
@@ -1221,6 +1308,65 @@ export interface ValuesListBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HistoryGridBlock_select".
+ */
+export interface HistoryGridBlockSelect<T extends boolean = true> {
+  overline?: T;
+  title?: T;
+  paragraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsRowBlock_select".
+ */
+export interface StatsRowBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        number?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HighlightedTextBlock_select".
+ */
+export interface HighlightedTextBlockSelect<T extends boolean = true> {
+  text?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlock_select".
+ */
+export interface TimelineBlockSelect<T extends boolean = true> {
+  overline?: T;
+  title?: T;
+  items?:
+    | T
+    | {
+        year?: T;
+        title?: T;
+        text?: T;
+        active?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1242,6 +1388,10 @@ export interface PostsSelect<T extends boolean = true> {
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
         valuesList?: T | ValuesListBlockSelect<T>;
+        historyGrid?: T | HistoryGridBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        highlightedText?: T | HighlightedTextBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1270,6 +1420,10 @@ export interface DepartmentsSelect<T extends boolean = true> {
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
         valuesList?: T | ValuesListBlockSelect<T>;
+        historyGrid?: T | HistoryGridBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        highlightedText?: T | HighlightedTextBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1295,6 +1449,10 @@ export interface HubsSelect<T extends boolean = true> {
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
         valuesList?: T | ValuesListBlockSelect<T>;
+        historyGrid?: T | HistoryGridBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        highlightedText?: T | HighlightedTextBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1349,6 +1507,10 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         postsFeed?: T | PostsFeedBlockSelect<T>;
         gallery?: T | GalleryBlockSelect<T>;
         valuesList?: T | ValuesListBlockSelect<T>;
+        historyGrid?: T | HistoryGridBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        highlightedText?: T | HighlightedTextBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

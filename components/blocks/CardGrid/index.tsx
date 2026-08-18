@@ -69,6 +69,30 @@ export function CardGrid({ variant, header, items, background }: CardGridProps) 
     )
   }
 
+  /**
+   * about-history.html puts this grid inside the narrow `about-content` column
+   * rather than a full-width section.
+   */
+  if (variant === 'ack') {
+    return (
+      <section className="about-content">
+        <div className="about-content__inner">
+          <div className="about-content__section">
+            <SectionHeader header={header} />
+            <div className="acknowledgment-grid">
+              {items?.map((item, index) => (
+                <div className="acknowledgment-grid__item" key={item.id ?? index}>
+                  <h3>{item.title}</h3>
+                  {item.text ? <p>{item.text}</p> : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className={background === 'white' ? 'section section--white' : 'section section--warm'}>
       <div className="container">

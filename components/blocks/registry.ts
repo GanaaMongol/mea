@@ -3,11 +3,15 @@ import type { ComponentType } from 'react'
 import { Accelerators } from './Accelerators'
 import { CardGrid } from './CardGrid'
 import { Gallery } from './Gallery'
+import { HighlightedText } from './HighlightedText'
+import { HistoryGrid } from './HistoryGrid'
 import { PageBanner } from './PageBanner'
 import { PostsFeed } from './PostsFeed'
 import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
 import { SectionTabs } from './SectionTabs'
+import { StatsRow } from './StatsRow'
+import { Timeline } from './Timeline'
 import { ValuesList } from './ValuesList'
 
 /**
@@ -26,4 +30,8 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   postsFeed: PostsFeed,
   gallery: Gallery,
   valuesList: ValuesList,
+  historyGrid: HistoryGrid,
+  statsRow: StatsRow,
+  highlightedText: HighlightedText,
+  timeline: Timeline,
 }
