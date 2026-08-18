@@ -28,8 +28,6 @@ npm run start                # serve the production build
 npm run lint                 # eslint (flat config, eslint 9)
 npm run generate:types       # payload-types.ts (run after every schema change)
 npm run generate:importmap   # app/(payload)/admin/importMap.js
-npm run seed                 # bootstrap-only local-API seed; skips docs that already exist
-                             # (SEED_FORCE=1 npm run seed overwrites them)
 ```
 
 **Never run `npx payload …`.** npx reaches out to the registry for a `payload` binary it
@@ -56,7 +54,6 @@ Next.js **App Router** + Payload CMS 3 installed *into* the same app (not a sepa
 - `components/blocks/` — one React component per Payload block + `RenderBlocks` + `registry.ts`.
 - `components/chrome/` — AnnouncementBar, Header, Footer, Newsletter.
 - `app/(frontend)/styles/` — the ported `lib/html/styles.css` design system.
-- `seed/` — local-API seed scripts.
 - `media/` — local disk uploads (gitignored).
 
 Notable config:
@@ -105,7 +102,8 @@ Writing a field before looking at the markup is forbidden. For each page:
 2. **Componentize** — each section becomes `components/blocks/<Name>` taking **props**. Every
    hardcoded value must surface as a prop; anything left inline is a bug.
 3. **Derive the schema** — write the block fields *from those props*, then `npm run generate:types`.
-4. **Seed** — move the values into `seed/` (local API).
+4. **Enter the content in `/admin`** — the database is the only source of truth for content;
+   there is no seed script, so nothing re-imposes hardcoded copy over an editor's work.
 5. **Wire up** — the route reads via `payload.find(...)` and renders
    `<RenderBlocks blocks={doc.layout} />`; delete the hardcoded copy.
 
@@ -174,7 +172,7 @@ complete design system. Converting it to utility classes destroys pixel parity f
 1. **`theme` global**: `colors` (primary/-dark/-light, neutral-0…900, border-medium, accent-red,
    link), `typography` (font family names + `--text-display|h1|h2|h3|h4|body|sm|caption`),
    `spacing` (`section-pad`, `gutter`, `container-max`, `radius-sm|md|lg|2xl|full`,
-   `padding-md|lg`). Seed the **exact** values from `lib/html/styles.css:6-59`.
+   `padding-md|lg`). Enter the **exact** values from `lib/html/styles.css:6-59` in `/admin`.
 2. `app/(frontend)/layout.tsx` fetches the global server-side and renders
    `<style id="theme-tokens">:root{ … }</style>` using the same variable names the CSS uses.
 3. The `:root` block in `globals.css` stays as a build-time / DB-unavailable fallback.
@@ -226,8 +224,9 @@ validation and basic abuse protection (honeypot / rate limit).
 
 ### Rich text
 
-Convert `news-detail.html`'s article body with `@payloadcms/richtext-lexical`'s HTML→Lexical
-converter inside the seed script (needs JSDOM). Never hand-author Lexical JSON.
+Paste article bodies into the admin's lexical editor. If a one-off bulk import is ever needed,
+use `@payloadcms/richtext-lexical`'s HTML→Lexical converter in a throwaway script — never
+hand-author Lexical JSON.
 
 ### Assets
 

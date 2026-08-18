@@ -37,11 +37,10 @@
       `siteSettings` global; `AnnouncementBar`/`Header`/`Newsletter`/`Footer`;
       `proxy.ts` нь `x-pathname` header өгснөөр active nav **server дээр** тооцогдоно.
 - [x] **Алхам 3** — `pageBanner`, `sectionTabs`, `richText` block; `RenderBlocks` + `registry`;
-      `pages` collection + `app/(frontend)/[...slug]` + `/`; seed script
-      (`npm run seed` — админ, theme, chrome, нүүр хуудас).
+      `pages` collection + `app/(frontend)/[...slug]` + `/`.
 - [~] **Алхам 4** — 19-өөс **3 хуудас** дууссан:
       - `news2.html` → `/news` — `postsFeed` block (12 карт, таб шүүлтүүр ажиллаж байна:
-        `?kind=article` → 3 карт), 12 `posts` seed хийсэн.
+        `?kind=article` → 3 карт), 12 `posts` DB-д орсон.
       - `news-detail.html` → `/news/[slug]` — нийтлэлийн бие нь блокоор
         (`richText` → `gallery` мозайк → `richText`), доор нь "Төстэй мэдээнүүд".
       - `index.html` → `/` — `pageBanner` + `cardGrid` + `quoteBanner` + `accelerators`
@@ -55,7 +54,8 @@
 **Шалгасан:** `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ ·
 `/`, `/news`, `/news?kind=article`, `/news/[slug]`, `/admin` бүгд 200.
 
-Админ: `admin@mea.mn` / `changeme123` (`SEED_ADMIN_EMAIL|PASSWORD`-оор солино).
+Админ: `admin@mea.mn` / `changeme123` (`/admin`-аас солино). Хоосон DB дээр Payload өөрөө
+эхний хэрэглэгч үүсгэх дэлгэц гаргана — seed script байхгүй.
 
 ⚠️ **`npx payload …` бүү ажиллуул** — registry-рүү залгаж, амжилтгүй болбол `node_modules`-ыг
 эвдэнэ (нэг удаа `next`, `payload`, `@payloadcms/*`-г устгасан). Зөвхөн `npm run <script>`.
@@ -107,7 +107,8 @@ Markup-ыг хараагүй байж field зохиохыг **хориглон�
    Hardcoded утга бүр props болж гарна — үлдвэл алдаа.
 3. **Schema гаргах** — props-ын хэлбэрээс block-ийн field-үүдийг бичнэ (урвуугаар биш).
    `interfaceName` өгч `payload-types.ts`-ээс шууд props-ын type болгож ашиглана.
-4. **Seed** — hardcoded утгуудыг `seed/` script рүү зөөж local API-аар DB-д хийнэ.
+4. **Контент оруулах** — hardcoded утгуудыг `/admin`-д гараар оруулна. Контентын цорын ганц
+   эх сурвалж нь DB; seed script байхгүй тул редакторын засварыг юу ч дарж бичихгүй.
 5. **Холбох** — page нь `payload.find(...)` → `<RenderBlocks blocks={page.layout} />`.
    Hardcoded хувилбарыг устгана.
 
@@ -195,8 +196,6 @@ app/
     news/page.tsx, news/[slug]/page.tsx
     departments/[slug]/page.tsx
     login/, profile/, membership/join/
-
-seed/                             # local API seed script-ууд
 ```
 
 ### 3.1 `RenderBlocks` загвар
@@ -307,8 +306,9 @@ Payload Live Preview.
   `02-guides/upgrading/version-16.md` §"Caching APIs" уншиж баталгаажуулна.
 
 ### 7.5 Rich text
-`news-detail.html`-ийн биетийг `@payloadcms/richtext-lexical`-ийн HTML→Lexical converter-ээр
-seed script дотор хөрвүүлнэ (JSDOM). Lexical JSON гараар бичихгүй.
+Нийтлэлийн биетийг `/admin`-ы lexical editor-т шууд оруулна. Хэрэв нэг удаагийн бөөн импорт
+хэрэгтэй бол `@payloadcms/richtext-lexical`-ийн HTML→Lexical converter-ийг түр script-д
+ашиглана (JSDOM). Lexical JSON гараар бичихгүй.
 
 ### 7.6 Зураг
 - **`media` collection руу**: редактор солих ёстой зураг — мэдээний cover, хүмүүсийн зураг,
