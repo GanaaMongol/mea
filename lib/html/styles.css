@@ -1910,21 +1910,52 @@ ol {
     color: var(--color-neutral-500);
     line-height: 1.6;
 }
+/* --- People grid (Figma 281:2970) — гарчгийн баганын хажууд, 3 хүн нэг мөрөнд --- */
+.people-grid {
+    display: grid;
+    grid-template-columns: 480px 1fr;
+    gap: var(--gutter);
+}
+.people-grid__body {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.people-grid__header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.people-grid__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    line-height: 30px;
+    color: var(--color-neutral-700);
+}
+.people-grid__desc {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--color-neutral-500);
+}
 .board-grid {
     display: grid;
-    grid-template-columns: repeat(3, 240px);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--gutter);
 }
 .board-card {
-    background: #fff;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--color-neutral-200);
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gutter);
 }
 .board-card__photo {
-    width: 240px;
-    height: 340px;
+    aspect-ratio: 240 / 340;
     overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-neutral-150);
 }
 .board-card__photo img {
     width: 100%;
@@ -1932,18 +1963,45 @@ ol {
     object-fit: cover;
 }
 .board-card__info {
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 .board-card__name {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: var(--color-neutral-800);
-    margin-bottom: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    color: var(--color-neutral-700);
 }
 .board-card__role {
-    font-size: var(--text-caption);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: 20px;
     color: var(--color-neutral-500);
+}
+
+/* Figma-д хүмүүсийн бүлгүүд 60px зайтай өрөгддөг (ерөнхий 80px биш). */
+.about-content:has(+ .about-content--tight) {
+    padding-bottom: 60px;
+}
+.about-content--tight:has(+ .about-content--tight) {
+    padding-bottom: 60px;
+}
+
+@media (max-width: 900px) {
+    .people-grid {
+        grid-template-columns: 1fr;
+    }
+    .people-grid__body {
+        grid-column: 1;
+    }
+}
+@media (max-width: 640px) {
+    .board-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* --- Hub Carousel --- */

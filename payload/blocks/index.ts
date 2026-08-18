@@ -7,6 +7,7 @@ import { GalleryBlock } from './Gallery/config'
 import { HighlightedTextBlock } from './HighlightedText/config'
 import { HistoryGridBlock } from './HistoryGrid/config'
 import { PageBannerBlock } from './PageBanner/config'
+import { PeopleGridBlock } from './PeopleGrid/config'
 import { PostsFeedBlock } from './PostsFeed/config'
 import { QuoteBannerBlock } from './QuoteBanner/config'
 import { RichTextBlock } from './RichText/config'
@@ -35,6 +36,7 @@ export const layoutBlocks: Block[] = [
   HighlightedTextBlock,
   TimelineBlock,
   CarouselBlock,
+  PeopleGridBlock,
 ]
 
 export {
@@ -52,4 +54,5 @@ export {
   HighlightedTextBlock,
   TimelineBlock,
   CarouselBlock,
+  PeopleGridBlock,
 }

@@ -45,7 +45,8 @@ export const BoardMembers: CollectionConfig = {
       required: true,
       defaultValue: 'board',
       options: [
-        { label: 'Удирдах зөвлөл', value: 'board' },
+        { label: 'Удирдах гишүүд', value: 'leadership' },
+        { label: 'Зөвлөлийн гишүүд', value: 'board' },
         { label: 'Албаны баг', value: 'team' },
         { label: 'Бүсийн баг', value: 'region' },
       ],

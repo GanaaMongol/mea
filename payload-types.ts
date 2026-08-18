@@ -186,6 +186,7 @@ export interface Page {
         | HighlightedTextBlock
         | TimelineBlock
         | CarouselBlock
+        | PeopleGridBlock
       )[]
     | null;
   meta?: {
@@ -336,6 +337,7 @@ export interface Post {
         | HighlightedTextBlock
         | TimelineBlock
         | CarouselBlock
+        | PeopleGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -421,6 +423,7 @@ export interface Department {
         | HighlightedTextBlock
         | TimelineBlock
         | CarouselBlock
+        | PeopleGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -540,6 +543,7 @@ export interface Hub {
         | HighlightedTextBlock
         | TimelineBlock
         | CarouselBlock
+        | PeopleGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -635,6 +639,7 @@ export interface MembershipTier {
         | HighlightedTextBlock
         | TimelineBlock
         | CarouselBlock
+        | PeopleGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -872,6 +877,21 @@ export interface CarouselBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PeopleGridBlock".
+ */
+export interface PeopleGridBlock {
+  title?: string | null;
+  description?: string | null;
+  source?: ('group' | 'manual') | null;
+  group?: ('leadership' | 'board' | 'team' | 'region') | null;
+  people?: (number | BoardMember)[] | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'peopleGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "boardMembers".
  */
 export interface BoardMember {
@@ -879,7 +899,7 @@ export interface BoardMember {
   name: string;
   role?: string | null;
   photo?: (number | null) | Media;
-  group: 'board' | 'team' | 'region';
+  group: 'leadership' | 'board' | 'team' | 'region';
   department?: (number | null) | Department;
   hub?: (number | null) | Hub;
   order?: number | null;
@@ -1079,6 +1099,7 @@ export interface PagesSelect<T extends boolean = true> {
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
       };
   meta?:
     | T
@@ -1414,6 +1435,20 @@ export interface CarouselBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PeopleGridBlock_select".
+ */
+export interface PeopleGridBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  source?: T;
+  group?: T;
+  people?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1440,6 +1475,7 @@ export interface PostsSelect<T extends boolean = true> {
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1473,6 +1509,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1503,6 +1540,7 @@ export interface HubsSelect<T extends boolean = true> {
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1562,6 +1600,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -7,6 +7,7 @@ import { Gallery } from './Gallery'
 import { HighlightedText } from './HighlightedText'
 import { HistoryGrid } from './HistoryGrid'
 import { PageBanner } from './PageBanner'
+import { PeopleGrid } from './PeopleGrid'
 import { PostsFeed } from './PostsFeed'
 import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
@@ -36,4 +37,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   highlightedText: HighlightedText,
   timeline: Timeline,
   carousel: Carousel,
+  peopleGrid: PeopleGrid,
 }
