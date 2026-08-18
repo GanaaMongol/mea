@@ -248,6 +248,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
+    margin-bottom: var(--gutter);
 }
 
 /* 4 Хурдасгуур — hover: карт зөөлөн өргөсч, зураг бага зэрэг ойртож, доод самбарт
@@ -286,9 +287,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(180deg, rgba(6, 26, 50, 0) 40%, rgba(6, 26, 50, 0.88) 100%),
-        rgba(6, 26, 50, 0.18);
+    background: linear-gradient(180deg, rgba(6, 26, 50, 0) 40%, rgba(6, 26, 50, 0.88) 100%), rgba(6, 26, 50, 0.18);
     pointer-events: none;
 }
 .accel-card__image {
@@ -403,4 +402,3 @@
 }
 
 /* ---- /Digital Strategy */
-
