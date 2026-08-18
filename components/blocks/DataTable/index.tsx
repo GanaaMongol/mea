@@ -3,7 +3,7 @@ import type { DataTableBlock as DataTableProps } from '@/payload-types'
 import { SectionHeader } from '@/components/blocks/SectionHeader'
 import { TableFilters } from './TableFilters'
 
-export function DataTable({ variant, header, columns, rows, filters }: DataTableProps) {
+export function DataTable({ variant, header, columns, rows, filters, regionColumn }: DataTableProps) {
   if (!columns?.length) return null
 
   /** membership-detail.html: a registry table with filter selects above it. */
@@ -13,7 +13,12 @@ export function DataTable({ variant, header, columns, rows, filters }: DataTable
         <div className="container">
           <div className="content-block">
             <SectionHeader header={header} />
-            <TableFilters columns={columns} rows={rows ?? []} filters={filters ?? []} />
+            <TableFilters
+              columns={columns}
+              rows={rows ?? []}
+              filters={filters ?? []}
+              regionColumn={regionColumn}
+            />
           </div>
         </div>
       </section>

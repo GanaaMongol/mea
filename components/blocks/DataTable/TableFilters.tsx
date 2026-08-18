@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import type { DataTableBlock } from '@/payload-types'
 
@@ -15,12 +15,23 @@ export function TableFilters({
   columns,
   rows,
   filters,
+  regionColumn,
 }: {
   columns: Columns
   rows: Rows
   filters: Filters
+  /** 1-based column the map's aimag name is matched against. */
+  regionColumn?: number | null
 }) {
   const [selected, setSelected] = useState<Record<number, string>>({})
+  const [region, setRegion] = useState<string | null>(null)
+
+  // The map block on the same page broadcasts the aimag the reader picked.
+  useEffect(() => {
+    const onRegion = (event: Event) => setRegion((event as CustomEvent<string | null>).detail)
+    window.addEventListener('mea:region', onRegion)
+    return () => window.removeEventListener('mea:region', onRegion)
+  }, [])
 
   const options = useMemo(() => {
     const map: Record<number, string[]> = {}
@@ -33,10 +44,14 @@ export function TableFilters({
     return map
   }, [filters, rows])
 
-  const visible = rows.filter((row) =>
-    Object.entries(selected).every(
-      ([index, value]) => !value || cellValue(row, Number(index)) === value,
-    ),
+  const regionIndex = (regionColumn ?? columns.length) - 1
+  const visible = rows.filter(
+    (row) =>
+      Object.entries(selected).every(
+        ([index, value]) => !value || cellValue(row, Number(index)) === value,
+      ) &&
+      // The map filters by substring: an address holds the aimag name inside it.
+      (!region || cellValue(row, regionIndex).toLowerCase().includes(region.toLowerCase())),
   )
 
   return (
@@ -88,7 +103,11 @@ export function TableFilters({
             ))}
           </tbody>
         </table>
-        {visible.length === 0 ? <p className="data-table__empty">Илэрц олдсонгүй.</p> : null}
+        {visible.length === 0 ? (
+          <p className="data-table__empty">
+            {region ? `«${region}»-д бүртгэлтэй чуулган олдсонгүй.` : 'Илэрц олдсонгүй.'}
+          </p>
+        ) : null}
       </div>
     </>
   )

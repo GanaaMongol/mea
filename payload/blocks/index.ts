@@ -16,6 +16,7 @@ import { PageBannerBlock } from './PageBanner/config'
 import { PeopleGridBlock } from './PeopleGrid/config'
 import { PostsFeedBlock } from './PostsFeed/config'
 import { ProcessStepsBlock } from './ProcessSteps/config'
+import { RegionMapBlock } from './RegionMap/config'
 import { QuoteBannerBlock } from './QuoteBanner/config'
 import { RichTextBlock } from './RichText/config'
 import { SectionIntroBlock } from './SectionIntro/config'
@@ -53,6 +54,7 @@ export const layoutBlocks: Block[] = [
   ContactBoxBlock,
   ProcessStepsBlock,
   FigureBlock,
+  RegionMapBlock,
 ]
 
 export {
@@ -79,4 +81,5 @@ export {
   ContactBoxBlock,
   ProcessStepsBlock,
   FigureBlock,
+  RegionMapBlock,
 }

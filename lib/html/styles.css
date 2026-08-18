@@ -4583,3 +4583,92 @@ ol {
     font-size: var(--text-sm);
     color: var(--color-neutral-500);
 }
+
+/* --- Аймгийн газрын зураг (membership/list) --- */
+.region-map {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.region-map__svg svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.region-map__svg path[data-region] {
+    fill: var(--color-neutral-200);
+    stroke: var(--color-neutral-0);
+    stroke-width: 1;
+    cursor: pointer;
+    transition:
+        fill 0.2s ease,
+        opacity 0.2s ease;
+    outline: none;
+}
+.region-map__svg path[data-region]:hover,
+.region-map__svg path[data-region]:focus-visible {
+    fill: var(--color-primary);
+}
+.region-map__svg path[data-region]:focus-visible {
+    stroke: var(--color-primary-dark);
+    stroke-width: 2;
+}
+/* Сонгосон аймаг тодорч, бусад нь бүдгэрнэ */
+.region-map__svg[data-selected] path[data-region] {
+    fill: var(--color-neutral-150);
+}
+.region-map__svg[data-selected] path[data-region]:hover {
+    fill: var(--color-primary-light);
+}
+.region-map__tip {
+    position: absolute;
+    transform: translate(-50%, -160%);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-neutral-700);
+    color: var(--color-neutral-0);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 2;
+}
+.region-map__legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 40px;
+    margin-top: 16px;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+}
+.region-map__hint {
+    color: var(--color-neutral-400);
+}
+.region-map__selected {
+    padding: 6px 16px;
+    border-radius: var(--radius-full);
+    background: rgba(20, 101, 190, 0.1);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+.region-map__clear {
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--color-neutral-500);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.region-map__clear:hover {
+    color: var(--color-primary);
+}
+
+/* Сонгогдсон аймгийг нэрээр нь тодруулна */
+.region-map__svg[data-selected] path[data-region][data-active='true'] {
+    fill: var(--color-primary);
+}

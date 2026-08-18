@@ -16,6 +16,7 @@ import { PageBanner } from './PageBanner'
 import { PeopleGrid } from './PeopleGrid'
 import { PostsFeed } from './PostsFeed'
 import { ProcessSteps } from './ProcessSteps'
+import { RegionMap } from './RegionMap'
 import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
 import { SectionIntro } from './SectionIntro'
@@ -54,4 +55,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   contactBox: ContactBox,
   processSteps: ProcessSteps,
   figure: Figure,
+  regionMap: RegionMap,
 }

@@ -44,6 +44,16 @@ export const DataTableBlock: Block = {
       ],
     },
     {
+      name: 'regionColumn',
+      type: 'number',
+      label: 'Газрын зурагтай холбогдох багана (1-ээс эхэлнэ)',
+      min: 1,
+      admin: {
+        condition: (_, s) => s?.variant === 'list',
+        description: 'Газрын зураг дээр аймаг сонгоход энэ баганаас хайна.',
+      },
+    },
+    {
       name: 'columns',
       type: 'array',
       minRows: 1,

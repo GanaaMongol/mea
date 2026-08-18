@@ -195,6 +195,7 @@ export interface Page {
         | ContactBoxBlock
         | ProcessStepsBlock
         | FigureBlock
+        | RegionMapBlock
       )[]
     | null;
   meta?: {
@@ -354,6 +355,7 @@ export interface Post {
         | ContactBoxBlock
         | ProcessStepsBlock
         | FigureBlock
+        | RegionMapBlock
       )[]
     | null;
   updatedAt: string;
@@ -448,6 +450,7 @@ export interface Department {
         | ContactBoxBlock
         | ProcessStepsBlock
         | FigureBlock
+        | RegionMapBlock
       )[]
     | null;
   updatedAt: string;
@@ -577,6 +580,7 @@ export interface Hub {
         | ContactBoxBlock
         | ProcessStepsBlock
         | FigureBlock
+        | RegionMapBlock
       )[]
     | null;
   updatedAt: string;
@@ -681,6 +685,7 @@ export interface MembershipTier {
         | ContactBoxBlock
         | ProcessStepsBlock
         | FigureBlock
+        | RegionMapBlock
       )[]
     | null;
   updatedAt: string;
@@ -995,6 +1000,10 @@ export interface DataTableBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Газрын зураг дээр аймаг сонгоход энэ баганаас хайна.
+   */
+  regionColumn?: number | null;
   columns?:
     | {
         label: string;
@@ -1093,6 +1102,32 @@ export interface FigureBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'figure';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RegionMapBlock".
+ */
+export interface RegionMapBlock {
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  /**
+   * SVG доторх path ↔ аймгийн нэр.
+   */
+  regions?:
+    | {
+        pathId: string;
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  linkToTable?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'regionMap';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1296,6 +1331,7 @@ export interface PagesSelect<T extends boolean = true> {
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
+        regionMap?: T | RegionMapBlockSelect<T>;
       };
   meta?:
     | T
@@ -1689,6 +1725,7 @@ export interface DataTableBlockSelect<T extends boolean = true> {
         column?: T;
         id?: T;
       };
+  regionColumn?: T;
   columns?:
     | T
     | {
@@ -1788,6 +1825,30 @@ export interface FigureBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RegionMapBlock_select".
+ */
+export interface RegionMapBlockSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
+  regions?:
+    | T
+    | {
+        pathId?: T;
+        name?: T;
+        id?: T;
+      };
+  linkToTable?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1823,6 +1884,7 @@ export interface PostsSelect<T extends boolean = true> {
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
+        regionMap?: T | RegionMapBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1865,6 +1927,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
+        regionMap?: T | RegionMapBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1904,6 +1967,7 @@ export interface HubsSelect<T extends boolean = true> {
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
+        regionMap?: T | RegionMapBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1972,6 +2036,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
+        regionMap?: T | RegionMapBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
