@@ -2335,6 +2335,38 @@ ol {
     }
 }
 
+/* --- Видео (rich text доторх блок) --- */
+.video-embed {
+    margin: 40px 0;
+}
+.video-embed__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-neutral-700);
+    box-shadow: 0 16px 32px rgba(26, 24, 18, 0.12);
+}
+.video-embed__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.video-embed__caption {
+    margin-top: 12px;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 20px;
+    color: var(--color-neutral-500);
+    text-align: center;
+}
+.video-embed__fallback a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
 /* --- Hub Content --- */
 .hub-content {
     padding: var(--section-pad) 0;

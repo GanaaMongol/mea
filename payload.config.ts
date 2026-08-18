@@ -2,10 +2,11 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
+import { VideoBlock } from '@/payload/blocks/Video/config'
 import { BoardMembers } from '@/payload/collections/BoardMembers'
 import { Departments } from '@/payload/collections/Departments'
 import { Hubs } from '@/payload/collections/Hubs'
@@ -55,7 +56,13 @@ export default buildConfig({
   ],
   globals: [Theme, SiteSettings],
 
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      // Rich text доторх "+" цэс: одоогоор видео.
+      BlocksFeature({ blocks: [VideoBlock] }),
+    ],
+  }),
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
