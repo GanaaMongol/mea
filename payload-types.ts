@@ -834,8 +834,12 @@ export interface TimelineBlock {
   items?:
     | {
         year: string;
-        title: string;
-        text?: string | null;
+        lines?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
         active?: boolean | null;
         id?: string | null;
       }[]
@@ -1357,8 +1361,12 @@ export interface TimelineBlockSelect<T extends boolean = true> {
     | T
     | {
         year?: T;
-        title?: T;
-        text?: T;
+        lines?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
         active?: T;
         id?: T;
       };

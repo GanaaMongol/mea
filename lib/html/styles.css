@@ -1550,71 +1550,133 @@ ol {
     line-height: 1.7;
 }
 
-/* --- Timeline --- */
+/* --- Timeline (Figma node 281:2929) ---
+   Үс шиг нимгэн зураас дээр он бүр цэгтэй, оны бичиг ээлжлэн дээр/доор
+   байрлана. Сонгосон оны тайлбар мөрүүд доор нь төвлөрч гарна. --- */
 .timeline {
     margin-top: 40px;
 }
-.timeline__track {
+.timeline__rail {
+    position: relative;
+    height: 220px;
+}
+/* зүүнээс баруун тийш татагдсан 2px зураас */
+.timeline__rail::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+    /* Figma-гийн зураасны өнгө — токенуудад дүйцэх утга байхгүй */
+    background: #d6cfc0;
+}
+/* хоёр захын 184px бүдгэрэлт — дизайны дагуу эхний ба сүүлийн он бүдэг харагдана */
+.timeline__rail::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background:
+        linear-gradient(to right, var(--color-neutral-50) 0, rgba(252, 250, 248, 0) 184px),
+        linear-gradient(to left, var(--color-neutral-50) 0, rgba(252, 250, 248, 0) 184px);
+}
+.timeline__points {
+    position: absolute;
+    inset: 0 80px;
     display: flex;
-    gap: 0;
-    border-bottom: 2px solid var(--color-neutral-200);
-    overflow-x: auto;
-    margin-bottom: 40px;
+    align-items: center;
+    justify-content: space-between;
+}
+.timeline__point {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.timeline__dot {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #a8a294;
+    border-radius: var(--radius-full);
+    /* дотоод 14px дүүргэлт — хүрээ болон дүүргэлтийн хооронд 3px завсар */
+    background: radial-gradient(circle, #a8a294 7px, transparent 7px);
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease;
 }
 .timeline__year {
-    padding: 12px 24px;
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-neutral-500);
-    border-bottom: 3px solid transparent;
-    white-space: nowrap;
-    cursor: pointer;
-    /* Оны мөр нь таб — <button> болж гарах тул browser-ийн өгөгдмөл дэвсгэр/хүрээг арилгана. */
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    transition:
-        color 0.25s ease,
-        border-color 0.25s ease;
-}
-.timeline__year:hover {
-    color: var(--color-primary);
-}
-.timeline__year:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: -2px;
-}
-.timeline__year--active {
-    color: var(--color-primary);
-    border-bottom-color: var(--color-primary);
-}
-.timeline__content {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--gutter);
-}
-.timeline__item-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: var(--font-display);
-    font-size: var(--text-h4);
-    font-weight: 700;
-    color: var(--color-neutral-600);
-    margin-bottom: 8px;
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--color-neutral-700);
+    white-space: nowrap;
+    transition: color 0.25s ease;
 }
-.timeline__item-text {
-    font-size: var(--text-sm);
-    color: var(--color-neutral-500);
-    line-height: 1.6;
+/* сондгой нь зураасны дээр, тэгш нь доор */
+.timeline__point:nth-child(odd) .timeline__year {
+    bottom: calc(100% + 10px);
 }
-/* Нэг удаад нэг оны тайлбар харагдана — 3 баганат тор шаардлагагүй. */
-.timeline__content--single {
-    display: block;
+.timeline__point:nth-child(even) .timeline__year {
+    top: calc(100% + 10px);
 }
-.timeline__panel {
+.timeline__point--active .timeline__dot {
+    border-color: var(--color-primary);
+    background: radial-gradient(circle, var(--color-primary) 7px, transparent 7px);
+}
+.timeline__point--active .timeline__year {
+    color: var(--color-primary);
+}
+.timeline__point:hover .timeline__year,
+.timeline__point:focus-visible .timeline__year {
+    color: var(--color-primary);
+}
+.timeline__point:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-full);
+}
+.timeline__desc {
     max-width: 720px;
+    margin: 40px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+}
+.timeline__line {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--color-primary);
 }
 
+@media (max-width: 900px) {
+    .timeline__rail {
+        height: 180px;
+        overflow-x: auto;
+    }
+    .timeline__points {
+        inset: 0 24px;
+        gap: 48px;
+        justify-content: flex-start;
+        min-width: max-content;
+    }
+    .timeline__rail::after {
+        background: none;
+    }
+}
 
 /* --- Mission Section (Vision page) --- */
 .mission-header {

@@ -16,8 +16,15 @@ export const TimelineBlock: Block = {
       admin: { initCollapsed: true },
       fields: [
         { name: 'year', type: 'text', required: true },
-        { name: 'title', type: 'text', required: true, localized: true },
-        { name: 'text', type: 'textarea', localized: true },
+        {
+          name: 'lines',
+          type: 'array',
+          label: 'Тайлбар мөрүүд',
+          minRows: 1,
+          labels: { singular: 'Мөр', plural: 'Мөрүүд' },
+          admin: { initCollapsed: false },
+          fields: [{ name: 'text', type: 'textarea', required: true, localized: true }],
+        },
         {
           name: 'active',
           type: 'checkbox',
