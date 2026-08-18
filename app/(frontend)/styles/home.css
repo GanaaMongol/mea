@@ -728,6 +728,12 @@
 .content-block__header--center {
     text-align: center;
 }
+/* `SectionHeader` төвлүүлэхдээ data-align="center" өгдөг. Текст нь эцгээсээ
+   өвлөгдөж төвдөө ирдэг ч `.content-block__desc`-д `max-width: 720px` байгаа тул
+   догол мөрийн хайрцаг өөрөө зүүн талдаа наалдчихдаг — auto margin түүнийг төвлүүлнэ. */
+.content-block__header[data-align="center"] .content-block__desc {
+    margin-inline: auto;
+}
 .content-block__header--center .content-block__label,
 .content-block__header--center .content-block__title {
     color: var(--color-neutral-700);
