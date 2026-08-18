@@ -1,14 +1,15 @@
 import type { Payload } from 'payload'
 
-import { customLink, upsertMedia } from './helpers'
+import { customLink, seedGlobal, upsertMedia } from './helpers'
 
 /** Announcement bar, header, newsletter and footer, transcribed from index.html. */
 export const seedChrome = async (payload: Payload) => {
   const logo = await upsertMedia(payload, 'main-logo.jpeg', 'MEA лого')
 
-  await payload.updateGlobal({
-    slug: 'siteSettings',
-    data: {
+  await seedGlobal(
+    payload,
+    'siteSettings',
+    {
       announcement: {
         enabled: true,
         text: 'ЗАРЛАЛ: "Ээлжит бага хурал 2025.10.09-10нд УБ-д',
@@ -103,8 +104,8 @@ export const seedChrome = async (payload: Payload) => {
         legalLinks: [customLink('Нууцлалын бодлого', '#'), customLink('Үйлчилгээний нөхцөл', '#')],
       },
     },
-    context: { disableRevalidate: true },
-  })
+    (doc) => Boolean(doc?.header),
+  )
 
   payload.logger.info('seed: site settings')
 }

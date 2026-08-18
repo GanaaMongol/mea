@@ -28,7 +28,8 @@ npm run start                # serve the production build
 npm run lint                 # eslint (flat config, eslint 9)
 npm run generate:types       # payload-types.ts (run after every schema change)
 npm run generate:importmap   # app/(payload)/admin/importMap.js
-npm run seed                 # idempotent local-API seed (admin user, theme, chrome, content)
+npm run seed                 # bootstrap-only local-API seed; skips docs that already exist
+                             # (SEED_FORCE=1 npm run seed overwrites them)
 ```
 
 **Never run `npx payload …`.** npx reaches out to the registry for a `payload` binary it

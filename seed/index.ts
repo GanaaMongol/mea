@@ -9,7 +9,10 @@ import { seedTheme } from './theme'
 import { seedUsers } from './users'
 
 /**
- * Idempotent. Run with `npm run seed` — safe to re-run after schema changes.
+ * Bootstrap only, and non-destructive: anything that already exists in the
+ * database is left untouched, because admin — not this file — owns the content
+ * once the site is seeded. Re-run freely with `npm run seed`; run
+ * `SEED_FORCE=1 npm run seed` to deliberately reset docs to these literals.
  */
 const run = async () => {
   const payload = await getPayload({ config })

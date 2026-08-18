@@ -1,13 +1,16 @@
 import type { Payload } from 'payload'
 
+import { seedGlobal } from './helpers'
+
 /**
  * Values are the literal tokens from `lib/html/styles.css:6-59`, so the seeded
  * site is pixel-identical to the mockups before anyone edits anything.
  */
 export const seedTheme = async (payload: Payload) => {
-  await payload.updateGlobal({
-    slug: 'theme',
-    data: {
+  await seedGlobal(
+    payload,
+    'theme',
+    {
       primary: '#1465be',
       primaryDark: '#10539b',
       primaryLight: '#3461e3',
@@ -50,8 +53,8 @@ export const seedTheme = async (payload: Payload) => {
       paddingMd: '16px',
       paddingLg: '24px',
     },
-    context: { disableRevalidate: true },
-  })
+    (doc) => Boolean(doc?.primary),
+  )
 
   payload.logger.info('seed: theme tokens')
 }

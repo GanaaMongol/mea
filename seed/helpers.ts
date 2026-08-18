@@ -4,6 +4,9 @@ import { fileURLToPath } from 'url'
 
 import type { Payload } from 'payload'
 
+/** Opt-in switch that lets the seed overwrite content an editor may have changed. */
+export const SEED_FORCE = process.env.SEED_FORCE === '1' || process.env.SEED_FORCE === 'true'
+
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 export const IMAGES_DIR = path.resolve(dirname, '../public/images')
 
@@ -37,7 +40,12 @@ export const upsertMedia = async (
   return doc.id
 }
 
-/** Creates a doc if its slug is free, otherwise updates the existing one. */
+/**
+ * Bootstrap only: creates the doc when its slug is free, and **leaves an
+ * existing doc alone** — once a page is in the database, admin is the source of
+ * truth and re-running the seed must not overwrite an editor's work.
+ * Set `SEED_FORCE=1` to deliberately reset a doc back to these literals.
+ */
 export const upsertBySlug = async <T extends 'pages' | 'posts' | 'departments' | 'hubs' | 'membershipTiers'>(
   payload: Payload,
   collection: T,
@@ -53,6 +61,11 @@ export const upsertBySlug = async <T extends 'pages' | 'posts' | 'departments' |
   })
 
   if (existing.docs[0]) {
+    if (!SEED_FORCE) {
+      payload.logger.info(`seed: ${collection}/${slug} exists — skipped (SEED_FORCE=1 to overwrite)`)
+      return existing.docs[0]
+    }
+
     return payload.update({
       collection,
       id: existing.docs[0].id,
@@ -105,3 +118,26 @@ export const customLink = (label: string, url: string, appearance?: string) => (
   url,
   ...(appearance ? { appearance } : {}),
 })
+
+/**
+ * Globals have no slug to look up, so the caller passes `isSeeded` — a check for
+ * a field the seed always fills. Same rule as `upsertBySlug`: never clobber a
+ * global an editor has already touched unless `SEED_FORCE` is set.
+ */
+export const seedGlobal = async <T extends 'theme' | 'siteSettings'>(
+  payload: Payload,
+  slug: T,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isSeeded: (doc: any) => boolean,
+) => {
+  const current = await payload.findGlobal({ slug, depth: 0 }).catch(() => null)
+
+  if (current && isSeeded(current) && !SEED_FORCE) {
+    payload.logger.info(`seed: ${slug} exists — skipped (SEED_FORCE=1 to overwrite)`)
+    return current
+  }
+
+  return payload.updateGlobal({ slug, data, context: { disableRevalidate: true } })
+}
