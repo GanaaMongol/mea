@@ -250,9 +250,9 @@
     line-height: 24px;
 }
 
-/* 4 хурдасгуур: hover үед карт 2 картын өргөн болж, зураг нь анхны хэмжээгээрээ
-   үлдэж, хажууд нь НЭГ картын өргөнтэй цэнхэр самбар нээгдэнэ.
-   Бусад картууд нуугдахгүй, зөвхөн шахагдана. */
+/* 4 Хурдасгуур — hover: карт зөөлөн өргөсч, зураг бага зэрэг ойртож, доод самбарт
+   тайлбар нь нээгдэнэ. Текстийн самбар нэг баганын өргөнтэй тогтмол тул өргөсөх
+   үед үг дахин мөрлөхгүй; зураг өөрөө хэмжээгээ өөрчлөхгүй (зөвхөн scale). */
 .digital_strategy_container {
     /* .container-ийн доторх өргөн: min(100vw - 2*40px, 1360 - 80) */
     --content: min(100vw - 80px, 1280px);
@@ -264,41 +264,32 @@
     height: calc(var(--col) * 580 / 322);
 }
 .accel-card {
+    position: relative;
     flex: 1 1 0;
     min-width: 0;
-    display: flex;
     overflow: hidden;
     border-radius: var(--radius-lg);
-    /* зураг 90% болж жижгэрэхэд эргэн тойрон нь цэнхэр харагдана
-       (энгийн үед зураг бүрэн бүрхэж байдаг тул нуугдана) */
     background: linear-gradient(180deg, #479af3 0%, #10539b 100%);
-    transition: flex-grow 0.4s ease;
+    transition: flex-grow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* hover: 3 (бусад нь 1) -> 50% / 16.6% / 16.6% / 16.6%.
-   50% = яг 2 картын өргөн, тэгэхээр зураг нь анхны хэмжээгээрээ үлдэнэ. */
 .accel-card:hover,
 .accel-card:focus-within {
-    flex-grow: 3;
+    flex-grow: 1.8;
 }
 .accel-card__frame {
-    position: relative;
-    flex: 1 1 auto;
-    min-width: 0;
+    position: absolute;
+    inset: 0;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
-/* бүх зураг дээр бага зэрэг харанхуй давхарга */
+/* зургийн доод хэсэгт бараан налуу — цагаан текст уншигдана */
 .accel-card__frame::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.25);
+    background:
+        linear-gradient(180deg, rgba(6, 26, 50, 0) 40%, rgba(6, 26, 50, 0.88) 100%),
+        rgba(6, 26, 50, 0.18);
     pointer-events: none;
-    transition:
-        inset 0.4s ease,
-        border-radius 0.4s ease;
 }
 .accel-card__image {
     display: block;
@@ -306,45 +297,38 @@
     height: 100%;
     object-fit: cover;
     transition:
-        width 0.4s ease,
-        height 0.4s ease,
-        border-radius 0.4s ease;
+        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease;
 }
-/* hover: зураг 90% x 90% болж, эргэн тойрон нь цэнхэр үлдэнэ */
 .accel-card:hover .accel-card__image,
 .accel-card:focus-within .accel-card__image {
-    width: 90%;
-    height: 90%;
-    border-radius: var(--radius-md);
+    transform: scale(1.06);
 }
-.accel-card:hover .accel-card__frame::after,
-.accel-card:focus-within .accel-card__frame::after {
-    inset: 5%;
-    border-radius: var(--radius-md);
+/* нэгийг нь хархад бусад нь бага зэрэг бүдгэрч, анхаарал төвлөрнө */
+@media (hover: hover) {
+    .digital_strategy_container:hover .accel-card:not(:hover) .accel-card__image {
+        opacity: 0.65;
+    }
 }
 .accel-card__panel {
-    flex: 0 0 0%;
-    min-width: 0;
-    overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /* нэг баганын өргөн — карт өргөсөхөд текст дахин мөрлөхгүй */
+    width: var(--col);
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 12px;
-    padding: 0;
-    background: linear-gradient(180deg, #479af3 0%, #10539b 100%);
-    color: #fff;
-    opacity: 0;
-    transition:
-        flex-basis 0.4s ease,
-        padding 0.4s ease,
-        opacity 0.3s ease;
-}
-/* өргөссөн картын хагас = шахагдсан картын өргөнтэй тэнцүү */
-.accel-card:hover .accel-card__panel,
-.accel-card:focus-within .accel-card__panel {
-    flex-basis: 50%;
+    gap: 8px;
     padding: 24px;
-    opacity: 1;
+    color: #fff;
+}
+.accel-card__num {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.7);
 }
 .accel-card__title {
     font-family: var(--font-display);
@@ -353,12 +337,34 @@
     line-height: 1.25;
     color: #fff;
 }
+.accel-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+.accel-card__title a:hover,
+.accel-card__title a:focus-visible {
+    text-decoration: underline;
+}
 .accel-card__text {
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: 400;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.9);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+        max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+.accel-card:hover .accel-card__text,
+.accel-card:focus-within .accel-card__text {
+    max-height: 10em;
+    opacity: 1;
+    transform: none;
 }
 
 /* Жижиг дэлгэц / hover байхгүй төхөөрөмж: багана болгож, текстийг шууд харуулна */
@@ -367,21 +373,32 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         height: auto;
+        --col: 100%;
     }
     .accel-card {
-        display: block;
-    }
-    .accel-card__frame {
         aspect-ratio: 322 / 580;
     }
     .accel-card__panel {
-        opacity: 1;
+        width: 100%;
         padding: 20px;
+    }
+    .accel-card__text {
+        max-height: none;
+        opacity: 1;
+        transform: none;
     }
 }
 @media (max-width: 640px) {
     .digital_strategy_container {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .accel-card,
+    .accel-card__image,
+    .accel-card__text {
+        transition: none;
     }
 }
 

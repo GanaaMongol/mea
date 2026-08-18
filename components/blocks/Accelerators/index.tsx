@@ -24,7 +24,9 @@ export function Accelerators({ header, items, numbered }: AcceleratorsProps) {
                 />
               </div>
               <div className="accel-card__panel">
-                {numbered ? <p>{String(index + 1).padStart(2, '0')}</p> : null}
+                {numbered ? (
+                  <p className="accel-card__num">{String(index + 1).padStart(2, '0')}</p>
+                ) : null}
                 <h3 className="accel-card__title">
                   {item.link?.label || item.link?.url || item.link?.reference ? (
                     <SiteLink link={item.link}>{item.title}</SiteLink>
