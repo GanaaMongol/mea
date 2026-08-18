@@ -4596,30 +4596,43 @@ ol {
     height: auto;
 }
 .region-map__svg path[data-region] {
-    fill: var(--color-neutral-200);
-    stroke: var(--color-neutral-0);
+    /* SVG-ийн өөрийнх нь цэнхэр (#1465BE) — токеноор дамжуулж theme-д уяна */
+    fill: var(--color-primary);
+    stroke: var(--color-neutral-200);
     stroke-width: 1;
     cursor: pointer;
     transition:
         fill 0.2s ease,
-        opacity 0.2s ease;
+        opacity 0.2s ease,
+        stroke 0.2s ease;
     outline: none;
 }
+/* Hover: тухайн аймаг цагаан болж, хүрээ нь цэнхэрээр тодорно */
 .region-map__svg path[data-region]:hover,
 .region-map__svg path[data-region]:focus-visible {
-    fill: var(--color-primary);
+    fill: var(--color-neutral-0);
+    stroke: var(--color-primary);
+    stroke-width: 1.5;
 }
 .region-map__svg path[data-region]:focus-visible {
     stroke: var(--color-primary-dark);
     stroke-width: 2;
 }
-/* Сонгосон аймаг тодорч, бусад нь бүдгэрнэ */
+/* Аймаг сонгосон үед бусад нь бүдгэрч, сонгосон нь цагаан хэвээр */
 .region-map__svg[data-selected] path[data-region] {
-    fill: var(--color-neutral-150);
+    opacity: 0.45;
+}
+.region-map__svg[data-selected] path[data-region][data-active='true'] {
+    opacity: 1;
+    fill: var(--color-neutral-0);
+    stroke: var(--color-primary);
+    stroke-width: 1.5;
 }
 .region-map__svg[data-selected] path[data-region]:hover {
-    fill: var(--color-primary-light);
+    opacity: 1;
+    fill: var(--color-neutral-0);
 }
+
 .region-map__tip {
     position: absolute;
     transform: translate(-50%, -160%);
@@ -4668,7 +4681,3 @@ ol {
     color: var(--color-primary);
 }
 
-/* Сонгогдсон аймгийг нэрээр нь тодруулна */
-.region-map__svg[data-selected] path[data-region][data-active='true'] {
-    fill: var(--color-primary);
-}
