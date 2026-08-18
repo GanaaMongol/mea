@@ -1170,7 +1170,8 @@ ol {
 /* 4 Хурдасгуур — hover: карт зөөлөн өргөсч, зураг бага зэрэг ойртож, доод самбарт
    тайлбар нь нээгдэнэ. Текстийн самбар нэг баганын өргөнтэй тогтмол тул өргөсөх
    үед үг дахин мөрлөхгүй; зураг өөрөө хэмжээгээ өөрчлөхгүй (зөвхөн scale). */
-.digital_strategy_container {
+.digital_strategy_container,
+.accel-row {
     /* .container-ийн доторх өргөн: min(100vw - 2*40px, 1360 - 80) */
     --content: min(100vw - 80px, 1280px);
     --col: calc((var(--content) - 3 * var(--gutter)) / 4);
@@ -1284,7 +1285,8 @@ ol {
 
 /* Жижиг дэлгэц / hover байхгүй төхөөрөмж: багана болгож, текстийг шууд харуулна */
 @media (max-width: 1024px), (hover: none) {
-    .digital_strategy_container {
+    .digital_strategy_container,
+    .accel-row {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         height: auto;
@@ -1304,7 +1306,8 @@ ol {
     }
 }
 @media (max-width: 640px) {
-    .digital_strategy_container {
+    .digital_strategy_container,
+    .accel-row {
         grid-template-columns: 1fr;
     }
 }

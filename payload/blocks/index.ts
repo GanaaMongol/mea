@@ -5,9 +5,11 @@ import { CardGridBlock } from './CardGrid/config'
 import { CarouselBlock } from './Carousel/config'
 import { CreedBlock } from './Creed/config'
 import { DataTableBlock } from './DataTable/config'
+import { DepartmentGridBlock } from './DepartmentGrid/config'
 import { GalleryBlock } from './Gallery/config'
 import { HighlightedTextBlock } from './HighlightedText/config'
 import { HistoryGridBlock } from './HistoryGrid/config'
+import { MediaCardBlock } from './MediaCard/config'
 import { PageBannerBlock } from './PageBanner/config'
 import { PeopleGridBlock } from './PeopleGrid/config'
 import { PostsFeedBlock } from './PostsFeed/config'
@@ -43,6 +45,8 @@ export const layoutBlocks: Block[] = [
   CreedBlock,
   SectionIntroBlock,
   DataTableBlock,
+  MediaCardBlock,
+  DepartmentGridBlock,
 ]
 
 export {
@@ -64,4 +68,6 @@ export {
   CreedBlock,
   SectionIntroBlock,
   DataTableBlock,
+  MediaCardBlock,
+  DepartmentGridBlock,
 }

@@ -190,6 +190,8 @@ export interface Page {
         | CreedBlock
         | SectionIntroBlock
         | DataTableBlock
+        | MediaCardBlock
+        | DepartmentGridBlock
       )[]
     | null;
   meta?: {
@@ -206,7 +208,7 @@ export interface Page {
  * via the `definition` "PageBannerBlock".
  */
 export interface PageBannerBlock {
-  variant: 'hub' | 'vision' | 'dept' | 'deptDetail' | 'news' | 'region' | 'imageOnly';
+  variant: 'hub' | 'vision' | 'dept' | 'deptDetail' | 'news' | 'region' | 'imageOnly' | 'hubGradient';
   overline?: string | null;
   title?: string | null;
   subtitle?: string | null;
@@ -344,6 +346,8 @@ export interface Post {
         | CreedBlock
         | SectionIntroBlock
         | DataTableBlock
+        | MediaCardBlock
+        | DepartmentGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -433,6 +437,8 @@ export interface Department {
         | CreedBlock
         | SectionIntroBlock
         | DataTableBlock
+        | MediaCardBlock
+        | DepartmentGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -556,6 +562,8 @@ export interface Hub {
         | CreedBlock
         | SectionIntroBlock
         | DataTableBlock
+        | MediaCardBlock
+        | DepartmentGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -655,6 +663,8 @@ export interface MembershipTier {
         | CreedBlock
         | SectionIntroBlock
         | DataTableBlock
+        | MediaCardBlock
+        | DepartmentGridBlock
       )[]
     | null;
   updatedAt: string;
@@ -976,6 +986,36 @@ export interface DataTableBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaCardBlock".
+ */
+export interface MediaCardBlock {
+  title: string;
+  description?: string | null;
+  image?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaCard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DepartmentGridBlock".
+ */
+export interface DepartmentGridBlock {
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  source?: ('auto' | 'manual') | null;
+  manual?: (number | Department)[] | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'departmentGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -1171,6 +1211,8 @@ export interface PagesSelect<T extends boolean = true> {
         creed?: T | CreedBlockSelect<T>;
         sectionIntro?: T | SectionIntroBlockSelect<T>;
         dataTable?: T | DataTableBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        departmentGrid?: T | DepartmentGridBlockSelect<T>;
       };
   meta?:
     | T
@@ -1570,6 +1612,36 @@ export interface DataTableBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaCardBlock_select".
+ */
+export interface MediaCardBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DepartmentGridBlock_select".
+ */
+export interface DepartmentGridBlockSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
+  source?: T;
+  manual?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1600,6 +1672,8 @@ export interface PostsSelect<T extends boolean = true> {
         creed?: T | CreedBlockSelect<T>;
         sectionIntro?: T | SectionIntroBlockSelect<T>;
         dataTable?: T | DataTableBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        departmentGrid?: T | DepartmentGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1637,6 +1711,8 @@ export interface DepartmentsSelect<T extends boolean = true> {
         creed?: T | CreedBlockSelect<T>;
         sectionIntro?: T | SectionIntroBlockSelect<T>;
         dataTable?: T | DataTableBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        departmentGrid?: T | DepartmentGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1671,6 +1747,8 @@ export interface HubsSelect<T extends boolean = true> {
         creed?: T | CreedBlockSelect<T>;
         sectionIntro?: T | SectionIntroBlockSelect<T>;
         dataTable?: T | DataTableBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        departmentGrid?: T | DepartmentGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1734,6 +1812,8 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         creed?: T | CreedBlockSelect<T>;
         sectionIntro?: T | SectionIntroBlockSelect<T>;
         dataTable?: T | DataTableBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        departmentGrid?: T | DepartmentGridBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

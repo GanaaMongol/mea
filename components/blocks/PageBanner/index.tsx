@@ -7,7 +7,7 @@ import { SiteLink } from '@/components/ui/SiteLink'
  * Class names come straight from `styles.css` so each variant keeps the mockup's
  * appearance; only the content is data.
  */
-const VARIANT_CLASS: Record<NonNullable<PageBannerProps['variant']>, string> = {
+const VARIANT_CLASS: Record<string, string> = {
   hub: 'hub-banner',
   vision: 'vision-banner',
   dept: 'dept-banner',
@@ -15,6 +15,8 @@ const VARIANT_CLASS: Record<NonNullable<PageBannerProps['variant']>, string> = {
   news: 'news-banner',
   region: 'hub-region-hero',
   imageOnly: 'news-detail-hero',
+  // organization.html: ижил hub-banner, зөвхөн градиентийн чиглэл өөр.
+  hubGradient: 'hub-banner hub-banner--horizontal',
 }
 
 export function PageBanner({
@@ -30,12 +32,14 @@ export function PageBanner({
   overlay,
   links,
 }: PageBannerProps) {
-  const base = VARIANT_CLASS[variant] ?? 'hub-banner'
+  const classes = VARIANT_CLASS[variant] ?? 'hub-banner'
+  // A variant may add a modifier; BEM children always hang off the first class.
+  const base = classes.split(' ')[0]
   const backgroundDoc = asMedia(background)
 
   if (variant === 'imageOnly') {
     return (
-      <section className={base}>
+      <section className={classes}>
         <MediaImage media={background} priority sizes="100vw" />
       </section>
     )
@@ -43,7 +47,7 @@ export function PageBanner({
 
   if (variant === 'news') {
     return (
-      <section className={base}>
+      <section className={classes}>
         <div className="container news-banner__inner">
           <div className="news-banner__media">
             <MediaImage media={background} alt={title ?? ''} priority sizes="(max-width: 900px) 100vw, 50vw" />
@@ -62,7 +66,7 @@ export function PageBanner({
 
   if (variant === 'region') {
     return (
-      <section className={base}>
+      <section className={classes}>
         <div className={`${base}__bg`}>
           <MediaImage media={background} priority fill sizes="100vw" />
         </div>
@@ -78,7 +82,7 @@ export function PageBanner({
 
   return (
     <section
-      className={base}
+      className={classes}
       style={{
         ...(backgroundDoc?.url ? { backgroundImage: `url("${backgroundDoc.url}")` } : {}),
         ...(height ? { height: `${height}px` } : {}),

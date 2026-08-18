@@ -5,9 +5,11 @@ import { CardGrid } from './CardGrid'
 import { Carousel } from './Carousel'
 import { Creed } from './Creed'
 import { DataTable } from './DataTable'
+import { DepartmentGrid } from './DepartmentGrid'
 import { Gallery } from './Gallery'
 import { HighlightedText } from './HighlightedText'
 import { HistoryGrid } from './HistoryGrid'
+import { MediaCard } from './MediaCard'
 import { PageBanner } from './PageBanner'
 import { PeopleGrid } from './PeopleGrid'
 import { PostsFeed } from './PostsFeed'
@@ -44,4 +46,6 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   creed: Creed,
   sectionIntro: SectionIntro,
   dataTable: DataTable,
+  mediaCard: MediaCard,
+  departmentGrid: DepartmentGrid,
 }

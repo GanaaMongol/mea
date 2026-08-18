@@ -26,6 +26,7 @@ export const PageBannerBlock: Block = {
         { label: 'Мэдээ (news-banner)', value: 'news' },
         { label: 'Бүс нутаг (hub-region-hero)', value: 'region' },
         { label: 'Зөвхөн зураг (news-detail-hero)', value: 'imageOnly' },
+        { label: 'Албад (хэвтээ градиент)', value: 'hubGradient' },
       ],
     },
     {
