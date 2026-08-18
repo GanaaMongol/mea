@@ -640,7 +640,6 @@
     cursor: pointer;
     transition:
         fill 0.2s ease,
-        opacity 0.2s ease,
         stroke 0.2s ease;
     outline: none;
 }
@@ -655,19 +654,14 @@
     stroke: var(--color-primary-dark);
     stroke-width: 2;
 }
-/* Аймаг сонгосон үед бусад нь бүдгэрч, сонгосон нь цагаан хэвээр */
-.region-map__svg[data-selected] path[data-region] {
-    opacity: 0.45;
-}
+/* Аймаг сонгосон үед бусад нь ЦЭНХЭР хэвээрээ үлдэнэ — зөвхөн сонгосон нь шар. */
 /* Сонгосны дараа тухайн аймаг шараараа үлдэнэ */
 .region-map__svg[data-selected] path[data-region][data-active='true'] {
-    opacity: 1;
     fill: var(--color-accent-yellow);
     stroke: var(--color-primary);
     stroke-width: 1.5;
 }
 .region-map__svg[data-selected] path[data-region]:hover {
-    opacity: 1;
     fill: var(--color-accent-yellow);
 }
 
