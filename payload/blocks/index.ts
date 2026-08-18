@@ -3,6 +3,7 @@ import type { Block } from 'payload'
 import { AcceleratorsBlock } from './Accelerators/config'
 import { CardGridBlock } from './CardGrid/config'
 import { CarouselBlock } from './Carousel/config'
+import { CreedBlock } from './Creed/config'
 import { GalleryBlock } from './Gallery/config'
 import { HighlightedTextBlock } from './HighlightedText/config'
 import { HistoryGridBlock } from './HistoryGrid/config'
@@ -37,6 +38,7 @@ export const layoutBlocks: Block[] = [
   TimelineBlock,
   CarouselBlock,
   PeopleGridBlock,
+  CreedBlock,
 ]
 
 export {
@@ -55,4 +57,5 @@ export {
   TimelineBlock,
   CarouselBlock,
   PeopleGridBlock,
+  CreedBlock,
 }

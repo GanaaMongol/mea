@@ -187,6 +187,7 @@ export interface Page {
         | TimelineBlock
         | CarouselBlock
         | PeopleGridBlock
+        | CreedBlock
       )[]
     | null;
   meta?: {
@@ -338,6 +339,7 @@ export interface Post {
         | TimelineBlock
         | CarouselBlock
         | PeopleGridBlock
+        | CreedBlock
       )[]
     | null;
   updatedAt: string;
@@ -424,6 +426,7 @@ export interface Department {
         | TimelineBlock
         | CarouselBlock
         | PeopleGridBlock
+        | CreedBlock
       )[]
     | null;
   updatedAt: string;
@@ -544,6 +547,7 @@ export interface Hub {
         | TimelineBlock
         | CarouselBlock
         | PeopleGridBlock
+        | CreedBlock
       )[]
     | null;
   updatedAt: string;
@@ -640,6 +644,7 @@ export interface MembershipTier {
         | TimelineBlock
         | CarouselBlock
         | PeopleGridBlock
+        | CreedBlock
       )[]
     | null;
   updatedAt: string;
@@ -908,6 +913,19 @@ export interface BoardMember {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CreedBlock".
+ */
+export interface CreedBlock {
+  title: string;
+  intro?: string | null;
+  background?: (number | null) | Media;
+  text: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'creed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -1100,6 +1118,7 @@ export interface PagesSelect<T extends boolean = true> {
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
+        creed?: T | CreedBlockSelect<T>;
       };
   meta?:
     | T
@@ -1449,6 +1468,18 @@ export interface PeopleGridBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CreedBlock_select".
+ */
+export interface CreedBlockSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  background?: T;
+  text?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1476,6 +1507,7 @@ export interface PostsSelect<T extends boolean = true> {
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
+        creed?: T | CreedBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1510,6 +1542,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
+        creed?: T | CreedBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1541,6 +1574,7 @@ export interface HubsSelect<T extends boolean = true> {
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
+        creed?: T | CreedBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1601,6 +1635,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         timeline?: T | TimelineBlockSelect<T>;
         carousel?: T | CarouselBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
+        creed?: T | CreedBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
