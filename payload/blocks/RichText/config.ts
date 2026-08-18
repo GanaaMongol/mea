@@ -36,6 +36,7 @@ export const RichTextBlock: Block = {
             { label: 'Байхгүй', value: 'none' },
             { label: 'Цагаан', value: 'white' },
             { label: 'Дулаан', value: 'warm' },
+            { label: 'Нийтлэлийн бие', value: 'article' },
           ],
           admin: { width: '50%' },
         },

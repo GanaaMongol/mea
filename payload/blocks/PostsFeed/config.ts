@@ -21,6 +21,7 @@ export const PostsFeedBlock: Block = {
       options: [
         { label: 'Энгийн (нүүр хуудас)', value: 'plain' },
         { label: 'Хүрээтэй (мэдээний жагсаалт)', value: 'bordered' },
+        { label: 'Төстэй мэдээ (дэлгэрэнгүйн доод хэсэг)', value: 'related' },
       ],
     },
     sectionHeader(),

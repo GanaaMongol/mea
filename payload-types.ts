@@ -475,7 +475,7 @@ export interface RichTextBlock {
     [k: string]: unknown;
   };
   width?: ('narrow' | 'wide') | null;
-  background?: ('none' | 'white' | 'warm') | null;
+  background?: ('none' | 'white' | 'warm' | 'article') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'richText';
@@ -732,7 +732,7 @@ export interface AcceleratorsBlock {
  * via the `definition` "PostsFeedBlock".
  */
 export interface PostsFeedBlock {
-  variant: 'plain' | 'bordered';
+  variant: 'plain' | 'bordered' | 'related';
   header?: {
     label?: string | null;
     title?: string | null;

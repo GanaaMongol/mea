@@ -82,7 +82,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
 
       <PostsFeed
         blockType="postsFeed"
-        variant="bordered"
+        variant="related"
         source="auto"
         kind="all"
         limit={4}

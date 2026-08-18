@@ -10,6 +10,16 @@ const BACKGROUND_CLASS: Record<string, string> = {
 }
 
 export function RichTextBlock({ header, content, width, background }: RichTextBlockProps) {
+  /** Inside a post the body sits in the article column, with no section of its own. */
+  if (background === 'article') {
+    return (
+      <div className="news-detail-article__body">
+        <SectionHeader header={header} />
+        <RichTextContent data={content} />
+      </div>
+    )
+  }
+
   return (
     <section className={BACKGROUND_CLASS[background ?? 'none'] ?? 'about-content'}>
       <div className={width === 'wide' ? 'container' : 'about-content__inner'}>

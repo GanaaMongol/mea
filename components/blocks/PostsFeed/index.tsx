@@ -46,36 +46,47 @@ async function loadPosts({
 export async function PostsFeed(props: Props) {
   const { variant, header, filter, moreLink, readLabel, pathname, activeKind } = props
   const posts = await loadPosts(props)
-  const bordered = variant === 'bordered'
+  const related = variant === 'related'
+  const bordered = variant === 'bordered' || related
   const current = activeKind ?? 'all'
 
   return (
-    <section className="section section--white news-wrapper">
+    <section
+      className={
+        related
+          ? 'section section--white news-wrapper news-detail-related'
+          : 'section section--white news-wrapper'
+      }
+    >
       <div className="container">
-        <div className={bordered ? 'news-header news-header--left' : 'news-header'}>
-          {header?.label ? <p className="title">{header.label}</p> : null}
-          {header?.title ? <h2>{header.title}</h2> : null}
-          {header?.description ? <p>{header.description}</p> : null}
+        {related ? (
+          header?.title ? <h2 className="news-detail-related__title">{header.title}</h2> : null
+        ) : (
+          <div className={bordered ? 'news-header news-header--left' : 'news-header'}>
+            {header?.label ? <p className="title">{header.label}</p> : null}
+            {header?.title ? <h2>{header.title}</h2> : null}
+            {header?.description ? <p>{header.description}</p> : null}
 
-          {filter?.enabled && filter.style === 'buttons' ? (
-            <div className="news-filter">
-              {filter.items?.map((item, index) => (
-                <Link
-                  key={item.id ?? index}
-                  href={item.kind === 'all' ? (pathname ?? '/') : `${pathname ?? '/'}?kind=${item.kind}`}
-                  className={[
-                    'news-filter__btn',
-                    item.kind === current ? 'news-filter__btn--active' : null,
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          ) : null}
-        </div>
+            {filter?.enabled && filter.style === 'buttons' ? (
+              <div className="news-filter">
+                {filter.items?.map((item, index) => (
+                  <Link
+                    key={item.id ?? index}
+                    href={item.kind === 'all' ? (pathname ?? '/') : `${pathname ?? '/'}?kind=${item.kind}`}
+                    className={[
+                      'news-filter__btn',
+                      item.kind === current ? 'news-filter__btn--active' : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        )}
 
         {filter?.enabled && filter.style === 'tabs' ? (
           <div className="cap-tabs cap-tabs--left">
