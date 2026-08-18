@@ -185,6 +185,7 @@ export interface Page {
         | StatsRowBlock
         | HighlightedTextBlock
         | TimelineBlock
+        | CarouselBlock
       )[]
     | null;
   meta?: {
@@ -334,6 +335,7 @@ export interface Post {
         | StatsRowBlock
         | HighlightedTextBlock
         | TimelineBlock
+        | CarouselBlock
       )[]
     | null;
   updatedAt: string;
@@ -418,6 +420,7 @@ export interface Department {
         | StatsRowBlock
         | HighlightedTextBlock
         | TimelineBlock
+        | CarouselBlock
       )[]
     | null;
   updatedAt: string;
@@ -536,6 +539,7 @@ export interface Hub {
         | StatsRowBlock
         | HighlightedTextBlock
         | TimelineBlock
+        | CarouselBlock
       )[]
     | null;
   updatedAt: string;
@@ -630,6 +634,7 @@ export interface MembershipTier {
         | StatsRowBlock
         | HighlightedTextBlock
         | TimelineBlock
+        | CarouselBlock
       )[]
     | null;
   updatedAt: string;
@@ -788,6 +793,7 @@ export interface ValuesListBlock {
 export interface HistoryGridBlock {
   overline?: string | null;
   title: string;
+  titleTone?: ('primary' | 'neutral') | null;
   paragraphs?:
     | {
         text: string;
@@ -847,6 +853,22 @@ export interface TimelineBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'timeline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlock".
+ */
+export interface CarouselBlock {
+  slides?:
+    | {
+        image: number | Media;
+        alt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carousel';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1056,6 +1078,7 @@ export interface PagesSelect<T extends boolean = true> {
         statsRow?: T | StatsRowBlockSelect<T>;
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
       };
   meta?:
     | T
@@ -1317,6 +1340,7 @@ export interface ValuesListBlockSelect<T extends boolean = true> {
 export interface HistoryGridBlockSelect<T extends boolean = true> {
   overline?: T;
   title?: T;
+  titleTone?: T;
   paragraphs?:
     | T
     | {
@@ -1375,6 +1399,21 @@ export interface TimelineBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarouselBlock_select".
+ */
+export interface CarouselBlockSelect<T extends boolean = true> {
+  slides?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1400,6 +1439,7 @@ export interface PostsSelect<T extends boolean = true> {
         statsRow?: T | StatsRowBlockSelect<T>;
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1432,6 +1472,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         statsRow?: T | StatsRowBlockSelect<T>;
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1461,6 +1502,7 @@ export interface HubsSelect<T extends boolean = true> {
         statsRow?: T | StatsRowBlockSelect<T>;
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1519,6 +1561,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         statsRow?: T | StatsRowBlockSelect<T>;
         highlightedText?: T | HighlightedTextBlockSelect<T>;
         timeline?: T | TimelineBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

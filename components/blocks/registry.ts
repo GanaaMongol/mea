@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 
 import { Accelerators } from './Accelerators'
 import { CardGrid } from './CardGrid'
+import { Carousel } from './Carousel'
 import { Gallery } from './Gallery'
 import { HighlightedText } from './HighlightedText'
 import { HistoryGrid } from './HistoryGrid'
@@ -34,4 +35,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   statsRow: StatsRow,
   highlightedText: HighlightedText,
   timeline: Timeline,
+  carousel: Carousel,
 }

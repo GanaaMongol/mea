@@ -9,6 +9,16 @@ export const HistoryGridBlock: Block = {
     { name: 'overline', type: 'text', label: 'Жижиг шошго', localized: true },
     { name: 'title', type: 'text', required: true, localized: true },
     {
+      name: 'titleTone',
+      type: 'select',
+      label: 'Гарчгийн өнгө',
+      defaultValue: 'primary',
+      options: [
+        { label: 'Цэнхэр', value: 'primary' },
+        { label: 'Бараан', value: 'neutral' },
+      ],
+    },
+    {
       name: 'paragraphs',
       type: 'array',
       minRows: 1,
