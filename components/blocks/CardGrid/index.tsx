@@ -16,6 +16,7 @@ export function CardGrid({ variant, header, items, background }: CardGridProps) 
 
   const cards = items?.map((item, index) => (
     <div className={style.card} key={item.id ?? index}>
+      {item.badge ? <span className={`${style.card}__badge`}>{item.badge}</span> : null}
       {item.icon ? (
         <MediaImage media={item.icon} className={`${style.card}__icon`} alt="" />
       ) : null}
@@ -96,8 +97,11 @@ export function CardGrid({ variant, header, items, background }: CardGridProps) 
   return (
     <section className={background === 'white' ? 'section section--white' : 'section section--warm'}>
       <div className="container">
-        <SectionHeader header={header} />
-        <div className={style.grid}>{cards}</div>
+        {/* membership.html wraps each section in `.content-block` for its 80px rhythm. */}
+        <div className={variant === 'step' ? 'content-block' : undefined}>
+          <SectionHeader header={header} />
+          <div className={style.grid}>{cards}</div>
+        </div>
       </div>
     </section>
   )

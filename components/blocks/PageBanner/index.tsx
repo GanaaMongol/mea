@@ -95,8 +95,10 @@ export function PageBanner({
       {/*
         The mockups centre a banner by swapping `.container` for the banner's own
         `__content` box (index.html) and keep `.container` for the left-aligned
-        about/department banners.
+        about/department banners. A banner with no copy (membership.html) skips
+        the box entirely.
       */}
+      {overline || title || subtitle || links?.length ? (
       <div
         className={
           variant === 'vision' || variant === 'hubGradient' || align === 'center'
@@ -115,6 +117,7 @@ export function PageBanner({
           </div>
         ) : null}
       </div>
+      ) : null}
     </section>
   )
 }

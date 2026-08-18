@@ -14,6 +14,7 @@ import { MediaCard } from './MediaCard'
 import { PageBanner } from './PageBanner'
 import { PeopleGrid } from './PeopleGrid'
 import { PostsFeed } from './PostsFeed'
+import { ProcessSteps } from './ProcessSteps'
 import { QuoteBanner } from './QuoteBanner'
 import { RichTextBlock } from './RichText'
 import { SectionIntro } from './SectionIntro'
@@ -50,4 +51,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   mediaCard: MediaCard,
   departmentGrid: DepartmentGrid,
   contactBox: ContactBox,
+  processSteps: ProcessSteps,
 }

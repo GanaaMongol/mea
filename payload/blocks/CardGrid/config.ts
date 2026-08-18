@@ -37,6 +37,11 @@ export const CardGridBlock: Block = {
           relationTo: 'media',
         },
         {
+          name: 'badge',
+          type: 'text',
+          label: 'Тэмдэглэгээ (алхмын дугаар)',
+        },
+        {
           name: 'title',
           type: 'text',
           required: true,

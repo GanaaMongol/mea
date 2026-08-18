@@ -14,6 +14,7 @@ import { MediaCardBlock } from './MediaCard/config'
 import { PageBannerBlock } from './PageBanner/config'
 import { PeopleGridBlock } from './PeopleGrid/config'
 import { PostsFeedBlock } from './PostsFeed/config'
+import { ProcessStepsBlock } from './ProcessSteps/config'
 import { QuoteBannerBlock } from './QuoteBanner/config'
 import { RichTextBlock } from './RichText/config'
 import { SectionIntroBlock } from './SectionIntro/config'
@@ -49,6 +50,7 @@ export const layoutBlocks: Block[] = [
   MediaCardBlock,
   DepartmentGridBlock,
   ContactBoxBlock,
+  ProcessStepsBlock,
 ]
 
 export {
@@ -73,4 +75,5 @@ export {
   MediaCardBlock,
   DepartmentGridBlock,
   ContactBoxBlock,
+  ProcessStepsBlock,
 }

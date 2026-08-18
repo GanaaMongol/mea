@@ -199,6 +199,12 @@ ol {
 .section--white {
     background: #fff;
 }
+/* Нэг өнгийн .section-ууд дараалан өрөгдвөл дунд нь давхар 96+96 биш,
+   mockup-ийн нэг main доторх хэмнэлээр үлдэнэ. */
+.section + .section {
+    padding-top: 0;
+}
+
 
 /* ===== INFO CARDS (3 col) ===== */
 .info-cards {

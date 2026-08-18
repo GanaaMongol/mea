@@ -193,6 +193,7 @@ export interface Page {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ProcessStepsBlock
       )[]
     | null;
   meta?: {
@@ -350,6 +351,7 @@ export interface Post {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ProcessStepsBlock
       )[]
     | null;
   updatedAt: string;
@@ -442,6 +444,7 @@ export interface Department {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ProcessStepsBlock
       )[]
     | null;
   updatedAt: string;
@@ -495,6 +498,7 @@ export interface CardGridBlock {
   items?:
     | {
         icon?: (number | null) | Media;
+        badge?: string | null;
         title: string;
         text?: string | null;
         link?: {
@@ -568,6 +572,7 @@ export interface Hub {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ProcessStepsBlock
       )[]
     | null;
   updatedAt: string;
@@ -670,6 +675,7 @@ export interface MembershipTier {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ProcessStepsBlock
       )[]
     | null;
   updatedAt: string;
@@ -1035,6 +1041,28 @@ export interface ContactBoxBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessStepsBlock".
+ */
+export interface ProcessStepsBlock {
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  items?:
+    | {
+        number?: string | null;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'processSteps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -1233,6 +1261,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        processSteps?: T | ProcessStepsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1332,6 +1361,7 @@ export interface CardGridBlockSelect<T extends boolean = true> {
     | T
     | {
         icon?: T;
+        badge?: T;
         title?: T;
         text?: T;
         link?:
@@ -1675,6 +1705,29 @@ export interface ContactBoxBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProcessStepsBlock_select".
+ */
+export interface ProcessStepsBlockSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
+  items?:
+    | T
+    | {
+        number?: T;
+        text?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1708,6 +1761,7 @@ export interface PostsSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        processSteps?: T | ProcessStepsBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1748,6 +1802,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        processSteps?: T | ProcessStepsBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1785,6 +1840,7 @@ export interface HubsSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        processSteps?: T | ProcessStepsBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1851,6 +1907,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        processSteps?: T | ProcessStepsBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
