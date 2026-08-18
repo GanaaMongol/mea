@@ -194,6 +194,7 @@ export interface Page {
         | DepartmentGridBlock
         | ContactBoxBlock
         | ProcessStepsBlock
+        | FigureBlock
       )[]
     | null;
   meta?: {
@@ -352,6 +353,7 @@ export interface Post {
         | DepartmentGridBlock
         | ContactBoxBlock
         | ProcessStepsBlock
+        | FigureBlock
       )[]
     | null;
   updatedAt: string;
@@ -445,6 +447,7 @@ export interface Department {
         | DepartmentGridBlock
         | ContactBoxBlock
         | ProcessStepsBlock
+        | FigureBlock
       )[]
     | null;
   updatedAt: string;
@@ -573,6 +576,7 @@ export interface Hub {
         | DepartmentGridBlock
         | ContactBoxBlock
         | ProcessStepsBlock
+        | FigureBlock
       )[]
     | null;
   updatedAt: string;
@@ -676,6 +680,7 @@ export interface MembershipTier {
         | DepartmentGridBlock
         | ContactBoxBlock
         | ProcessStepsBlock
+        | FigureBlock
       )[]
     | null;
   updatedAt: string;
@@ -973,7 +978,23 @@ export interface SectionIntroBlock {
  * via the `definition` "DataTableBlock".
  */
 export interface DataTableBlock {
-  variant?: ('region' | 'plain') | null;
+  header?: {
+    label?: string | null;
+    title?: string | null;
+    description?: string | null;
+    align?: ('left' | 'center') | null;
+  };
+  variant?: ('region' | 'plain' | 'list') | null;
+  /**
+   * Багана бүрийн утгуудаас сонголт үүсгэнэ.
+   */
+  filters?:
+    | {
+        label: string;
+        column: number;
+        id?: string | null;
+      }[]
+    | null;
   columns?:
     | {
         label: string;
@@ -1060,6 +1081,18 @@ export interface ProcessStepsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'processSteps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FigureBlock".
+ */
+export interface FigureBlock {
+  image: number | Media;
+  caption?: string | null;
+  variant?: ('map' | 'wide') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'figure';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1262,6 +1295,7 @@ export interface PagesSelect<T extends boolean = true> {
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
+        figure?: T | FigureBlockSelect<T>;
       };
   meta?:
     | T
@@ -1639,7 +1673,22 @@ export interface SectionIntroBlockSelect<T extends boolean = true> {
  * via the `definition` "DataTableBlock_select".
  */
 export interface DataTableBlockSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        description?: T;
+        align?: T;
+      };
   variant?: T;
+  filters?:
+    | T
+    | {
+        label?: T;
+        column?: T;
+        id?: T;
+      };
   columns?:
     | T
     | {
@@ -1728,6 +1777,17 @@ export interface ProcessStepsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FigureBlock_select".
+ */
+export interface FigureBlockSelect<T extends boolean = true> {
+  image?: T;
+  caption?: T;
+  variant?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1762,6 +1822,7 @@ export interface PostsSelect<T extends boolean = true> {
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
+        figure?: T | FigureBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1803,6 +1864,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
+        figure?: T | FigureBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1841,6 +1903,7 @@ export interface HubsSelect<T extends boolean = true> {
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
+        figure?: T | FigureBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1908,6 +1971,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
+        figure?: T | FigureBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;

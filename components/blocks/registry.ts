@@ -7,6 +7,7 @@ import { ContactBox } from './ContactBox'
 import { Creed } from './Creed'
 import { DataTable } from './DataTable'
 import { DepartmentGrid } from './DepartmentGrid'
+import { Figure } from './Figure'
 import { Gallery } from './Gallery'
 import { HighlightedText } from './HighlightedText'
 import { HistoryGrid } from './HistoryGrid'
@@ -52,4 +53,5 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   departmentGrid: DepartmentGrid,
   contactBox: ContactBox,
   processSteps: ProcessSteps,
+  figure: Figure,
 }

@@ -1,7 +1,7 @@
 import type { SectionTabsBlock as SectionTabsProps } from '@/payload-types'
 
 import { SiteLink } from '@/components/ui/SiteLink'
-import { isActivePath, resolveHref } from '@/lib/links'
+import { resolveHref } from '@/lib/links'
 
 /** `dept-tabs` (about/departments/hubs), `tab-bar` (membership), `cap-tabs` (news). */
 const VARIANT = {
@@ -35,7 +35,9 @@ export function SectionTabs({
       <div className={style.inner}>
         {items?.map((item, index) => {
           const href = resolveHref(item)
-          const active = pathname ? isActivePath(href, pathname) : false
+          // Tabs are sibling pages, so only the exact route lights up — an
+          // ancestor match would keep /membership lit on /membership/list.
+          const active = pathname === href
           return (
             <SiteLink
               key={item.id ?? index}

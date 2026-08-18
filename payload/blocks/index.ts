@@ -7,6 +7,7 @@ import { ContactBoxBlock } from './ContactBox/config'
 import { CreedBlock } from './Creed/config'
 import { DataTableBlock } from './DataTable/config'
 import { DepartmentGridBlock } from './DepartmentGrid/config'
+import { FigureBlock } from './Figure/config'
 import { GalleryBlock } from './Gallery/config'
 import { HighlightedTextBlock } from './HighlightedText/config'
 import { HistoryGridBlock } from './HistoryGrid/config'
@@ -51,6 +52,7 @@ export const layoutBlocks: Block[] = [
   DepartmentGridBlock,
   ContactBoxBlock,
   ProcessStepsBlock,
+  FigureBlock,
 ]
 
 export {
@@ -76,4 +78,5 @@ export {
   DepartmentGridBlock,
   ContactBoxBlock,
   ProcessStepsBlock,
+  FigureBlock,
 }
