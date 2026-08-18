@@ -249,6 +249,21 @@
     border-bottom: 3px solid transparent;
     white-space: nowrap;
     cursor: pointer;
+    /* Оны мөр нь таб — <button> болж гарах тул browser-ийн өгөгдмөл дэвсгэр/хүрээг арилгана. */
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+.timeline__year:hover {
+    color: var(--color-primary);
+}
+.timeline__year:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
 }
 .timeline__year--active {
     color: var(--color-primary);
@@ -271,6 +286,14 @@
     color: var(--color-neutral-500);
     line-height: 1.6;
 }
+/* Нэг удаад нэг оны тайлбар харагдана — 3 баганат тор шаардлагагүй. */
+.timeline__content--single {
+    display: block;
+}
+.timeline__panel {
+    max-width: 720px;
+}
+
 
 /* --- Mission Section (Vision page) --- */
 .mission-header {

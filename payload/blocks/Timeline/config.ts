@@ -21,7 +21,7 @@ export const TimelineBlock: Block = {
         {
           name: 'active',
           type: 'checkbox',
-          label: 'Онцолсон он',
+          label: 'Хуудас нээгдэхэд сонгогдсон байх',
           defaultValue: false,
         },
       ],
