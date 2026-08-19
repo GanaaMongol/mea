@@ -1,28 +1,34 @@
 @import "tailwindcss";
 
 /*
- * The MEA design system, ported from lib/html/styles.css. The files below are
+ * The MEA design system, ported from lib/html/styles.css.
+ *
+ * Imported into Tailwind's `components` layer. Unlayered CSS outranks *any*
+ * layered rule, so while these files were unlayered, `base.css`'s
+ * `*{margin:0;padding:0}` reset silently beat every Tailwind `p-*`/`m-*`
+ * utility. Sitting in `components` keeps their order among themselves, keeps
+ * them above Tailwind's preflight, and lets utilities win again. The files below are
  * that stylesheet split at its own section boundaries and imported in the
  * original order — concatenating them reproduces the source byte for byte, so
  * the cascade is unchanged and the mockups' BEM class names keep working.
  *
  * Do not convert these to Tailwind utilities. Tailwind is for new UI only.
  */
-@import "./styles/tokens.css";
-@import "./styles/base.css";
-@import "./styles/home.css";
-@import "./styles/chrome.css";
-@import "./styles/about.css";
-@import "./styles/pages/login.css";
-@import "./styles/footer.css";
-@import "./styles/pages/profile.css";
-@import "./styles/responsive.css";
-@import "./styles/pages/membership.css";
-@import "./styles/pages/news.css";
-@import "./styles/pages/hub-region.css";
-@import "./styles/pages/vision.css";
-@import "./styles/pages/news-detail.css";
-@import "./styles/pages/organization.css";
+@import "./styles/tokens.css" layer(components);
+@import "./styles/base.css" layer(components);
+@import "./styles/home.css" layer(components);
+@import "./styles/chrome.css" layer(components);
+@import "./styles/about.css" layer(components);
+@import "./styles/pages/login.css" layer(components);
+@import "./styles/footer.css" layer(components);
+@import "./styles/pages/profile.css" layer(components);
+@import "./styles/responsive.css" layer(components);
+@import "./styles/pages/membership.css" layer(components);
+@import "./styles/pages/news.css" layer(components);
+@import "./styles/pages/hub-region.css" layer(components);
+@import "./styles/pages/vision.css" layer(components);
+@import "./styles/pages/news-detail.css" layer(components);
+@import "./styles/pages/organization.css" layer(components);
 
 /*
  * Expose the design tokens to Tailwind utilities. The values resolve through the

@@ -49,7 +49,7 @@ export function SearchButton() {
             <dialog
                 ref={dialogRef}
                 aria-label="Хайх"
-                className="fixed inset-0 m-0 h-full max-h-full w-full max-w-full bg-transparent p-0 backdrop:bg-neutral-600/85 backdrop:backdrop-blur-[2px]"
+                className="fixed inset-0 m-0 h-full max-h-full w-full max-w-full bg-transparent p-0 backdrop:bg-neutral-600/85 backdrop:backdrop-blur-[2px] top-[20vh] z-[1000]"
                 onClick={(event) => {
                     if (event.target === dialogRef.current) dialogRef.current?.close();
                 }}>
@@ -59,7 +59,7 @@ export function SearchButton() {
                         role="search"
                         className="flex w-[35%] items-center gap-lg rounded-2xl bg-neutral-0 px-lg py-lg shadow-[0_24px_64px_rgba(0,0,0,0.25)]">
                         <span
-                            className="shrink-0 text-primary"
+                            className="shrink-0 text-primary ml-[10px]"
                             aria-hidden="true">
                             <svg
                                 width="24"
@@ -89,7 +89,7 @@ export function SearchButton() {
                             autoFocus
                             placeholder="Мэдээ мэдээлэл, эвент хайх..."
                             aria-label="Хайх"
-                            className="min-w-0 flex-1 bg-transparent font-body text-h4 text-neutral-700 outline-none placeholder:text-neutral-400"
+                            className="min-w-0 flex-1 bg-transparent font-body text-h4 text-neutral-700 outline-none placeholder:text-neutral-400 py-30 [&::-webkit-search-cancel-button]:appearance-none"
                         />
                         <button
                             type="button"
