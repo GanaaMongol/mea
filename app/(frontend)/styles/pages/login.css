@@ -11,8 +11,6 @@
 }
 .login-card {
     width: 340px;
-    border: 1px solid var(--color-neutral-300);
-    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -163,4 +161,3 @@
     width: 16px;
     height: 16px;
 }
-
