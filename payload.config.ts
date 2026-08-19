@@ -9,6 +9,7 @@ import sharp from 'sharp'
 import { VideoBlock } from '@/payload/blocks/Video/config'
 import { BoardMembers } from '@/payload/collections/BoardMembers'
 import { Departments } from '@/payload/collections/Departments'
+import { Feedback } from '@/payload/collections/Feedback'
 import { Hubs } from '@/payload/collections/Hubs'
 import { Media } from '@/payload/collections/Media'
 import { Members } from '@/payload/collections/Members'
@@ -52,6 +53,7 @@ export default buildConfig({
     MembershipTiers,
     Media,
     Members,
+    Feedback,
     Users,
   ],
   globals: [Theme, SiteSettings],

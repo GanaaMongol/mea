@@ -4,6 +4,7 @@ import { AcceleratorsBlock } from './Accelerators/config'
 import { CardGridBlock } from './CardGrid/config'
 import { CarouselBlock } from './Carousel/config'
 import { ContactBoxBlock } from './ContactBox/config'
+import { ContactFormBlock } from './ContactForm/config'
 import { CreedBlock } from './Creed/config'
 import { DataTableBlock } from './DataTable/config'
 import { DepartmentGridBlock } from './DepartmentGrid/config'
@@ -52,6 +53,7 @@ export const layoutBlocks: Block[] = [
   MediaCardBlock,
   DepartmentGridBlock,
   ContactBoxBlock,
+  ContactFormBlock,
   ProcessStepsBlock,
   FigureBlock,
   RegionMapBlock,
@@ -79,6 +81,7 @@ export {
   MediaCardBlock,
   DepartmentGridBlock,
   ContactBoxBlock,
+  ContactFormBlock,
   ProcessStepsBlock,
   FigureBlock,
   RegionMapBlock,

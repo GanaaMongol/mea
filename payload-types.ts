@@ -76,6 +76,7 @@ export interface Config {
     membershipTiers: MembershipTier;
     media: Media;
     members: Member;
+    feedback: Feedback;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -92,6 +93,7 @@ export interface Config {
     membershipTiers: MembershipTiersSelect<false> | MembershipTiersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     members: MembersSelect<false> | MembersSelect<true>;
+    feedback: FeedbackSelect<false> | FeedbackSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -193,6 +195,7 @@ export interface Page {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ContactFormBlock
         | ProcessStepsBlock
         | FigureBlock
         | RegionMapBlock
@@ -353,6 +356,7 @@ export interface Post {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ContactFormBlock
         | ProcessStepsBlock
         | FigureBlock
         | RegionMapBlock
@@ -448,6 +452,7 @@ export interface Department {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ContactFormBlock
         | ProcessStepsBlock
         | FigureBlock
         | RegionMapBlock
@@ -578,6 +583,7 @@ export interface Hub {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ContactFormBlock
         | ProcessStepsBlock
         | FigureBlock
         | RegionMapBlock
@@ -683,6 +689,7 @@ export interface MembershipTier {
         | MediaCardBlock
         | DepartmentGridBlock
         | ContactBoxBlock
+        | ContactFormBlock
         | ProcessStepsBlock
         | FigureBlock
         | RegionMapBlock
@@ -1071,6 +1078,47 @@ export interface ContactBoxBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactFormBlock".
+ */
+export interface ContactFormBlock {
+  title: string;
+  details?:
+    | {
+        /**
+         * Жишээ: Утас, Хаяг, Цахим шуудан
+         */
+        label: string;
+        items?:
+          | {
+              value: string;
+              /**
+               * Заавал биш. Жишээ: tel:+97690152040, mailto:info@mea.mn
+               */
+              href?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  form: {
+    title: string;
+    nameLabel?: string | null;
+    emailLabel?: string | null;
+    phoneLabel?: string | null;
+    messageLabel?: string | null;
+    submitLabel?: string | null;
+    /**
+     * Амжилттай илгээсний дараа харагдана.
+     */
+    successMessage?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactForm';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ProcessStepsBlock".
  */
 export interface ProcessStepsBlock {
@@ -1165,6 +1213,21 @@ export interface Member {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback".
+ */
+export interface Feedback {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  status: 'new' | 'read' | 'answered' | 'archived';
+  sourceUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1244,6 +1307,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'members';
         value: number | Member;
+      } | null)
+    | ({
+        relationTo: 'feedback';
+        value: number | Feedback;
       } | null)
     | ({
         relationTo: 'users';
@@ -1332,6 +1399,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        contactForm?: T | ContactFormBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
         regionMap?: T | RegionMapBlockSelect<T>;
@@ -1794,6 +1862,39 @@ export interface ContactBoxBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactFormBlock_select".
+ */
+export interface ContactFormBlockSelect<T extends boolean = true> {
+  title?: T;
+  details?:
+    | T
+    | {
+        label?: T;
+        items?:
+          | T
+          | {
+              value?: T;
+              href?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  form?:
+    | T
+    | {
+        title?: T;
+        nameLabel?: T;
+        emailLabel?: T;
+        phoneLabel?: T;
+        messageLabel?: T;
+        submitLabel?: T;
+        successMessage?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ProcessStepsBlock_select".
  */
 export interface ProcessStepsBlockSelect<T extends boolean = true> {
@@ -1885,6 +1986,7 @@ export interface PostsSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        contactForm?: T | ContactFormBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
         regionMap?: T | RegionMapBlockSelect<T>;
@@ -1928,6 +2030,7 @@ export interface DepartmentsSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        contactForm?: T | ContactFormBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
         regionMap?: T | RegionMapBlockSelect<T>;
@@ -1968,6 +2071,7 @@ export interface HubsSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        contactForm?: T | ContactFormBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
         regionMap?: T | RegionMapBlockSelect<T>;
@@ -2037,6 +2141,7 @@ export interface MembershipTiersSelect<T extends boolean = true> {
         mediaCard?: T | MediaCardBlockSelect<T>;
         departmentGrid?: T | DepartmentGridBlockSelect<T>;
         contactBox?: T | ContactBoxBlockSelect<T>;
+        contactForm?: T | ContactFormBlockSelect<T>;
         processSteps?: T | ProcessStepsBlockSelect<T>;
         figure?: T | FigureBlockSelect<T>;
         regionMap?: T | RegionMapBlockSelect<T>;
@@ -2124,6 +2229,20 @@ export interface MembersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback_select".
+ */
+export interface FeedbackSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  message?: T;
+  status?: T;
+  sourceUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

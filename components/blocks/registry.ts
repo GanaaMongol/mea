@@ -4,6 +4,7 @@ import { Accelerators } from './Accelerators'
 import { CardGrid } from './CardGrid'
 import { Carousel } from './Carousel'
 import { ContactBox } from './ContactBox'
+import { ContactForm } from './ContactForm'
 import { Creed } from './Creed'
 import { DataTable } from './DataTable'
 import { DepartmentGrid } from './DepartmentGrid'
@@ -53,6 +54,7 @@ export const blockComponents: Record<string, ComponentType<any>> = {
   mediaCard: MediaCard,
   departmentGrid: DepartmentGrid,
   contactBox: ContactBox,
+  contactForm: ContactForm,
   processSteps: ProcessSteps,
   figure: Figure,
   regionMap: RegionMap,

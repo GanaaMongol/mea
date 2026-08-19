@@ -390,6 +390,13 @@ Payload Live Preview.
 - [ ] "Нууц үг мартсан" (`/login`) ба "Мэдээлэл өөрчлөх" (`/profile`) — холбоос
       байгаа ч харгалзах урсгал хийгдээгүй.
 
+### Алхам 5.1 — Холбоо барих (Figma-аас)
+`contactForm` block (Figma `160:2583`) — зүүн талд засварлагдах холбоо барих мэдээлэл,
+баруун талд "Санал хүсэлт илгээх" маягт. Маягт нь `feedback` collection руу бичнэ
+(нийтэд `create`, унших нь зөвхөн админ). Honeypot + IP тутам 10 минутад 3 удаа.
+`/contact` хуудас `pages`-д үүссэн (`pageBanner` + `contactForm`).
+Энэ хэсэг нь `lib/html/`-д mockup байхгүй тул Tailwind + theme token-оор бичсэн.
+
 ### Алхам 6 — цэвэрлэгээ
 `lib/html/` устгана. Контентын зургийг `public/images/`-ээс хасаж `media`-д үлдээнэ.
 `npm run build` + `npm run lint` цэвэр.
