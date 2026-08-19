@@ -19,7 +19,6 @@ export const LOGIN_DEFAULTS = {
   forgotLabel: 'Нууц үгээ мартсан уу?',
   dividerLabel: 'Эсвэл',
   registerLabel: 'Бүртгүүлэх',
-  resetLabel: 'Нууц үг сэргээх',
   backLabel: 'Нүүр хуудас',
 }
 

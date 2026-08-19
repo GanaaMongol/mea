@@ -2502,7 +2502,6 @@ export interface SiteSetting {
       passwordPlaceholder?: string | null;
       submitLabel?: string | null;
       dividerLabel?: string | null;
-      resetLabel?: string | null;
       forgotLink?: {
         type?: ('reference' | 'custom') | null;
         newTab?: boolean | null;
@@ -2799,7 +2798,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
               passwordPlaceholder?: T;
               submitLabel?: T;
               dividerLabel?: T;
-              resetLabel?: T;
               forgotLink?:
                 | T
                 | {

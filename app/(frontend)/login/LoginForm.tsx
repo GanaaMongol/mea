@@ -16,7 +16,7 @@ export type LoginLabels = {
   submitLabel: string
   pendingLabel: string
   dividerLabel: string
-  resetLabel: string
+  /** Sits below the register button, in the mockup's "Reset password" slot. */
   forgot: { label: string; href: string }
   register: { label: string; href: string }
   back: { label: string; href: string }
@@ -42,10 +42,6 @@ export function LoginForm({ labels, next }: { labels: LoginLabels; next: string 
 
           <div className="login-field-group">
             <div className="login-field-group__inner">
-              <Link href={labels.forgot.href} className="login-forgot">
-                {labels.forgot.label}
-              </Link>
-
               <div className="form-field">
                 <label className="form-field__label" htmlFor="identifier">
                   {labels.identifierLabel}
@@ -101,7 +97,9 @@ export function LoginForm({ labels, next }: { labels: LoginLabels; next: string 
               {labels.register.label}
             </Link>
 
-            <p className="login-reset">{labels.resetLabel}</p>
+            <Link href={labels.forgot.href} className="login-reset">
+              {labels.forgot.label}
+            </Link>
           </div>
         </form>
       </div>

@@ -286,13 +286,11 @@ export const SiteSettings: GlobalConfig = {
                         },
                       ],
                     },
-                    {
-                      name: 'resetLabel',
-                      type: 'text',
-                      localized: true,
-                      defaultValue: LOGIN_DEFAULTS.resetLabel,
-                    },
-                    link({ name: 'forgotLink', label: 'Нууц үг мартсан холбоос', appearance: false }),
+                    link({
+                      name: 'forgotLink',
+                      label: 'Нууц үг мартсан холбоос',
+                      appearance: false,
+                    }),
                     link({ name: 'registerLink', label: 'Бүртгүүлэх холбоос', appearance: false }),
                     link({ name: 'backLink', label: 'Буцах холбоос', appearance: false }),
                   ],

@@ -43,7 +43,6 @@ export default async function LoginPage({ searchParams }: Props) {
     submitLabel: login?.submitLabel || LOGIN_DEFAULTS.submitLabel,
     pendingLabel: LOGIN_DEFAULTS.pendingLabel,
     dividerLabel: login?.dividerLabel || LOGIN_DEFAULTS.dividerLabel,
-    resetLabel: login?.resetLabel || LOGIN_DEFAULTS.resetLabel,
     forgot: {
       label: login?.forgotLink?.label || LOGIN_DEFAULTS.forgotLabel,
       href: hrefOr(login?.forgotLink, '#'),
