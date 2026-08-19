@@ -412,6 +412,50 @@ export const SiteSettings: GlobalConfig = {
                       localized: true,
                       defaultValue: PROFILE_DEFAULTS.passwordFieldLabel,
                     },
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'passwordCurrentLabel',
+                          type: 'text',
+                          localized: true,
+                          defaultValue: PROFILE_DEFAULTS.passwordCurrentLabel,
+                          admin: { width: '50%' },
+                        },
+                        {
+                          name: 'passwordNewLabel',
+                          type: 'text',
+                          localized: true,
+                          defaultValue: PROFILE_DEFAULTS.passwordNewLabel,
+                          admin: { width: '50%' },
+                        },
+                      ],
+                    },
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'passwordConfirmLabel',
+                          type: 'text',
+                          localized: true,
+                          defaultValue: PROFILE_DEFAULTS.passwordConfirmLabel,
+                          admin: { width: '50%' },
+                        },
+                        {
+                          name: 'passwordSubmitLabel',
+                          type: 'text',
+                          localized: true,
+                          defaultValue: PROFILE_DEFAULTS.passwordSubmitLabel,
+                          admin: { width: '50%' },
+                        },
+                      ],
+                    },
+                    {
+                      name: 'passwordCancelLabel',
+                      type: 'text',
+                      localized: true,
+                      defaultValue: PROFILE_DEFAULTS.passwordCancelLabel,
+                    },
                   ],
                 },
               ],

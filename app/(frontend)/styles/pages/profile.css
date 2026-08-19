@@ -82,11 +82,10 @@
 }
 .profile-panel {
     flex: 1;
-    border: 1px solid var(--color-neutral-300);
-    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
     gap: 40px;
+    min-height: 580px;
 }
 .profile-panel__header {
     display: flex;
@@ -169,4 +168,3 @@
     height: 1px;
     background: var(--color-neutral-300);
 }
-

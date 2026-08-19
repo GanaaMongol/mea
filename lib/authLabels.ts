@@ -36,6 +36,11 @@ export const PROFILE_DEFAULTS = {
   passwordTitle: 'Нууц үг',
   passwordEditLabel: 'Нууц үг солих',
   passwordFieldLabel: 'Нууц үг',
+  passwordCurrentLabel: 'Одоогийн нууц үг',
+  passwordNewLabel: 'Шинэ нууц үг',
+  passwordConfirmLabel: 'Шинэ нууц үгээ давтах',
+  passwordSubmitLabel: 'Хадгалах',
+  passwordCancelLabel: 'Болих',
 }
 
 /**
@@ -48,6 +53,21 @@ export const AUTH_MESSAGES = {
   invalid: 'Утасны дугаар/и-мэйл эсвэл нууц үг буруу байна.',
   locked: 'Хэт олон удаа буруу оролдсон тул бүртгэл түр хаагдлаа. 10 минутын дараа дахин оролдоно уу.',
   failed: 'Нэвтрэхэд алдаа гарлаа. Дараа дахин оролдоно уу.',
+}
+
+/** Minimum length enforced on a new password, in characters. */
+export const MIN_PASSWORD_LENGTH = 8
+
+export const PASSWORD_MESSAGES = {
+  signedOut: 'Таны нэвтэрсэн хугацаа дууссан байна. Дахин нэвтэрнэ үү.',
+  missing: 'Гурван талбарыг бүгдийг бөглөнө үү.',
+  mismatch: 'Шинэ нууц үг хоёр талбарт таарахгүй байна.',
+  tooShort: `Шинэ нууц үг дор хаяж ${MIN_PASSWORD_LENGTH} тэмдэгт байх ёстой.`,
+  same: 'Шинэ нууц үг нь одоогийнхоос өөр байх ёстой.',
+  wrongCurrent: 'Одоогийн нууц үг буруу байна.',
+  locked: 'Хэт олон удаа буруу оролдсон тул түр хаагдлаа. 10 минутын дараа дахин оролдоно уу.',
+  failed: 'Нууц үг солиход алдаа гарлаа. Дараа дахин оролдоно уу.',
+  success: 'Нууц үг солигдлоо. Бусад төхөөрөмж дээрх нэвтрэлт цуцлагдсан.',
 }
 
 /** The default landing page after a successful login. */

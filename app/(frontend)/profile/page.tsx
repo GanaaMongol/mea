@@ -3,8 +3,9 @@ import { redirect } from 'next/navigation'
 
 import { logoutAction } from '@/lib/actions/auth'
 import { getMember, memberDisplayName } from '@/lib/auth'
-import { PROFILE_DEFAULTS } from '@/lib/authLabels'
+import { LOGIN_DEFAULTS, PROFILE_DEFAULTS } from '@/lib/authLabels'
 import { getAuthSettings } from '@/lib/queries'
+import { PasswordSection } from './PasswordSection'
 
 export const metadata: Metadata = {
   title: PROFILE_DEFAULTS.panelTitle,
@@ -151,23 +152,19 @@ export default async function ProfilePage() {
 
             <div className="profile-panel__divider" />
 
-            <div className="profile-info-section">
-              <div className="profile-info-section__header">
-                <h3 className="profile-info-section__title">{labels.passwordTitle}</h3>
-                <span className="profile-edit-link">
-                  {labels.passwordEditLabel}
-                  <span className="profile-edit-link__icon">
-                    <EditIcon />
-                  </span>
-                </span>
-              </div>
-              <div className="profile-field-row">
-                <div className="profile-field">
-                  <label className="profile-field__label">{labels.passwordFieldLabel}</label>
-                  <div className="profile-field__value profile-field__value--password">••••••••</div>
-                </div>
-              </div>
-            </div>
+            <PasswordSection
+              labels={{
+                title: labels.passwordTitle,
+                fieldLabel: labels.passwordFieldLabel,
+                editLabel: labels.passwordEditLabel,
+                cancelLabel: labels.passwordCancelLabel,
+                currentLabel: labels.passwordCurrentLabel,
+                newLabel: labels.passwordNewLabel,
+                confirmLabel: labels.passwordConfirmLabel,
+                submitLabel: labels.passwordSubmitLabel,
+                pendingLabel: LOGIN_DEFAULTS.pendingLabel,
+              }}
+            />
           </div>
         </div>
       </div>

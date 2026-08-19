@@ -2607,6 +2607,11 @@ export interface SiteSetting {
       passwordTitle?: string | null;
       passwordEditLabel?: string | null;
       passwordFieldLabel?: string | null;
+      passwordCurrentLabel?: string | null;
+      passwordNewLabel?: string | null;
+      passwordConfirmLabel?: string | null;
+      passwordSubmitLabel?: string | null;
+      passwordCancelLabel?: string | null;
     };
   };
   updatedAt?: string | null;
@@ -2841,6 +2846,11 @@ export interface SiteSettingsSelect<T extends boolean = true> {
               passwordTitle?: T;
               passwordEditLabel?: T;
               passwordFieldLabel?: T;
+              passwordCurrentLabel?: T;
+              passwordNewLabel?: T;
+              passwordConfirmLabel?: T;
+              passwordSubmitLabel?: T;
+              passwordCancelLabel?: T;
             };
       };
   updatedAt?: T;
