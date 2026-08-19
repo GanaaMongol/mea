@@ -66,6 +66,12 @@ export default buildConfig({
     ],
   }),
   db: postgresAdapter({
+    // Migrations, not dev push. Push re-introspected all 800+ tables on every
+    // boot (~95s before Payload answered); with it off, the schema changes only
+    // when a migration runs. After changing a collection/block/global:
+    //   npm run migrate:create -- --name <what-changed>
+    //   npm run migrate
+    push: false,
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
