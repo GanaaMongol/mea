@@ -53,11 +53,11 @@ export function SearchButton() {
                 onClick={(event) => {
                     if (event.target === dialogRef.current) dialogRef.current?.close();
                 }}>
-                <div className="flex h-full w-full items-start justify-center px-gutter pt-[25vh]">
+                <div className="flex h-full w-full items-start justify-center px-gutter pt-[6vh]">
                     <form
                         action="/news"
                         role="search"
-                        className="flex w-[35%] mt-lg items-center gap-md rounded-2xl bg-neutral-0 px-lg py-lg shadow-[0_24px_64px_rgba(0,0,0,0.25)]">
+                        className="flex w-[35%] items-center gap-lg rounded-2xl bg-neutral-0 px-lg py-lg shadow-[0_24px_64px_rgba(0,0,0,0.25)]">
                         <span
                             className="shrink-0 text-primary"
                             aria-hidden="true">
