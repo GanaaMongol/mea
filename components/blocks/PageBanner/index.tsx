@@ -89,8 +89,19 @@ export function PageBanner({
         ...(align === 'center' ? { textAlign: 'center' } : {}),
       }}
     >
+      {/*
+        membership.html wraps the watermark in `__bg` — an absolutely positioned,
+        centred layer — so the mark sits *behind* the copy. Without that wrapper
+        it stayed in the banner's flex flow and pushed the text aside.
+      */}
       {watermark ? (
-        <MediaImage media={watermark} className={`${base}__watermark`} alt="" />
+        base === 'hub-banner' ? (
+          <div className={`${base}__bg`}>
+            <MediaImage media={watermark} className={`${base}__watermark`} alt="" />
+          </div>
+        ) : (
+          <MediaImage media={watermark} className={`${base}__watermark`} alt="" />
+        )
       ) : null}
       {/*
         The mockups centre a banner by swapping `.container` for the banner's own

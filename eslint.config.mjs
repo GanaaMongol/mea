@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Payload generates these from the schema; they are not hand-edited.
+    "migrations/**",
   ]),
 ]);
 
