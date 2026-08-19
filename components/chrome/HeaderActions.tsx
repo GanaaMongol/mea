@@ -47,11 +47,11 @@ export function SearchButton() {
           if (event.target === dialogRef.current) dialogRef.current?.close()
         }}
       >
-        <div className="flex h-full w-full items-start justify-center px-gutter pt-[100px]">
+        <div className="flex h-full w-full items-start justify-center px-gutter pt-[25vh]">
           <form
             action="/news"
             role="search"
-            className="flex w-11/12 items-center gap-md rounded-2xl bg-neutral-0 px-lg py-md shadow-[0_24px_64px_rgba(0,0,0,0.35)] sm:w-1/3"
+            className="flex w-11/12 items-center rounded-2xl bg-neutral-0 px-lg py-md shadow-[0_24px_64px_rgba(0,0,0,0.35)] sm:w-1/3"
           >
             <span className="shrink-0 text-neutral-400" aria-hidden="true">
               <svg
@@ -74,7 +74,7 @@ export function SearchButton() {
               autoFocus
               placeholder="Хайх..."
               aria-label="Хайх"
-              className="min-w-0 flex-1 bg-transparent font-body text-h2 text-neutral-700 outline-none placeholder:text-neutral-400"
+              className="mx-lg min-w-0 flex-1 bg-transparent font-body text-h4 text-neutral-700 outline-none placeholder:text-neutral-400"
             />
             <kbd className="hidden shrink-0 rounded-sm border border-neutral-200 px-2 py-1 font-ui text-caption text-neutral-400 sm:block">
               ESC
