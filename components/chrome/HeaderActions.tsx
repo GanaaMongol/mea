@@ -51,12 +51,12 @@ export function SearchButton() {
           <form
             action="/news"
             role="search"
-            className="flex w-2/3 items-center gap-4 rounded-2xl bg-neutral-0 px-7 py-5 shadow-[0_24px_64px_rgba(0,0,0,0.35)]"
+            className="flex w-11/12 items-center gap-3 rounded-2xl bg-neutral-0 px-6 py-4 shadow-[0_24px_64px_rgba(0,0,0,0.35)] sm:w-1/3"
           >
-            <span className="text-neutral-400" aria-hidden="true">
+            <span className="shrink-0 text-neutral-400" aria-hidden="true">
               <svg
-                width="28"
-                height="28"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -74,9 +74,9 @@ export function SearchButton() {
               autoFocus
               placeholder="Хайх..."
               aria-label="Хайх"
-              className="w-full bg-transparent font-body text-h1 text-neutral-700 outline-none placeholder:text-neutral-400"
+              className="min-w-0 flex-1 bg-transparent font-body text-h2 text-neutral-700 outline-none placeholder:text-neutral-400"
             />
-            <kbd className="hidden shrink-0 rounded-sm border border-neutral-200 px-2 py-1 font-ui text-caption text-neutral-400 sm:block">
+            <kbd className="hidden shrink-0 rounded-sm border border-neutral-200 px-1.5 py-0.5 font-ui text-caption text-neutral-400 sm:block">
               ESC
             </kbd>
           </form>
