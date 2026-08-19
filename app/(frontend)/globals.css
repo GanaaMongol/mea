@@ -66,4 +66,11 @@
     --radius-lg: var(--radius-lg);
     --radius-2xl: var(--radius-2xl);
     --radius-full: var(--radius-full);
+
+    /* Spacing tokens as named Tailwind steps: `p-md`, `gap-lg`, `px-gutter`,
+     * `py-section`. The numeric scale (`p-4`) keeps working alongside them. */
+    --spacing-md: var(--padding-md);
+    --spacing-lg: var(--padding-lg);
+    --spacing-gutter: var(--gutter);
+    --spacing-section: var(--section-pad);
 }
