@@ -68,8 +68,13 @@ export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }
           ))}
         </nav>
 
+        {/*
+          Three slots so the social row sits dead centre: the copyright and the
+          legal links each take an equal share of the leftover width, leaving the
+          middle group centred on the footer regardless of their text length.
+        */}
         <div className="footer__bottom">
-          <p className="footer__copyright">{footer?.copyright}</p>
+          <p className="footer__copyright flex-1">{footer?.copyright}</p>
 
           {footer?.socialLinks?.length ? (
             <div className="footer__social">
@@ -94,9 +99,11 @@ export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }
             </div>
           ) : null}
 
-          {footer?.legalLinks?.map((link, index) => (
-            <SiteLink key={link.id ?? index} link={link} className="footer__legal-link" />
-          ))}
+          <div className="flex flex-1 justify-end gap-lg">
+            {footer?.legalLinks?.map((link, index) => (
+              <SiteLink key={link.id ?? index} link={link} className="footer__legal-link" />
+            ))}
+          </div>
         </div>
       </div>
     </footer>
