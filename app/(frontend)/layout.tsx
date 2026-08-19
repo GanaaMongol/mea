@@ -8,6 +8,8 @@ import { AnnouncementBar } from '@/components/chrome/AnnouncementBar'
 import { Footer } from '@/components/chrome/Footer'
 import { Header } from '@/components/chrome/Header'
 import { Newsletter } from '@/components/chrome/Newsletter'
+import { getMember } from '@/lib/auth'
+import { PROFILE_DEFAULTS } from '@/lib/authLabels'
 import { getPayloadClient } from '@/lib/payload'
 import { buildThemeCss } from '@/lib/theme'
 import './globals.css'
@@ -62,7 +64,11 @@ async function getChrome(): Promise<{
 }
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
-  const [{ settings, theme }, headerList] = await Promise.all([getChrome(), headers()])
+  const [{ settings, theme }, headerList, member] = await Promise.all([
+    getChrome(),
+    headers(),
+    getMember(),
+  ])
   const pathname = headerList.get('x-pathname') ?? '/'
   const themeCss = buildThemeCss(theme)
 
@@ -79,7 +85,19 @@ export default async function FrontendLayout({ children }: { children: React.Rea
       </head>
       <body>
         <AnnouncementBar announcement={settings?.announcement} locale="mn" />
-        <Header header={settings?.header} pathname={pathname} />
+        <Header
+          header={settings?.header}
+          pathname={pathname}
+          account={
+            member
+              ? {
+                  href: '/profile',
+                  label:
+                    settings?.auth?.profile?.headerLinkLabel || PROFILE_DEFAULTS.headerLinkLabel,
+                }
+              : null
+          }
+        />
         {children}
         <Newsletter newsletter={settings?.newsletter} />
         <Footer footer={settings?.footer} />

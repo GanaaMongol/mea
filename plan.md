@@ -49,7 +49,10 @@
       **Бэлэн болсон block: 8** — `pageBanner`, `sectionTabs`, `richText`, `cardGrid`,
       `quoteBanner`, `accelerators`, `postsFeed`, `gallery`.
 
-      Үлдсэн: departments, organization, hubs×3, about×5, membership×3, login/profile.
+      Үлдсэн: departments, organization, hubs×3, about×5, membership×3, membership-join.
+
+      **Алхам 5 (auth) эхэлсэн:** `login.html` → `/login`, `user-profile.html` → `/profile`
+      ажиллаж байна (утас/и-мэйлээр нэвтрэх, гарах, толгойн товч солигдох).
 
 **Шалгасан:** `npm run lint` ✅ · `npx tsc --noEmit` ✅ · `npm run build` ✅ ·
 `/`, `/news`, `/news?kind=article`, `/news/[slug]`, `/admin` бүгд 200.
@@ -367,6 +370,20 @@ Payload Live Preview.
 
 ### Алхам 5 — auth & форм
 `members` login (Server Action + cookie), `/membership/join` бүртгэл, `/profile`.
+
+- [x] `/login` — `LoginForm` (`useActionState`), `loginAction` Server Action.
+      Нэвтрэх нэр = **утасны дугаар эсвэл и-мэйл** (утсыг зөвхөн цифрээр хадгалж,
+      `members.phone`-оор и-мэйлийг нь олоод Payload-ийн `login`-д дамжуулна).
+      Cookie нь `generatePayloadCookie`-оор тавигдаж, `?next=` зөвхөн дотоод зам.
+      Буруу оролдлого 5 удаа → Payload өөрөө 10 минут түгждэг.
+- [x] `/profile` — `members` session заавал шаардана (үгүй бол `/login?next=/profile`),
+      мэдээллийг харуулж, `logoutAction` нь session-ийг DB-ээс устгаад cookie-г арилгана.
+- [x] Толгойн "Нэвтрэх" товч нэвтэрсэн үед "Профайл" болж солигдоно (`layout.tsx` → `getMember`).
+- [x] Хоёр хуудасны бүх текст `siteSettings → Нэвтрэх & Профайл` таб дотор
+      (`lib/authLabels.ts` нь default-уудыг global болон fallback хоёрт нэг дор өгнө).
+- [ ] `/membership/join` бүртгэлийн форм — үлдсэн.
+- [ ] "Нууц үг мартсан" / "Нууц үг солих" / "Мэдээлэл өөрчлөх" — холбоос байгаа ч
+      харгалзах урсгал хийгдээгүй.
 
 ### Алхам 6 — цэвэрлэгээ
 `lib/html/` устгана. Контентын зургийг `public/images/`-ээс хасаж `media`-д үлдээнэ.

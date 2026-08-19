@@ -10,9 +10,11 @@ import { MenuToggle, SearchButton } from './HeaderActions'
 type Props = {
   header: SiteSetting['header'] | undefined
   pathname: string
+  /** Set once a member is signed in — the login button becomes their account link. */
+  account?: { href: string; label: string } | null
 }
 
-export function Header({ header, pathname }: Props) {
+export function Header({ header, pathname, account }: Props) {
   return (
     <header className="header">
       <div className="container">
@@ -40,7 +42,11 @@ export function Header({ header, pathname }: Props) {
 
         <div className="header__actions">
           {header?.showSearch ? <SearchButton /> : null}
-          {header?.loginLink?.label ? (
+          {account ? (
+            <Link href={account.href} className="btn btn--primary btn--sm">
+              {account.label}
+            </Link>
+          ) : header?.loginLink?.label ? (
             <SiteLink link={header.loginLink} className="btn btn--primary btn--sm" />
           ) : null}
         </div>

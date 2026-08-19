@@ -2,7 +2,7 @@ import 'server-only'
 
 import { draftMode } from 'next/headers'
 
-import type { Page } from '@/payload-types'
+import type { Page, SiteSetting } from '@/payload-types'
 
 import { getPayloadClient } from './payload'
 
@@ -34,4 +34,20 @@ export const getPageSlugs = async (): Promise<string[]> => {
   })
 
   return docs.map((doc) => doc.slug).filter((slug): slug is string => Boolean(slug))
+}
+
+/**
+ * `/login` and `/profile` are app UI rather than blocks, so their labels come
+ * from this one corner of `siteSettings`. Failing soft keeps the login form
+ * usable (on its coded defaults) even if the global has never been saved.
+ */
+export const getAuthSettings = async (): Promise<SiteSetting['auth'] | null> => {
+  try {
+    const payload = await getPayloadClient()
+    const settings = await payload.findGlobal({ slug: 'siteSettings', depth: 1 })
+    return settings.auth ?? null
+  } catch (error) {
+    console.error('[queries] siteSettings unavailable:', error)
+    return null
+  }
 }

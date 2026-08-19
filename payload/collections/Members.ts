@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { normalizePhone } from '@/lib/phone'
 import { adminsOnly, adminsOnlyField, selfOnly } from '@/payload/access'
 
 /**
@@ -10,7 +11,12 @@ import { adminsOnly, adminsOnlyField, selfOnly } from '@/payload/access'
 export const Members: CollectionConfig = {
   slug: 'members',
   labels: { singular: 'Гишүүн', plural: 'Гишүүд' },
-  auth: true,
+  auth: {
+    // A membership account is checked far less often than an admin session, so
+    // the 2h default would log people out mid-visit. Payload's lockout defaults
+    // (5 attempts / 10 minutes) stay as they are.
+    tokenExpiration: 60 * 60 * 24 * 7,
+  },
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['email', 'fullName', 'organization', 'status'],
@@ -33,6 +39,18 @@ export const Members: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
+      unique: true,
+      index: true,
+      label: 'Утасны дугаар',
+      admin: {
+        description: '/login дээр нэвтрэх нэр болно. Зөвхөн цифрээр хадгалагдана.',
+      },
+      hooks: {
+        // Stored canonically so the login lookup can compare digits to digits.
+        beforeValidate: [
+          ({ value }) => (typeof value === 'string' ? normalizePhone(value) || null : value),
+        ],
+      },
     },
     {
       name: 'organization',

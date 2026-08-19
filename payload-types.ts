@@ -1136,6 +1136,9 @@ export interface RegionMapBlock {
 export interface Member {
   id: number;
   fullName: string;
+  /**
+   * /login дээр нэвтрэх нэр болно. Зөвхөн цифрээр хадгалагдана.
+   */
   phone?: string | null;
   organization?: string | null;
   tier?: (number | null) | MembershipTier;
@@ -2487,6 +2490,125 @@ export interface SiteSetting {
         }[]
       | null;
   };
+  auth?: {
+    login?: {
+      title?: string | null;
+      identifierLabel?: string | null;
+      /**
+       * Утасны дугаар эсвэл и-мэйлээр нэвтэрч болно.
+       */
+      identifierPlaceholder?: string | null;
+      passwordLabel?: string | null;
+      passwordPlaceholder?: string | null;
+      submitLabel?: string | null;
+      dividerLabel?: string | null;
+      resetLabel?: string | null;
+      forgotLink?: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        label?: string | null;
+        reference?:
+          | ({
+              relationTo: 'pages';
+              value: number | Page;
+            } | null)
+          | ({
+              relationTo: 'posts';
+              value: number | Post;
+            } | null)
+          | ({
+              relationTo: 'departments';
+              value: number | Department;
+            } | null)
+          | ({
+              relationTo: 'hubs';
+              value: number | Hub;
+            } | null)
+          | ({
+              relationTo: 'membershipTiers';
+              value: number | MembershipTier;
+            } | null);
+        url?: string | null;
+        id?: string | null;
+      };
+      registerLink?: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        label?: string | null;
+        reference?:
+          | ({
+              relationTo: 'pages';
+              value: number | Page;
+            } | null)
+          | ({
+              relationTo: 'posts';
+              value: number | Post;
+            } | null)
+          | ({
+              relationTo: 'departments';
+              value: number | Department;
+            } | null)
+          | ({
+              relationTo: 'hubs';
+              value: number | Hub;
+            } | null)
+          | ({
+              relationTo: 'membershipTiers';
+              value: number | MembershipTier;
+            } | null);
+        url?: string | null;
+        id?: string | null;
+      };
+      backLink?: {
+        type?: ('reference' | 'custom') | null;
+        newTab?: boolean | null;
+        label?: string | null;
+        reference?:
+          | ({
+              relationTo: 'pages';
+              value: number | Page;
+            } | null)
+          | ({
+              relationTo: 'posts';
+              value: number | Post;
+            } | null)
+          | ({
+              relationTo: 'departments';
+              value: number | Department;
+            } | null)
+          | ({
+              relationTo: 'hubs';
+              value: number | Hub;
+            } | null)
+          | ({
+              relationTo: 'membershipTiers';
+              value: number | MembershipTier;
+            } | null);
+        url?: string | null;
+        id?: string | null;
+      };
+    };
+    profile?: {
+      /**
+       * Нэвтэрсэн үед толгойн товч дээр гарах текст.
+       */
+      headerLinkLabel?: string | null;
+      /**
+       * {name} нь хэрэглэгчийн нэрээр солигдоно.
+       */
+      greeting?: string | null;
+      menuAccountLabel?: string | null;
+      menuLogoutLabel?: string | null;
+      panelTitle?: string | null;
+      editLabel?: string | null;
+      generalTitle?: string | null;
+      phoneLabel?: string | null;
+      emailLabel?: string | null;
+      passwordTitle?: string | null;
+      passwordEditLabel?: string | null;
+      passwordFieldLabel?: string | null;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2657,6 +2779,68 @@ export interface SiteSettingsSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               id?: T;
+            };
+      };
+  auth?:
+    | T
+    | {
+        login?:
+          | T
+          | {
+              title?: T;
+              identifierLabel?: T;
+              identifierPlaceholder?: T;
+              passwordLabel?: T;
+              passwordPlaceholder?: T;
+              submitLabel?: T;
+              dividerLabel?: T;
+              resetLabel?: T;
+              forgotLink?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    label?: T;
+                    reference?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              registerLink?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    label?: T;
+                    reference?: T;
+                    url?: T;
+                    id?: T;
+                  };
+              backLink?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    label?: T;
+                    reference?: T;
+                    url?: T;
+                    id?: T;
+                  };
+            };
+        profile?:
+          | T
+          | {
+              headerLinkLabel?: T;
+              greeting?: T;
+              menuAccountLabel?: T;
+              menuLogoutLabel?: T;
+              panelTitle?: T;
+              editLabel?: T;
+              generalTitle?: T;
+              phoneLabel?: T;
+              emailLabel?: T;
+              passwordTitle?: T;
+              passwordEditLabel?: T;
+              passwordFieldLabel?: T;
             };
       };
   updatedAt?: T;
