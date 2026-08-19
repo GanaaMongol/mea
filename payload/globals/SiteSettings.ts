@@ -192,6 +192,39 @@ export const SiteSettings: GlobalConfig = {
                   ],
                 },
                 {
+                  name: 'socialLinks',
+                  type: 'array',
+                  label: 'Сошиал холбоос',
+                  admin: {
+                    initCollapsed: true,
+                    description: 'Хөлийн доод эгнээний голд дугуй товч болж харагдана.',
+                  },
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'platform',
+                          type: 'select',
+                          required: true,
+                          options: [
+                            { label: 'Facebook', value: 'facebook' },
+                            { label: 'Instagram', value: 'instagram' },
+                            { label: 'YouTube', value: 'youtube' },
+                          ],
+                          admin: { width: '40%' },
+                        },
+                        {
+                          name: 'url',
+                          type: 'text',
+                          required: true,
+                          admin: { width: '60%' },
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
                   name: 'copyright',
                   type: 'text',
                   localized: true,

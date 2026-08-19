@@ -5,6 +5,17 @@ import type { SiteSetting } from '@/payload-types'
 import { MediaImage } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
 
+/**
+ * The three marks exported from the Figma footer, kept at the geometry the
+ * design gives them: a 24px box for each, with YouTube's glyph inset to 16×11
+ * inside that box.
+ */
+const SOCIAL_ICONS: Record<string, { src: string; width: number; height: number; label: string }> = {
+  facebook: { src: '/images/social-facebook.svg', width: 24, height: 24, label: 'Facebook' },
+  instagram: { src: '/images/social-instagram.svg', width: 24, height: 24, label: 'Instagram' },
+  youtube: { src: '/images/social-youtube.svg', width: 16, height: 11, label: 'YouTube' },
+}
+
 export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }) {
   return (
     <footer className="footer">
@@ -59,6 +70,30 @@ export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }
 
         <div className="footer__bottom">
           <p className="footer__copyright">{footer?.copyright}</p>
+
+          {footer?.socialLinks?.length ? (
+            <div className="footer__social">
+              {footer.socialLinks.map((item, index) => {
+                const icon = SOCIAL_ICONS[item.platform]
+                if (!icon) return null
+
+                return (
+                  <a
+                    key={item.id ?? index}
+                    href={item.url}
+                    className="footer__social-link"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label={icon.label}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={icon.src} alt="" width={icon.width} height={icon.height} />
+                  </a>
+                )
+              })}
+            </div>
+          ) : null}
+
           {footer?.legalLinks?.map((link, index) => (
             <SiteLink key={link.id ?? index} link={link} className="footer__legal-link" />
           ))}

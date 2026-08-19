@@ -1,0 +1,144 @@
+/* --- Search Modal ---
+ *
+ * Not part of the ported `styles.css` — this UI has no mockup. Written in the
+ * same BEM style so every value lives in one place, and driven entirely by the
+ * design tokens, so the `theme` global still controls it.
+ *
+ * The element is a native <dialog>: `showModal()` puts it in the browser's top
+ * layer, so it needs no z-index to clear the sticky header.
+ */
+
+.search-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    overflow: hidden;
+}
+.search-modal::backdrop {
+    background: color-mix(in srgb, var(--color-neutral-600) 85%, transparent);
+    backdrop-filter: blur(2px);
+}
+
+/* Fills the dialog; the panel's distance from the top of the screen is set here
+   and nowhere else. */
+.search-modal__layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 24vh var(--gutter) 0;
+}
+
+.search-modal__panel {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-lg);
+    width: 35%;
+    padding: var(--padding-lg);
+    background: var(--color-neutral-0);
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+}
+
+.search-modal__icon {
+    display: flex;
+    flex-shrink: 0;
+    color: var(--color-primary);
+}
+
+.search-modal__input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: var(--text-h4);
+    color: var(--color-neutral-700);
+}
+.search-modal__input::placeholder {
+    color: var(--color-neutral-400);
+}
+/* WebKit adds its own clear button to type="search"; the panel has one already. */
+.search-modal__input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.search-modal__close {
+    display: flex;
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-neutral-700);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.search-modal__close:hover {
+    color: var(--color-primary);
+}
+
+@media (max-width: 1100px) {
+    .search-modal__panel {
+        width: 60%;
+    }
+}
+@media (max-width: 768px) {
+    .search-modal__panel {
+        width: 100%;
+    }
+}
+
+/* --- Search Results (/search) --- */
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-md);
+    list-style: none;
+    margin-top: var(--padding-lg);
+}
+.search-results__link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--padding-md) var(--padding-lg);
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: border-color 0.2s;
+}
+.search-results__link:hover {
+    border-color: var(--color-primary);
+}
+.search-results__group {
+    font-family: var(--font-ui);
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.96px;
+    color: var(--color-neutral-400);
+}
+.search-results__title {
+    font-family: var(--font-body);
+    font-size: var(--text-h4);
+    font-weight: 600;
+    color: var(--color-neutral-700);
+}
+.search-results__excerpt {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-neutral-500);
+}
+.search-results__empty {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-neutral-500);
+}

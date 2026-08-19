@@ -2577,6 +2577,16 @@ export interface SiteSetting {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Хөлийн доод эгнээний голд дугуй товч болж харагдана.
+     */
+    socialLinks?:
+      | {
+          platform: 'facebook' | 'instagram' | 'youtube';
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
     copyright?: string | null;
     legalLinks?:
       | {
@@ -2890,6 +2900,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
                     url?: T;
                     id?: T;
                   };
+              id?: T;
+            };
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
               id?: T;
             };
         copyright?: T;

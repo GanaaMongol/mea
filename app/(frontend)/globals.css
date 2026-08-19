@@ -30,6 +30,9 @@
 @import "./styles/pages/news-detail.css" layer(components);
 @import "./styles/pages/organization.css" layer(components);
 
+/* New UI with no mockup of its own, kept in the same layer as the design system. */
+@import "./styles/search.css" layer(components);
+
 /*
  * Expose the design tokens to Tailwind utilities. The values resolve through the
  * same custom properties the ported CSS uses, so editing the `theme` global in

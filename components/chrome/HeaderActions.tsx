@@ -38,28 +38,20 @@ export function SearchButton() {
                     />
                 </svg>
             </button>
-
-            {/*
-        A native <dialog> rather than a positioned div: `showModal()` puts it in
-        the browser's top layer, so it sits above the sticky header and the
-        announcement bar without competing on z-index, and Escape closes it for
-        free. The dialog itself fills the viewport, so a click that lands on it
-        (and not on the search panel) is a click on the backdrop.
-      */}
             <dialog
                 ref={dialogRef}
                 aria-label="Хайх"
-                className="fixed inset-0 m-0 h-full max-h-full w-full max-w-full bg-transparent p-0 backdrop:bg-neutral-600/85 backdrop:backdrop-blur-[2px] top-[20vh] z-[1000]"
+                className="search-modal"
                 onClick={(event) => {
                     if (event.target === dialogRef.current) dialogRef.current?.close();
                 }}>
-                <div className="flex h-full w-full items-start justify-center px-gutter pt-[6vh]">
+                <div className="search-modal__layout">
                     <form
-                        action="/news"
+                        action="/search"
                         role="search"
-                        className="flex w-[35%] items-center gap-lg rounded-2xl bg-neutral-0 px-lg py-lg shadow-[0_24px_64px_rgba(0,0,0,0.25)]">
+                        className="search-modal__panel">
                         <span
-                            className="shrink-0 text-primary ml-[10px]"
+                            className="search-modal__icon"
                             aria-hidden="true">
                             <svg
                                 width="24"
@@ -87,14 +79,14 @@ export function SearchButton() {
                             type="search"
                             name="q"
                             autoFocus
-                            placeholder="Мэдээ мэдээлэл, эвент хайх..."
+                            placeholder="Мэдээ мэдээллээс хайх..."
                             aria-label="Хайх"
-                            className="min-w-0 flex-1 bg-transparent font-body text-h4 text-neutral-700 outline-none placeholder:text-neutral-400 py-30 [&::-webkit-search-cancel-button]:appearance-none"
+                            className="search-modal__input"
                         />
                         <button
                             type="button"
                             aria-label="Хаах"
-                            className="shrink-0 cursor-pointer border-0 bg-transparent p-0 text-neutral-700"
+                            className="search-modal__close"
                             onClick={() => dialogRef.current?.close()}>
                             <svg
                                 width="24"
