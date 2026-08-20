@@ -150,7 +150,7 @@ Markup-ыг хараагүй байж field зохиохыг **хориглон�
 
 | Block | Давтамж | Класс | Татдаг | Тохиргоо |
 | --- | --- | --- | --- | --- |
-| `postsFeed` | **3** | `news-grid`, `news-card` | `posts` | `sectionHeader`, `kind` (all/news/article), `limit`, `layout` (grid/carousel), `showFilter`, `moreLink`, `manual[]` (гараар сонгох боломж) |
+| `postsFeed` | **3** | `news-grid`, `news-card` | `posts` / `prayers` (`collection` сонголт) | `sectionHeader`, `kind` (all/news/article), `limit`, `layout` (grid/carousel), `showFilter`, `moreLink`, `manual[]` (гараар сонгох боломж) |
 | `departmentGrid` | **2** | `dept-grid`/`dept-card`, `org-dept-grid`/`org-dept-card` | `departments` | `variant` (card/overlay), `limit`, `manual[]` |
 | `peopleGrid` | **5** | `board-grid`/`board-card`, `team-grid`/`team-card`, `hub-region-team-grid` | `boardMembers` | `variant` (board/team/region), `sectionHeader`, `group` (filter), `manual[]` |
 | `gallery` | **5** | `hub-carousel`, `hub-carousel__slide`, `news-detail-article__gallery` | — (өөрийн media) | `variant` (carousel/grid/mosaic), `items[]` (media, caption) |
@@ -232,6 +232,7 @@ Block component-ийн props нь `payload-types.ts`-ээс generate хийгд�
 | --- | --- | --- | --- |
 | `pages` | collection | **бүх статик хуудас** | `title`, `slug`, `layout: blocks[]`, SEO, drafts |
 | `posts` | collection | `/news`, `/news/[slug]` | title, slug, kind (Мэдээ/Нийтлэл), excerpt, cover, `layout: blocks[]` эсвэл lexical body, publishedAt |
+| `prayers` | collection | `/prayer`, `/prayer/[slug]` | `posts`-той ижил талбарууд (`articleFields`), `kind`-гүй. Админд "Мэдээ & Нийтлэл"-ийн доор. |
 | `departments` | collection | `/departments/[slug]` | name, slug, lead, image, `layout: blocks[]` |
 | `hubs` | collection | `/hubs/*` | name, slug, region, banner, `layout: blocks[]` |
 | `boardMembers` | collection | `peopleGrid`-ийн эх | name, role, photo, `group` (board/team/region), order |

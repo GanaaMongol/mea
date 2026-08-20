@@ -116,6 +116,8 @@ Page order and which blocks each page yields: `plan.md` §8 Алхам 4.
 | `index.html` | `/` | `pages` (slug `home`) |
 | `news2.html` | `/news` | `pages` + `postsFeed` block |
 | `news-detail.html` | `/news/[slug]` | `posts` |
+| — (шинэ) | `/prayer` | `pages` + `postsFeed` block (эх сурвалж: `prayers`) |
+| — (шинэ) | `/prayer/[slug]` | `prayers` |
 | `membership.html` | `/membership` | `pages` + `membershipTiers` |
 | `membership-detail.html` | `/membership/[slug]` | `membershipTiers` |
 | `membership-join.html` | `/membership/join` | form (server action) |
@@ -184,6 +186,7 @@ complete design system. Converting it to utility classes destroys pixel parity f
 | --- | --- | --- |
 | `pages` | collection | every static page — `title`, `slug`, `layout: blocks[]`, SEO, drafts |
 | `posts` | collection | `/news`, `/news/[slug]` — kind (Мэдээ/Нийтлэл), excerpt, cover, body, publishedAt |
+| `prayers` | collection | `/prayer`, `/prayer/[slug]` — `posts`-той ижил бүтэц (`payload/fields/article.ts`), `kind`-гүй |
 | `departments` | collection | `/departments/[slug]` |
 | `hubs` | collection | `/hubs/*` |
 | `boardMembers` | collection | feeds `peopleGrid` (group: board / team / region) |
