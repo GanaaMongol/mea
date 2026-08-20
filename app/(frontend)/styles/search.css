@@ -41,7 +41,7 @@
     display: flex;
     align-items: center;
     gap: var(--padding-lg);
-    width: 35%;
+    width: 45%;
     padding: var(--padding-lg);
     background: var(--color-neutral-0);
     border-radius: var(--radius-2xl);

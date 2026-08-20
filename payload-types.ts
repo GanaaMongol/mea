@@ -323,7 +323,7 @@ export interface Post {
    * URL-д ашиглагдана. Хоосон орхивол гарчгаас автоматаар үүснэ.
    */
   slug: string;
-  kind: 'news' | 'article';
+  kind: 'news' | 'article' | 'prayer';
   publishedAt?: string | null;
   cover?: (number | null) | Media;
   /**
@@ -764,7 +764,7 @@ export interface PostsFeedBlock {
   };
   source: 'auto' | 'manual';
   limit?: number | null;
-  kind?: ('all' | 'news' | 'article') | null;
+  kind?: ('all' | 'newsArticle' | 'news' | 'article' | 'prayer') | null;
   manual?: (number | Post)[] | null;
   filter?: {
     enabled?: boolean | null;
@@ -772,7 +772,7 @@ export interface PostsFeedBlock {
     items?:
       | {
           label: string;
-          kind: 'all' | 'news' | 'article';
+          kind: 'all' | 'newsArticle' | 'news' | 'article' | 'prayer';
           id?: string | null;
         }[]
       | null;

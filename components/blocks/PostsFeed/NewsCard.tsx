@@ -7,6 +7,7 @@ import { MediaImage } from '@/components/ui/MediaImage'
 const KIND_LABEL: Record<string, string> = {
   news: 'Мэдээ',
   article: 'Нийтлэл',
+  prayer: 'Залбирал',
 }
 
 /** `2026/06/28` — the format the mockups use. */

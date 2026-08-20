@@ -65,6 +65,8 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
 
   if (!post) notFound()
 
+  const prayer = post.kind === 'prayer'
+
   return (
     <>
       {post.cover ? (
@@ -80,14 +82,15 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
         </div>
       </section>
 
+      {/* Prayers sit beside prayers; everything else stays on news & articles. */}
       <PostsFeed
         blockType="postsFeed"
         variant="related"
         source="auto"
-        kind="all"
+        kind={prayer ? 'prayer' : 'newsArticle'}
         limit={4}
         readLabel="Унших"
-        header={{ title: 'Төстэй мэдээнүүд', align: 'left' }}
+        header={{ title: prayer ? 'Бусад залбирлууд' : 'Төстэй мэдээнүүд', align: 'left' }}
       />
     </>
   )

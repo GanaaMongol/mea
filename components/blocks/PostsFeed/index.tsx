@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import type { Where } from 'payload'
+
 import type { Post, PostsFeedBlock as PostsFeedProps } from '@/payload-types'
 
 import { ArrowUpRight } from '@/components/ui/ArrowUpRight'
@@ -15,6 +17,13 @@ type Props = PostsFeedProps & {
 
 const asPost = (value: number | Post): Post | null =>
   typeof value === 'object' ? value : null
+
+/** `all` means every kind; `newsArticle` is the news list's "everything but prayers". */
+const kindWhere = (kind?: string | null): Where => {
+  if (!kind || kind === 'all') return {}
+  if (kind === 'newsArticle') return { kind: { in: ['news', 'article'] } }
+  return { kind: { equals: kind } }
+}
 
 async function loadPosts({
   source,
@@ -33,7 +42,7 @@ async function loadPosts({
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
     collection: 'posts',
-    where: effectiveKind && effectiveKind !== 'all' ? { kind: { equals: effectiveKind } } : {},
+    where: kindWhere(effectiveKind),
     sort: '-publishedAt',
     limit: limit ?? 4,
     depth: 1,
@@ -48,7 +57,12 @@ export async function PostsFeed(props: Props) {
   const posts = await loadPosts(props)
   const related = variant === 'related'
   const bordered = variant === 'bordered' || related
-  const current = activeKind ?? 'all'
+  // The block's own kind is the tab that's active on a bare URL, so that tab
+  // links back to the clean path rather than repeating itself as a query.
+  const defaultKind = props.kind ?? 'all'
+  const current = activeKind ?? defaultKind
+  const tabHref = (kind: string) =>
+    kind === defaultKind ? (pathname ?? '/') : `${pathname ?? '/'}?kind=${kind}`
 
   return (
     <section
@@ -72,7 +86,7 @@ export async function PostsFeed(props: Props) {
                 {filter.items?.map((item, index) => (
                   <Link
                     key={item.id ?? index}
-                    href={item.kind === 'all' ? (pathname ?? '/') : `${pathname ?? '/'}?kind=${item.kind}`}
+                    href={tabHref(item.kind)}
                     className={[
                       'news-filter__btn',
                       item.kind === current ? 'news-filter__btn--active' : null,
@@ -93,7 +107,7 @@ export async function PostsFeed(props: Props) {
             {filter.items?.map((item, index) => (
               <Link
                 key={item.id ?? index}
-                href={item.kind === 'all' ? (pathname ?? '/') : `${pathname ?? '/'}?kind=${item.kind}`}
+                href={tabHref(item.kind)}
                 className={[
                   'cap-tab',
                   item.kind === current ? 'cap-tab--active' : null,

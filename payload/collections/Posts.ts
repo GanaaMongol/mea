@@ -5,10 +5,12 @@ import { layoutBlocks } from '@/payload/blocks'
 import { slugField } from '@/payload/fields/slug'
 import { revalidateCollection, revalidateCollectionDelete } from '@/payload/hooks/revalidate'
 
-const postPaths = (doc: Record<string, unknown>) => [
-  '/news',
-  `/news/${typeof doc.slug === 'string' ? doc.slug : ''}`,
-]
+const postPaths = (doc: Record<string, unknown>) => {
+  const slug = typeof doc.slug === 'string' ? doc.slug : ''
+  // Prayers share the `/news/[slug]` detail route but list on their own page.
+  const lists = doc.kind === 'prayer' ? ['/news', '/prayer'] : ['/news']
+  return [...lists, `/news/${slug}`]
+}
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -45,6 +47,7 @@ export const Posts: CollectionConfig = {
       options: [
         { label: 'Мэдээ', value: 'news' },
         { label: 'Нийтлэл', value: 'article' },
+        { label: 'Залбирал', value: 'prayer' },
       ],
       admin: { position: 'sidebar' },
     },

@@ -8,6 +8,19 @@ import { sectionHeader } from '@/payload/fields/sectionHeader'
  * "Дэлгэрэнгүй"), news2.html (12 bordered cards + tab filter) and as the related
  * strip under news-detail.html.
  */
+/**
+ * `newsArticle` keeps prayers out of the news list's "Бүгд" tab: `all` really
+ * means every post kind, so a feed that should stay news-only asks for both
+ * news and articles explicitly.
+ */
+const kindOptions = [
+  { label: 'Бүгд', value: 'all' },
+  { label: 'Мэдээ & Нийтлэл', value: 'newsArticle' },
+  { label: 'Мэдээ', value: 'news' },
+  { label: 'Нийтлэл', value: 'article' },
+  { label: 'Залбирал', value: 'prayer' },
+]
+
 export const PostsFeedBlock: Block = {
   slug: 'postsFeed',
   interfaceName: 'PostsFeedBlock',
@@ -53,11 +66,7 @@ export const PostsFeedBlock: Block = {
       name: 'kind',
       type: 'select',
       defaultValue: 'all',
-      options: [
-        { label: 'Бүгд', value: 'all' },
-        { label: 'Мэдээ', value: 'news' },
-        { label: 'Нийтлэл', value: 'article' },
-      ],
+      options: kindOptions,
       admin: { condition: (_, s) => s?.source !== 'manual' },
     },
     {
@@ -104,11 +113,7 @@ export const PostsFeedBlock: Block = {
               type: 'select',
               required: true,
               defaultValue: 'all',
-              options: [
-                { label: 'Бүгд', value: 'all' },
-                { label: 'Мэдээ', value: 'news' },
-                { label: 'Нийтлэл', value: 'article' },
-              ],
+              options: kindOptions,
             },
           ],
         },
