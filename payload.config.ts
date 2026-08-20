@@ -28,6 +28,11 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      // Залбирал бол `posts`-ын нэг төрөл. Тусдаа collection үүсгэхгүйгээр
+      // хажуугийн цэснээс шүүсэн жагсаалт руу шууд орох холбоос.
+      afterNavLinks: ['/payload/components/PrayerNavLink#PrayerNavLink'],
+    },
     meta: {
       titleSuffix: '— MEA',
     },
