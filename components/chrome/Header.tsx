@@ -4,17 +4,25 @@ import type { SiteSetting } from '@/payload-types'
 
 import { MediaImage } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
-import { isActiveSection, resolveHref } from '@/lib/links'
+import { resolveHref } from '@/lib/links'
 import { MenuToggle, SearchButton } from './HeaderActions'
+import { HeaderNav, type NavItem } from './HeaderNav'
 
 type Props = {
   header: SiteSetting['header'] | undefined
-  pathname: string
   /** Set once a member is signed in — the login button becomes their account link. */
   account?: { href: string; label: string } | null
 }
 
-export function Header({ header, pathname, account }: Props) {
+export function Header({ header, account }: Props) {
+  // References resolve to URLs here, on the server, where the related documents
+  // are already loaded; the nav itself only needs the finished href.
+  const items: NavItem[] = (header?.nav ?? []).map((item) => ({
+    href: resolveHref(item),
+    label: item.label ?? '',
+    newTab: Boolean(item.newTab),
+  }))
+
   return (
     <header className="header">
       <div className="container">
@@ -27,18 +35,7 @@ export function Header({ header, pathname, account }: Props) {
           )}
         </Link>
 
-        <nav className="header__nav">
-          {header?.nav?.map((item, index) => {
-            const href = resolveHref(item)
-            return (
-              <SiteLink
-                key={item.id ?? index}
-                link={item}
-                className={isActiveSection(href, pathname) ? 'active' : undefined}
-              />
-            )
-          })}
-        </nav>
+        <HeaderNav items={items} />
 
         <div className="header__actions">
           {header?.showSearch ? <SearchButton /> : null}

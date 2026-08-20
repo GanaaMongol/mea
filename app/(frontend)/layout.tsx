@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter, Manrope, Playfair } from 'next/font/google'
-import { headers } from 'next/headers'
 
 import type { SiteSetting, Theme } from '@/payload-types'
 
@@ -64,12 +63,7 @@ async function getChrome(): Promise<{
 }
 
 export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
-  const [{ settings, theme }, headerList, member] = await Promise.all([
-    getChrome(),
-    headers(),
-    getMember(),
-  ])
-  const pathname = headerList.get('x-pathname') ?? '/'
+  const [{ settings, theme }, member] = await Promise.all([getChrome(), getMember()])
   const themeCss = buildThemeCss(theme)
 
   return (
@@ -87,7 +81,6 @@ export default async function FrontendLayout({ children }: { children: React.Rea
         <AnnouncementBar announcement={settings?.announcement} locale="mn" />
         <Header
           header={settings?.header}
-          pathname={pathname}
           account={
             member
               ? {
