@@ -7,9 +7,11 @@ import { revalidateCollection, revalidateCollectionDelete } from '@/payload/hook
 
 const postPaths = (doc: Record<string, unknown>) => {
   const slug = typeof doc.slug === 'string' ? doc.slug : ''
-  // Prayers share the `/news/[slug]` detail route but list on their own page.
-  const lists = doc.kind === 'prayer' ? ['/news', '/prayer'] : ['/news']
-  return [...lists, `/news/${slug}`]
+  // Prayers live under `/prayer`; news and articles under `/news`. The home page
+  // carries a feed of the latter, so it is flushed alongside.
+  return doc.kind === 'prayer'
+    ? ['/prayer', `/prayer/${slug}`]
+    : ['/', '/news', `/news/${slug}`]
 }
 
 export const Posts: CollectionConfig = {

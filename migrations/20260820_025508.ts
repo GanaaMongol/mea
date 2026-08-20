@@ -2,44 +2,44 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TYPE "public"."enum_pages_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_pages_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_pages_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_pages_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_posts_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_posts_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_posts_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_posts_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_posts_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__posts_v_version_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_departments_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_departments_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_departments_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_departments_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_filter_items_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_filter_items_kind" ADD VALUE 'prayer';
-  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_kind" ADD VALUE 'newsArticle' BEFORE 'news';
-  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_kind" ADD VALUE 'prayer';`)
+   ALTER TYPE "public"."enum_pages_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_pages_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_pages_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_pages_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__pages_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_posts_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_posts_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_posts_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_posts_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_posts_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__posts_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__posts_v_version_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_departments_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_departments_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_departments_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_departments_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__departments_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_hubs_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum__hubs_v_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_filter_items_kind" ADD VALUE IF NOT EXISTS 'prayer';
+  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'newsArticle' BEFORE 'news';
+  ALTER TYPE "public"."enum_membership_tiers_blocks_posts_feed_kind" ADD VALUE IF NOT EXISTS 'prayer';`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {

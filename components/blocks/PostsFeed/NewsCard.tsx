@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { Post } from '@/payload-types'
 
 import { MediaImage } from '@/components/ui/MediaImage'
+import { postHref } from '@/lib/postHref'
 
 const KIND_LABEL: Record<string, string> = {
   news: 'Мэдээ',
@@ -28,7 +29,7 @@ type Props = {
 }
 
 export function NewsCard({ post, variant, readLabel }: Props) {
-  const href = `/news/${post.slug}`
+  const href = postHref(post)
   const tag = KIND_LABEL[post.kind ?? 'news'] ?? post.kind
   const date = formatDate(post.publishedAt)
 

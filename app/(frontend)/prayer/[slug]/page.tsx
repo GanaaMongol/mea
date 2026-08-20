@@ -8,7 +8,7 @@ type Params = { slug: string }
 
 export async function generateStaticParams() {
   try {
-    const slugs = await getPostSlugs('newsArticle')
+    const slugs = await getPostSlugs('prayer')
     return slugs.map((slug) => ({ slug }))
   } catch {
     // The DB may not be reachable during a build; pages then render on demand.
@@ -23,7 +23,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const post = await getPostBySlug(slug)
-  if (!post) return {}
+  if (!post || post.kind !== 'prayer') return {}
 
   return {
     title: post.title,
@@ -31,13 +31,12 @@ export async function generateMetadata({
   }
 }
 
-export default async function PostPage({ params }: { params: Promise<Params> }) {
+export default async function PrayerPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params
   const post = await getPostBySlug(slug)
 
   if (!post) notFound()
-  // A prayer has one canonical URL, and it is not this one.
-  if (post.kind === 'prayer') redirect(`/prayer/${post.slug}`)
+  if (post.kind !== 'prayer') redirect(`/news/${post.slug}`)
 
   return <PostArticle post={post} />
 }

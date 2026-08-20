@@ -23,6 +23,42 @@ export const getPageBySlug = async (slug: string): Promise<Page | null> => {
   return docs[0] ?? null
 }
 
+/** Shared by `/news/[slug]` and `/prayer/[slug]` — the kind picks the route. */
+export const getPostBySlug = async (slug: string): Promise<Post | null> => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayloadClient()
+
+  const { docs } = await payload.find({
+    collection: 'posts',
+    where: { slug: { equals: slug } },
+    limit: 1,
+    depth: 2,
+    draft,
+    overrideAccess: draft,
+    pagination: false,
+  })
+
+  return docs[0] ?? null
+}
+
+/** Slugs for one detail route's `generateStaticParams`. */
+export const getPostSlugs = async (kind: 'prayer' | 'newsArticle'): Promise<string[]> => {
+  const payload = await getPayloadClient()
+  const { docs } = await payload.find({
+    collection: 'posts',
+    where:
+      kind === 'prayer'
+        ? { kind: { equals: 'prayer' } }
+        : { kind: { not_equals: 'prayer' } },
+    limit: 500,
+    depth: 0,
+    pagination: false,
+    select: { slug: true },
+  })
+
+  return docs.map((doc) => doc.slug).filter((slug): slug is string => Boolean(slug))
+}
+
 export const getPageSlugs = async (): Promise<string[]> => {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
