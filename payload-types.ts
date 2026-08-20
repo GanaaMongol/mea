@@ -325,7 +325,7 @@ export interface Post {
    * URL-д ашиглагдана. Хоосон орхивол гарчгаас автоматаар үүснэ.
    */
   slug: string;
-  kind: 'news' | 'article' | 'prayer';
+  kind: 'news' | 'article';
   publishedAt?: string | null;
   cover?: (number | null) | Media;
   /**
@@ -764,17 +764,29 @@ export interface PostsFeedBlock {
     description?: string | null;
     align?: ('left' | 'center') | null;
   };
+  collection: 'posts' | 'prayers';
   source: 'auto' | 'manual';
   limit?: number | null;
-  kind?: ('all' | 'newsArticle' | 'news' | 'article' | 'prayer') | null;
-  manual?: (number | Post)[] | null;
+  kind?: ('all' | 'news' | 'article') | null;
+  manual?:
+    | (
+        | {
+            relationTo: 'posts';
+            value: number | Post;
+          }
+        | {
+            relationTo: 'prayers';
+            value: number | Prayer;
+          }
+      )[]
+    | null;
   filter?: {
     enabled?: boolean | null;
     style?: ('buttons' | 'tabs') | null;
     items?:
       | {
           label: string;
-          kind: 'all' | 'newsArticle' | 'news' | 'article' | 'prayer';
+          kind: 'all' | 'news' | 'article';
           id?: string | null;
         }[]
       | null;
@@ -811,6 +823,59 @@ export interface PostsFeedBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'postsFeed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayers".
+ */
+export interface Prayer {
+  id: number;
+  title: string;
+  /**
+   * URL-д ашиглагдана. Хоосон орхивол гарчгаас автоматаар үүснэ.
+   */
+  slug: string;
+  publishedAt?: string | null;
+  cover?: (number | null) | Media;
+  /**
+   * Жагсаалтын картад харагдана.
+   */
+  excerpt?: string | null;
+  /**
+   * Нийтлэлийн бие. Текст, зургийн цомог зэргийг чирж дараалуулна.
+   */
+  layout?:
+    | (
+        | PageBannerBlock
+        | SectionTabsBlock
+        | RichTextBlock
+        | CardGridBlock
+        | QuoteBannerBlock
+        | AcceleratorsBlock
+        | PostsFeedBlock
+        | GalleryBlock
+        | ValuesListBlock
+        | HistoryGridBlock
+        | StatsRowBlock
+        | HighlightedTextBlock
+        | TimelineBlock
+        | CarouselBlock
+        | PeopleGridBlock
+        | CreedBlock
+        | SectionIntroBlock
+        | DataTableBlock
+        | MediaCardBlock
+        | DepartmentGridBlock
+        | ContactBoxBlock
+        | ContactFormBlock
+        | ProcessStepsBlock
+        | FigureBlock
+        | RegionMapBlock
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1178,15 +1243,6 @@ export interface RegionMapBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'regionMap';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "prayers".
- */
-export interface Prayer {
-  id: number;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1610,6 +1666,7 @@ export interface PostsFeedBlockSelect<T extends boolean = true> {
         description?: T;
         align?: T;
       };
+  collection?: T;
   source?: T;
   limit?: T;
   kind?: T;
@@ -2015,8 +2072,43 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "prayers_select".
  */
 export interface PrayersSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  publishedAt?: T;
+  cover?: T;
+  excerpt?: T;
+  layout?:
+    | T
+    | {
+        pageBanner?: T | PageBannerBlockSelect<T>;
+        sectionTabs?: T | SectionTabsBlockSelect<T>;
+        richText?: T | RichTextBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        quoteBanner?: T | QuoteBannerBlockSelect<T>;
+        accelerators?: T | AcceleratorsBlockSelect<T>;
+        postsFeed?: T | PostsFeedBlockSelect<T>;
+        gallery?: T | GalleryBlockSelect<T>;
+        valuesList?: T | ValuesListBlockSelect<T>;
+        historyGrid?: T | HistoryGridBlockSelect<T>;
+        statsRow?: T | StatsRowBlockSelect<T>;
+        highlightedText?: T | HighlightedTextBlockSelect<T>;
+        timeline?: T | TimelineBlockSelect<T>;
+        carousel?: T | CarouselBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
+        creed?: T | CreedBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        dataTable?: T | DataTableBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        departmentGrid?: T | DepartmentGridBlockSelect<T>;
+        contactBox?: T | ContactBoxBlockSelect<T>;
+        contactForm?: T | ContactFormBlockSelect<T>;
+        processSteps?: T | ProcessStepsBlockSelect<T>;
+        figure?: T | FigureBlockSelect<T>;
+        regionMap?: T | RegionMapBlockSelect<T>;
+      };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,14 +1,13 @@
 import Link from 'next/link'
 
-import type { Post } from '@/payload-types'
+import type { Article, ArticleCollection } from '@/lib/postHref'
 
 import { MediaImage } from '@/components/ui/MediaImage'
-import { postHref } from '@/lib/postHref'
+import { articleHref } from '@/lib/postHref'
 
 const KIND_LABEL: Record<string, string> = {
   news: 'Мэдээ',
   article: 'Нийтлэл',
-  prayer: 'Залбирал',
 }
 
 /** `2026/06/28` — the format the mockups use. */
@@ -22,15 +21,20 @@ const formatDate = (value?: string | null) => {
 }
 
 type Props = {
-  post: Post
+  post: Article
+  collection: ArticleCollection
   /** `bordered` keeps the tag above the body; `plain` nests it inside. */
   variant: 'plain' | 'bordered'
   readLabel: string
 }
 
-export function NewsCard({ post, variant, readLabel }: Props) {
-  const href = postHref(post)
-  const tag = KIND_LABEL[post.kind ?? 'news'] ?? post.kind
+export function NewsCard({ post, collection, variant, readLabel }: Props) {
+  const href = articleHref(post, collection)
+  // Prayers have no kind of their own — the collection is the category.
+  const tag =
+    collection === 'prayers'
+      ? 'Залбирал'
+      : (KIND_LABEL[('kind' in post && post.kind) || 'news'] ?? 'Мэдээ')
   const date = formatDate(post.publishedAt)
 
   const tagEl = <span className="news-card__tag">{tag}</span>

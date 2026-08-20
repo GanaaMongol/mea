@@ -8,17 +8,10 @@ import { sectionHeader } from '@/payload/fields/sectionHeader'
  * "Дэлгэрэнгүй"), news2.html (12 bordered cards + tab filter) and as the related
  * strip under news-detail.html.
  */
-/**
- * `newsArticle` keeps prayers out of the news list's "Бүгд" tab: `all` really
- * means every post kind, so a feed that should stay news-only asks for both
- * news and articles explicitly.
- */
 const kindOptions = [
   { label: 'Бүгд', value: 'all' },
-  { label: 'Мэдээ & Нийтлэл', value: 'newsArticle' },
   { label: 'Мэдээ', value: 'news' },
   { label: 'Нийтлэл', value: 'article' },
-  { label: 'Залбирал', value: 'prayer' },
 ]
 
 export const PostsFeedBlock: Block = {
@@ -38,6 +31,17 @@ export const PostsFeedBlock: Block = {
       ],
     },
     sectionHeader(),
+    {
+      name: 'collection',
+      type: 'select',
+      label: 'Эх сурвалж',
+      required: true,
+      defaultValue: 'posts',
+      options: [
+        { label: 'Мэдээ & Нийтлэл', value: 'posts' },
+        { label: 'Залбирал', value: 'prayers' },
+      ],
+    },
     {
       type: 'row',
       fields: [
@@ -67,12 +71,14 @@ export const PostsFeedBlock: Block = {
       type: 'select',
       defaultValue: 'all',
       options: kindOptions,
-      admin: { condition: (_, s) => s?.source !== 'manual' },
+      admin: {
+        condition: (_, s) => s?.source !== 'manual' && s?.collection !== 'prayers',
+      },
     },
     {
       name: 'manual',
       type: 'relationship',
-      relationTo: 'posts',
+      relationTo: ['posts', 'prayers'],
       hasMany: true,
       admin: { condition: (_, s) => s?.source === 'manual' },
     },
@@ -80,6 +86,7 @@ export const PostsFeedBlock: Block = {
       name: 'filter',
       type: 'group',
       label: 'Шүүлтүүр',
+      admin: { condition: (_, s) => s?.collection !== 'prayers' },
       fields: [
         {
           name: 'enabled',

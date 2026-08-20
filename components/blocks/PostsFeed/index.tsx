@@ -2,7 +2,8 @@ import Link from 'next/link'
 
 import type { Where } from 'payload'
 
-import type { Post, PostsFeedBlock as PostsFeedProps } from '@/payload-types'
+import type { PostsFeedBlock as PostsFeedProps } from '@/payload-types'
+import type { Article, ArticleCollection } from '@/lib/postHref'
 
 import { ArrowUpRight } from '@/components/ui/ArrowUpRight'
 import { SiteLink } from '@/components/ui/SiteLink'
@@ -15,25 +16,27 @@ type Props = PostsFeedProps & {
   activeKind?: string
 }
 
-const asPost = (value: number | Post): Post | null =>
-  typeof value === 'object' ? value : null
-
-/** `all` means every kind; `newsArticle` is the news list's "everything but prayers". */
-const kindWhere = (kind?: string | null): Where => {
-  if (!kind || kind === 'all') return {}
-  if (kind === 'newsArticle') return { kind: { in: ['news', 'article'] } }
-  return { kind: { equals: kind } }
-}
+const kindWhere = (kind?: string | null): Where =>
+  !kind || kind === 'all' ? {} : { kind: { equals: kind } }
 
 async function loadPosts({
+  collection,
   source,
   manual,
   kind,
   limit,
   activeKind,
-}: Pick<Props, 'source' | 'manual' | 'kind' | 'limit' | 'activeKind'>): Promise<Post[]> {
+}: Pick<
+  Props,
+  'collection' | 'source' | 'manual' | 'kind' | 'limit' | 'activeKind'
+>): Promise<Article[]> {
   if (source === 'manual') {
-    return (manual ?? []).map(asPost).filter((post): post is Post => Boolean(post))
+    // Polymorphic relationship: `{ relationTo, value }`, and `value` is only a
+    // document once the query ran with depth.
+    return (manual ?? [])
+      .filter((item) => item.relationTo === collection)
+      .map((item) => item.value)
+      .filter((value): value is Article => typeof value === 'object')
   }
 
   // A reader's tab choice overrides the block's configured kind.
@@ -41,8 +44,8 @@ async function loadPosts({
 
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
-    collection: 'posts',
-    where: kindWhere(effectiveKind),
+    collection,
+    where: collection === 'prayers' ? {} : kindWhere(effectiveKind),
     sort: '-publishedAt',
     limit: limit ?? 4,
     depth: 1,
@@ -54,7 +57,8 @@ async function loadPosts({
 
 export async function PostsFeed(props: Props) {
   const { variant, header, filter, moreLink, readLabel, pathname, activeKind } = props
-  const posts = await loadPosts(props)
+  const collection = (props.collection ?? 'posts') as ArticleCollection
+  const posts = await loadPosts({ ...props, collection })
   const related = variant === 'related'
   const bordered = variant === 'bordered' || related
   // The block's own kind is the tab that's active on a bare URL, so that tab
@@ -63,6 +67,7 @@ export async function PostsFeed(props: Props) {
   const current = activeKind ?? defaultKind
   const tabHref = (kind: string) =>
     kind === defaultKind ? (pathname ?? '/') : `${pathname ?? '/'}?kind=${kind}`
+  const showFilter = filter?.enabled && collection === 'posts'
 
   return (
     <section
@@ -81,7 +86,7 @@ export async function PostsFeed(props: Props) {
             {header?.title ? <h2>{header.title}</h2> : null}
             {header?.description ? <p>{header.description}</p> : null}
 
-            {filter?.enabled && filter.style === 'buttons' ? (
+            {showFilter && filter.style === 'buttons' ? (
               <div className="news-filter">
                 {filter.items?.map((item, index) => (
                   <Link
@@ -102,16 +107,13 @@ export async function PostsFeed(props: Props) {
           </div>
         )}
 
-        {filter?.enabled && filter.style === 'tabs' ? (
+        {showFilter && filter.style === 'tabs' ? (
           <div className="cap-tabs cap-tabs--left">
             {filter.items?.map((item, index) => (
               <Link
                 key={item.id ?? index}
                 href={tabHref(item.kind)}
-                className={[
-                  'cap-tab',
-                  item.kind === current ? 'cap-tab--active' : null,
-                ]
+                className={['cap-tab', item.kind === current ? 'cap-tab--active' : null]
                   .filter(Boolean)
                   .join(' ')}
               >
@@ -126,6 +128,7 @@ export async function PostsFeed(props: Props) {
             <NewsCard
               key={post.id}
               post={post}
+              collection={collection}
               variant={bordered ? 'bordered' : 'plain'}
               readLabel={readLabel ?? 'Унших'}
             />

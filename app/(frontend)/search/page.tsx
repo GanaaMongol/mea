@@ -32,8 +32,14 @@ export default async function SearchPage({ searchParams }: Props) {
 
         {posts.length ? (
           <div className="news-grid">
-            {posts.map((post) => (
-              <NewsCard key={post.id} post={post} variant="plain" readLabel="Унших" />
+            {posts.map((hit) => (
+              <NewsCard
+                key={`${hit.collection}-${hit.doc.id}`}
+                post={hit.doc}
+                collection={hit.collection}
+                variant="plain"
+                readLabel="Унших"
+              />
             ))}
           </div>
         ) : null}

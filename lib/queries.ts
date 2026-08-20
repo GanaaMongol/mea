@@ -2,7 +2,10 @@ import 'server-only'
 
 import { draftMode } from 'next/headers'
 
-import type { Page, Post, SiteSetting } from '@/payload-types'
+import type { Where } from 'payload'
+
+import type { Page, SiteSetting } from '@/payload-types'
+import type { Article, ArticleCollection } from './postHref'
 
 import { getPayloadClient } from './payload'
 
@@ -23,13 +26,16 @@ export const getPageBySlug = async (slug: string): Promise<Page | null> => {
   return docs[0] ?? null
 }
 
-/** Shared by `/news/[slug]` and `/prayer/[slug]` — the kind picks the route. */
-export const getPostBySlug = async (slug: string): Promise<Post | null> => {
+/** One document from `posts` or `prayers` — the two share a shape and a template. */
+export const getArticleBySlug = async (
+  collection: ArticleCollection,
+  slug: string,
+): Promise<Article | null> => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayloadClient()
 
   const { docs } = await payload.find({
-    collection: 'posts',
+    collection,
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 2,
@@ -42,14 +48,12 @@ export const getPostBySlug = async (slug: string): Promise<Post | null> => {
 }
 
 /** Slugs for one detail route's `generateStaticParams`. */
-export const getPostSlugs = async (kind: 'prayer' | 'newsArticle'): Promise<string[]> => {
+export const getArticleSlugs = async (
+  collection: ArticleCollection,
+): Promise<string[]> => {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({
-    collection: 'posts',
-    where:
-      kind === 'prayer'
-        ? { kind: { equals: 'prayer' } }
-        : { kind: { not_equals: 'prayer' } },
+    collection,
     limit: 500,
     depth: 0,
     pagination: false,
@@ -96,8 +100,10 @@ export type SearchLink = {
   excerpt?: string | null
 }
 
+export type SearchHit = { collection: ArticleCollection; doc: Article }
+
 export type SearchResults = {
-  posts: Post[]
+  posts: SearchHit[]
   links: SearchLink[]
   total: number
 }
@@ -115,20 +121,27 @@ export const searchSite = async (query: string): Promise<SearchResults> => {
   const like = { like: q }
   const common = { limit: 12, depth: 0, pagination: false, overrideAccess: false } as const
 
-  const [posts, pages, departments, hubs] = await Promise.all([
-    payload.find({
-      collection: 'posts',
-      where: { or: [{ title: like }, { excerpt: like }] },
-      sort: '-publishedAt',
-      limit: 24,
-      depth: 1,
-      pagination: false,
-      overrideAccess: false,
-    }),
+  const articleQuery = {
+    where: { or: [{ title: like }, { excerpt: like }] } as Where,
+    sort: '-publishedAt',
+    limit: 24,
+    depth: 1,
+    pagination: false as const,
+    overrideAccess: false,
+  }
+
+  const [posts, prayers, pages, departments, hubs] = await Promise.all([
+    payload.find({ collection: 'posts', ...articleQuery }),
+    payload.find({ collection: 'prayers', ...articleQuery }),
     payload.find({ collection: 'pages', where: { title: like }, ...common }),
     payload.find({ collection: 'departments', where: { name: like }, ...common }),
     payload.find({ collection: 'hubs', where: { name: like }, ...common }),
   ])
+
+  const hits: SearchHit[] = [
+    ...posts.docs.map((doc) => ({ collection: 'posts' as const, doc })),
+    ...prayers.docs.map((doc) => ({ collection: 'prayers' as const, doc })),
+  ].sort((a, b) => (b.doc.publishedAt ?? '').localeCompare(a.doc.publishedAt ?? ''))
 
   const links: SearchLink[] = [
     ...pages.docs.map((doc) => ({
@@ -152,5 +165,5 @@ export const searchSite = async (query: string): Promise<SearchResults> => {
     })),
   ]
 
-  return { posts: posts.docs, links, total: posts.docs.length + links.length }
+  return { posts: hits, links, total: hits.length + links.length }
 }

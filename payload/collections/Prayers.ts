@@ -1,31 +1,38 @@
 import type { CollectionConfig } from 'payload'
 
-import { adminsOnly } from '@/payload/access'
+import { adminsOnly, publishedOrSignedIn } from '@/payload/access'
+import { articleFields } from '@/payload/fields/article'
+import { revalidateCollection, revalidateCollectionDelete } from '@/payload/hooks/revalidate'
+
+const prayerPaths = (doc: Record<string, unknown>) => [
+  '/prayer',
+  `/prayer/${typeof doc.slug === 'string' ? doc.slug : ''}`,
+]
 
 /**
- * A nav entry, not a content type. Prayers are `posts` with `kind: 'prayer'` —
- * one table, one set of blocks, one detail route. This collection carries no
- * fields and can never hold a document; its list view redirects to the filtered
- * posts list. Registering it right after `Posts` in `payload.config.ts` is what
- * places "Залбирал" directly under "Мэдээ & Нийтлэл" in the sidebar.
+ * Prayers are their own content type — same shape as a post (see
+ * `articleFields`), own list, own route. Registered right after `Posts` in
+ * `payload.config.ts`, which is what puts "Залбирал" under "Мэдээ & Нийтлэл"
+ * in the admin sidebar.
  */
 export const Prayers: CollectionConfig = {
   slug: 'prayers',
   labels: { singular: 'Залбирал', plural: 'Залбирал' },
   admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'publishedAt', 'updatedAt'],
     group: 'Агуулга',
-    components: {
-      views: {
-        list: { Component: '/payload/components/PrayerListRedirect#PrayerListRedirect' },
-      },
-    },
   },
   access: {
-    // `read` is what makes the entry visible in the nav; nothing may be written.
-    read: adminsOnly,
-    create: () => false,
-    update: () => false,
-    delete: () => false,
+    read: publishedOrSignedIn,
+    create: adminsOnly,
+    update: adminsOnly,
+    delete: adminsOnly,
   },
-  fields: [],
+  versions: { drafts: true },
+  hooks: {
+    afterChange: [revalidateCollection(prayerPaths)],
+    afterDelete: [revalidateCollectionDelete(prayerPaths)],
+  },
+  fields: articleFields(),
 }

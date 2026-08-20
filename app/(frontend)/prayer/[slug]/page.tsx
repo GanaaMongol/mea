@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 import { PostArticle } from '@/components/posts/PostArticle'
-import { getPostBySlug, getPostSlugs } from '@/lib/queries'
+import { getArticleBySlug, getArticleSlugs } from '@/lib/queries'
 
 type Params = { slug: string }
 
 export async function generateStaticParams() {
   try {
-    const slugs = await getPostSlugs('prayer')
+    const slugs = await getArticleSlugs('prayers')
     return slugs.map((slug) => ({ slug }))
   } catch {
     // The DB may not be reachable during a build; pages then render on demand.
@@ -22,21 +22,20 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
-  if (!post || post.kind !== 'prayer') return {}
+  const prayer = await getArticleBySlug('prayers', slug)
+  if (!prayer) return {}
 
   return {
-    title: post.title,
-    description: post.excerpt ?? undefined,
+    title: prayer.title,
+    description: prayer.excerpt ?? undefined,
   }
 }
 
 export default async function PrayerPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const prayer = await getArticleBySlug('prayers', slug)
 
-  if (!post) notFound()
-  if (post.kind !== 'prayer') redirect(`/news/${post.slug}`)
+  if (!prayer) notFound()
 
-  return <PostArticle post={post} />
+  return <PostArticle post={prayer} collection="prayers" />
 }

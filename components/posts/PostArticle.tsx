@@ -1,16 +1,22 @@
-import type { Post } from '@/payload-types'
+import type { Article, ArticleCollection } from '@/lib/postHref'
 
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { PostsFeed } from '@/components/blocks/PostsFeed'
 import { MediaImage } from '@/components/ui/MediaImage'
-import { postHref } from '@/lib/postHref'
+import { articleHref } from '@/lib/postHref'
 
 /**
- * The post body shared by `/news/[slug]` and `/prayer/[slug]`. Only the related
- * strip differs: prayers sit beside prayers, everything else beside news.
+ * The detail template shared by `/news/[slug]` and `/prayer/[slug]`. Only the
+ * related strip differs: prayers sit beside prayers, posts beside posts.
  */
-export function PostArticle({ post }: { post: Post }) {
-  const prayer = post.kind === 'prayer'
+export function PostArticle({
+  post,
+  collection,
+}: {
+  post: Article
+  collection: ArticleCollection
+}) {
+  const prayer = collection === 'prayers'
 
   return (
     <>
@@ -23,15 +29,16 @@ export function PostArticle({ post }: { post: Post }) {
       <section className="news-detail-article">
         <div className="container news-detail-article__inner">
           <h1 className="news-detail-article__title">{post.title}</h1>
-          <RenderBlocks blocks={post.layout} pathname={postHref(post)} />
+          <RenderBlocks blocks={post.layout} pathname={articleHref(post, collection)} />
         </div>
       </section>
 
       <PostsFeed
         blockType="postsFeed"
         variant="related"
+        collection={collection}
         source="auto"
-        kind={prayer ? 'prayer' : 'newsArticle'}
+        kind="all"
         limit={4}
         readLabel="Унших"
         header={{ title: prayer ? 'Бусад залбирлууд' : 'Төстэй мэдээнүүд', align: 'left' }}
