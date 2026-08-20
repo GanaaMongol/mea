@@ -5,13 +5,15 @@ import { FeedbackForm } from './FeedbackForm'
 
 /**
  * Two columns: editable contact details, and the feedback form that writes to
- * the `feedback` collection. New UI with no mockup of its own, so it is built
- * from the theme tokens through Tailwind rather than from `styles.css` classes.
+ * the `feedback` collection. New UI with no mockup of its own, so the insides
+ * are Tailwind on theme tokens — but the outer frame uses the design system's
+ * `.section` / `.container`, so its width and gutters line up with every other
+ * block on the page instead of running 80px wider.
  */
 export function ContactForm({ title, details, form }: ContactFormProps) {
   return (
-    <section className="bg-neutral-50 px-6 py-24">
-      <div className="mx-auto w-full max-w-[var(--container-max)]">
+    <section className="section bg-neutral-50">
+      <div className="container">
         <div className="flex flex-col items-stretch gap-[60px] lg:flex-row lg:items-center">
           <div className="flex flex-1 flex-col gap-6">
             <h2 className="max-w-[480px] font-display text-h1 font-bold text-primary">{title}</h2>
