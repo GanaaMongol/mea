@@ -1,7 +1,0 @@
-/* Payload renders `afterNavLinks` right below the last nav group, so a rule and
-   a little air keep it from reading as part of "Тохиргоо". */
-.wrap {
-  margin-top: calc(var(--base) * 0.5);
-  padding-top: calc(var(--base) * 0.5);
-  border-top: 1px solid var(--theme-elevation-100);
-}

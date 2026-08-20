@@ -70,6 +70,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    prayers: Prayer;
     departments: Department;
     hubs: Hub;
     boardMembers: BoardMember;
@@ -87,6 +88,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    prayers: PrayersSelect<false> | PrayersSelect<true>;
     departments: DepartmentsSelect<false> | DepartmentsSelect<true>;
     hubs: HubsSelect<false> | HubsSelect<true>;
     boardMembers: BoardMembersSelect<false> | BoardMembersSelect<true>;
@@ -1179,6 +1181,15 @@ export interface RegionMapBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayers".
+ */
+export interface Prayer {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members".
  */
 export interface Member {
@@ -1283,6 +1294,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'prayers';
+        value: number | Prayer;
       } | null)
     | ({
         relationTo: 'departments';
@@ -1994,6 +2009,14 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayers_select".
+ */
+export interface PrayersSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

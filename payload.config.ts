@@ -16,6 +16,7 @@ import { Members } from '@/payload/collections/Members'
 import { MembershipTiers } from '@/payload/collections/MembershipTiers'
 import { Pages } from '@/payload/collections/Pages'
 import { Posts } from '@/payload/collections/Posts'
+import { Prayers } from '@/payload/collections/Prayers'
 import { Users } from '@/payload/collections/Users'
 import { SiteSettings } from '@/payload/globals/SiteSettings'
 import { Theme } from '@/payload/globals/Theme'
@@ -27,11 +28,6 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
-    },
-    components: {
-      // Залбирал бол `posts`-ын нэг төрөл. Тусдаа collection үүсгэхгүйгээр
-      // хажуугийн цэснээс шүүсэн жагсаалт руу шууд орох холбоос.
-      afterNavLinks: ['/payload/components/PrayerNavLink#PrayerNavLink'],
     },
     meta: {
       titleSuffix: '— MEA',
@@ -52,6 +48,8 @@ export default buildConfig({
   collections: [
     Pages,
     Posts,
+    // Хажуугийн цэсэнд "Мэдээ & Нийтлэл"-ийн яг доор гарахын тулд Posts-ын дараа.
+    Prayers,
     Departments,
     Hubs,
     BoardMembers,
