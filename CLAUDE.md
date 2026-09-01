@@ -225,6 +225,63 @@ validation and basic abuse protection (honeypot / rate limit).
   `siteSettings` revalidate `('/', 'layout')`. `revalidateTag`/`updateTag` semantics changed in
   Next 16 — read `02-guides/upgrading/version-16.md` §"Caching APIs" first.
 
+### Query budget and Payload performance
+
+Payload stores one logical document across many tables when it contains arrays, blocks, localized
+fields, relationships, or rich text with nested media/links. The site must stay fast by treating
+public pages as cached content and by keeping DB reads shallow and narrow.
+
+- `depth` is the primary cost driver. Payload defaults to `depth: 2`; for list pages this is often
+  unnecessary. Use `depth: 0` or `depth: 1` for listing views and only expand relations when the
+  page truly needs them.
+- Use `select` aggressively so a query does not pull rich text, nested blocks, or unrelated
+  relation data. Example: `select: { title: true, slug: true, publishedAt: true }` for a list page.
+- Use `pagination: false` when a page does not need total counts; this avoids an extra count query.
+- Add indexes on high-traffic lookup fields such as `slug` and any `where` filter fields. For slug
+  lookups, every public-facing collection should have a unique index or at least a text index in the
+  database.
+- Keep public pages mostly static: homepage, about pages, department listings, hub landing pages,
+  and large marketing views should be cacheable and should not hit the database on every request.
+  Prefer `export const revalidate = 3600` for route-level cache and `unstable_cache`/`revalidateTag`
+  for data-level caches when a page depends on query results.
+- Use hooks to invalidate cache tags when content changes. `afterChange` and `afterDelete` should call
+  `revalidateTag` for collections like `pages`, `posts`, `departments`, `hubs`, `theme`, and
+  `siteSettings` so admin edits refresh immediately without requiring a full rebuild.
+- Reserve the database for the hot paths that are truly dynamic: admin panel access, member signup,
+  login, user-specific profile data, and restricted content that depends on current auth/session state.
+- Treat cache as the real optimization lever. A public-facing page that is cached for an hour will
+  usually outperform a lightly optimized but uncached page by an order of magnitude.
+
+Practical examples:
+
+```ts
+const posts = await payload.find({
+  collection: 'posts',
+  depth: 1,
+  limit: 10,
+  select: { title: true, slug: true, publishedAt: true, heroImage: true },
+  sort: '-publishedAt',
+})
+```
+
+```ts
+// app/(frontend)/page.tsx
+export const revalidate = 3600
+```
+
+```ts
+const getDepartments = unstable_cache(
+  async () => payload.find({ collection: 'departments', depth: 1, pagination: false }),
+  ['departments'],
+  { tags: ['departments'], revalidate: 3600 },
+)
+```
+
+Verification requirement: enable the Postgres logger locally and measure real query counts on a warm
+public route. If a route regularly produces 30+ SQL queries, the issue is likely `depth`/relation
+explosion or missing select narrowing. If a route stays around 5 queries or fewer after warm cache,
+then the query shape is acceptable.
+
 ### Rich text
 
 Paste article bodies into the admin's lexical editor. If a one-off bulk import is ever needed,

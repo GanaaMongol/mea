@@ -1049,9 +1049,11 @@
     padding: var(--section-pad) 0;
 }
 .hub-content__inner {
-    max-width: var(--container-max);
+    width: min(100%, calc(var(--container-max) - 80px));
+    max-width: calc(var(--container-max) - 80px);
     margin: 0 auto;
     padding: 0 40px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 80px;

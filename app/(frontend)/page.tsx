@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { getPageBySlug } from '@/lib/queries'
 
+export const revalidate = 3600
+
 type Search = { [key: string]: string | string[] | undefined }
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -75,6 +75,14 @@ export default buildConfig({
     //   npm run migrate:create -- --name <what-changed>
     //   npm run migrate
     push: false,
+    logger:
+      process.env.PAYLOAD_LOG_SQL === '1'
+        ? {
+            logQuery(query, params) {
+              console.info('[Payload SQL]', query, '\nparams:', JSON.stringify(params))
+            },
+          }
+        : undefined,
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },

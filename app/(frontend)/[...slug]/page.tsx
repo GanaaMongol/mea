@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { getPageBySlug, getPageSlugs } from '@/lib/queries'
 
+export const revalidate = 3600
+
 type Params = { slug: string[] }
 type Search = { [key: string]: string | string[] | undefined }
 

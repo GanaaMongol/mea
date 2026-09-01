@@ -7,6 +7,8 @@ import type { Hub } from '@/payload-types'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { getPayloadClient } from '@/lib/payload'
 
+export const revalidate = 3600
+
 type Params = { slug: string }
 
 const getHub = async (slug: string): Promise<Hub | null> => {

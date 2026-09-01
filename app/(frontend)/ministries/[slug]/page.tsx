@@ -7,6 +7,8 @@ import type { Department } from '@/payload-types'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { getPayloadClient } from '@/lib/payload'
 
+export const revalidate = 3600
+
 type Params = { slug: string }
 
 const getDepartment = async (slug: string): Promise<Department | null> => {

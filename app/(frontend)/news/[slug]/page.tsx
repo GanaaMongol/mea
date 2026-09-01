@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { PostArticle } from '@/components/posts/PostArticle'
 import { getArticleBySlug, getArticleSlugs } from '@/lib/queries'
 
+export const revalidate = 3600
+
 type Params = { slug: string }
 
 export async function generateStaticParams() {

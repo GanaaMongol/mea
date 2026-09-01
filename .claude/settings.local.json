@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Bash(grep -oE '<\\(h[23]|span|time\\)[^>]*class=\"[^\"]*\"[^>]*>[^<]{3,}' /Users/ganaa/payload/lib/html/news.html)",
+      "Bash(sed -n '/<header class=\"header\">/,/<\\\\/header>/p' index.html)",
+      "Bash(sed -n '/<header class=\"header\">/,/<\\\\/header>/p' about-vision.html)",
+      "Bash(sed -n '/<header class=\"header\">/,/<\\\\/header>/p' login.html)",
+      "Bash(sed -n '/<header class=\"header\">/,/<\\\\/header>/p' news.html)",
+      "Read(//tmp/**)",
+      "Bash(sed -n '/<footer class=\"footer\">/,/<\\\\/footer>/p' index.html)",
+      "Bash(sed -n '/<footer class=\"footer\">/,/<\\\\/footer>/p' about-vision.html)",
+      "Bash(sed -n '/<footer class=\"footer\">/,/<\\\\/footer>/p' login.html)",
+      "Bash(sed -n '/<footer class=\"footer\">/,/<\\\\/footer>/p' hub-faith-orgs.html)",
+      "Bash(sed -n '/<div class=\"announcement-bar\">/,/^        <\\\\/div>$/p' index.html)",
+      "Bash(sed -n '/<div class=\"announcement-bar\">/,/^        <\\\\/div>$/p' about-vision.html)",
+      "Bash(sed -n '/<div class=\"announcement-bar\">/,/^        <\\\\/div>$/p' login.html)",
+      "Bash(python3 /private/tmp/claude-501/-Users-ganaa-payload/9dd6329c-dffe-4dfa-a8ef-eb732d18c69d/scratchpad/sync-chrome.py)",
+      "Bash(npm view *)",
+      "Bash(npm install *)",
+      "Bash(npm uninstall *)",
+      "mcp__claude_ai_Figma__whoami",
+      "Bash(python3 *)",
+      "Bash(sips -g pixelWidth -g pixelHeight images/card-1.png images/card-2.png images/card-3.png images/card-4.png)",
+      "Bash(md5 -q images/card-2.png images/card-3.png images/card-4.png)",
+      "Bash(npx --yes prettier --write --tab-width 4 --single-attribute-per-line --print-width 180 /private/tmp/claude-501/-Users-ganaa-payload-lib-html/d6f5380b-7cba-4c14-aa30-68c85dfb470d/scratchpad/t.html)",
+      "Bash(git diff *)",
+      "mcp__claude_ai_Figma__get_design_context",
+      "mcp__claude_ai_Figma__get_metadata",
+      "mcp__claude_ai_Figma__get_figma_skill"
+    ]
+  }
+}

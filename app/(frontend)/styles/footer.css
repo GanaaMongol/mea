@@ -4,10 +4,12 @@
     padding: 60px 0 0;
 }
 .footer__inner {
-    max-width: var(--container-max);
+    width: min(100%, calc(var(--container-max) - 80px));
+    max-width: calc(var(--container-max) - 80px);
     margin: 0 auto;
     border-radius: var(--radius-sm);
     padding: 48px 40px 24px;
+    box-sizing: border-box;
 }
 .footer__top {
     display: flex;
