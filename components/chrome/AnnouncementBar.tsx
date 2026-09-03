@@ -1,11 +1,12 @@
 import type { SiteSetting } from '@/payload-types'
+import type { Locale } from '@/lib/i18n'
 
 import { SiteLink } from '@/components/ui/SiteLink'
 import { LanguageSelector } from './LanguageSelector'
 
 type Props = {
   announcement: SiteSetting['announcement'] | undefined
-  locale: string
+  locale: Locale
 }
 
 export function AnnouncementBar({ announcement, locale }: Props) {
@@ -16,14 +17,14 @@ export function AnnouncementBar({ announcement, locale }: Props) {
       <div className="container">
         <p className="announcement-bar__text">
           {announcement.text}
-          {announcement.cta?.label ? <SiteLink link={announcement.cta} /> : null}
+          {announcement.cta?.label ? <SiteLink link={announcement.cta} locale={locale} /> : null}
         </p>
       </div>
       <div className="right-container">
         <ul className="announcement-bar__links">
           {announcement.links?.map((link, index) => (
             <li key={link.id ?? index}>
-              <SiteLink link={link} />
+              <SiteLink link={link} locale={locale} />
             </li>
           ))}
           {announcement.showLanguageSwitcher ? <LanguageSelector locale={locale} /> : null}

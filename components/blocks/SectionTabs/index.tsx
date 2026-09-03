@@ -1,6 +1,7 @@
 import type { SectionTabsBlock as SectionTabsProps } from '@/payload-types'
 
 import { SiteLink } from '@/components/ui/SiteLink'
+import { type Locale } from '@/lib/i18n'
 import { resolveHref } from '@/lib/links'
 
 /** `dept-tabs` (about/departments/hubs), `tab-bar` (membership), `cap-tabs` (news). */
@@ -16,7 +17,8 @@ export function SectionTabs({
   align,
   plain,
   pathname,
-}: SectionTabsProps & { pathname?: string }) {
+  locale,
+}: SectionTabsProps & { pathname?: string; locale?: Locale }) {
   const style = VARIANT[variant] ?? VARIANT.dept
 
   // The modifiers live in the ported CSS (`dept-tabs--center`, `dept-tabs--plain`,
@@ -34,12 +36,13 @@ export function SectionTabs({
     <div className={wrapper}>
       <div className={style.inner}>
         {items?.map((item, index) => {
-          const href = resolveHref(item)
+          const href = resolveHref(item, locale)
           // Tabs are sibling pages, so only the exact route lights up — an
           // ancestor match would keep /membership lit on /membership/list.
           const active = pathname === href
           return (
             <SiteLink
+              locale={locale}
               key={item.id ?? index}
               link={item}
               className={[style.item, active ? style.active : null].filter(Boolean).join(' ')}

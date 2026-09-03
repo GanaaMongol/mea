@@ -3,7 +3,10 @@ import Link from 'next/link'
 import type { Department, DepartmentGridBlock as DepartmentGridProps } from '@/payload-types'
 
 import { MediaImage } from '@/components/ui/MediaImage'
+import { DEFAULT_LOCALE, localeHref, type Locale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
+
+type Props = DepartmentGridProps & { locale?: Locale }
 
 const asDepartment = (value: number | Department): Department | null =>
   typeof value === 'object' ? value : null
@@ -20,7 +23,8 @@ async function loadDepartments({
   source,
   manual,
   limit,
-}: Pick<DepartmentGridProps, 'source' | 'manual' | 'limit'>): Promise<Department[]> {
+  locale,
+}: Pick<Props, 'source' | 'manual' | 'limit' | 'locale'>): Promise<Department[]> {
   if (source === 'manual') {
     return (manual ?? []).map(asDepartment).filter((doc): doc is Department => Boolean(doc))
   }
@@ -31,14 +35,16 @@ async function loadDepartments({
     sort: 'order',
     limit: limit ?? 12,
     depth: 1,
+    locale,
     pagination: false,
   })
 
   return docs
 }
 
-export async function DepartmentGrid(props: DepartmentGridProps) {
+export async function DepartmentGrid(props: Props) {
   const { header } = props
+  const locale = props.locale ?? DEFAULT_LOCALE
   const departments = await loadDepartments(props)
 
   if (!departments.length) return null
@@ -68,7 +74,9 @@ export async function DepartmentGrid(props: DepartmentGridProps) {
                 </div>
                 <div className="accel-card__panel">
                   <h3 className="accel-card__title">
-                    <Link href={`/ministries/${department.slug}`}>{department.name}</Link>
+                    <Link href={localeHref(`/ministries/${department.slug}`, locale)}>
+                      {department.name}
+                    </Link>
                   </h3>
                   {department.excerpt ? (
                     <p className="accel-card__text">{department.excerpt}</p>

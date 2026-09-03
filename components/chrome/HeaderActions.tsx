@@ -2,18 +2,20 @@
 
 import { useRef, useState } from "react";
 
+import type { UiStrings } from "@/lib/dictionary";
+
 /**
  * The only interactive bits of the chrome: the search toggle and the mobile menu
  * button. Everything else in the header stays a Server Component.
  */
-export function SearchButton() {
+export function SearchButton({ action, t }: { action: string; t: UiStrings }) {
     const dialogRef = useRef<HTMLDialogElement>(null);
 
     return (
         <>
             <button
                 className="header__search-btn"
-                aria-label="Хайх"
+                aria-label={t.search}
                 aria-haspopup="dialog"
                 onClick={() => dialogRef.current?.showModal()}>
                 <svg
@@ -40,14 +42,14 @@ export function SearchButton() {
             </button>
             <dialog
                 ref={dialogRef}
-                aria-label="Хайх"
+                aria-label={t.search}
                 className="search-modal"
                 onClick={(event) => {
                     if (event.target === dialogRef.current) dialogRef.current?.close();
                 }}>
                 <div className="search-modal__layout">
                     <form
-                        action="/search"
+                        action={action}
                         role="search"
                         className="search-modal__panel">
                         <span
@@ -79,13 +81,13 @@ export function SearchButton() {
                             type="search"
                             name="q"
                             autoFocus
-                            placeholder="Мэдээ мэдээллээс хайх..."
-                            aria-label="Хайх"
+                            placeholder={t.searchPlaceholder}
+                            aria-label={t.search}
                             className="search-modal__input"
                         />
                         <button
                             type="button"
-                            aria-label="Хаах"
+                            aria-label={t.close}
                             className="search-modal__close"
                             onClick={() => dialogRef.current?.close()}>
                             <svg
@@ -107,13 +109,13 @@ export function SearchButton() {
     );
 }
 
-export function MenuToggle() {
+export function MenuToggle({ t }: { t: UiStrings }) {
     const [open, setOpen] = useState(false);
 
     return (
         <button
             className="header__menu-toggle"
-            aria-label="Цэс"
+            aria-label={t.menu}
             aria-expanded={open}
             data-open={open || undefined}
             onClick={() => {

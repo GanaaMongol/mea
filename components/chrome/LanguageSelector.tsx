@@ -1,12 +1,26 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-const LOCALES = [
-  { code: 'en', label: 'English' },
-  { code: 'mn', label: 'Монгол' },
-] as const
+import { LOCALES, localeHref, stripLocale, type Locale } from '@/lib/i18n'
 
-export function LanguageSelector({ locale }: { locale: string }) {
-  const current = LOCALES.find((l) => l.code === locale) ?? LOCALES[1]
+const LABELS: Record<Locale, string> = {
+  en: 'English',
+  mn: 'Монгол',
+}
+
+/**
+ * Switches locale in place: the reader stays on the page they were reading.
+ *
+ * Client-side because the chrome lives in the shared layout — a path read from
+ * request headers would go stale after the first client-side navigation and the
+ * switcher would start pointing at whichever page loaded first. `stripLocale`
+ * makes the rewritten path (`/mn/news`) and the browser's (`/news`) agree, so
+ * server and client render the same href.
+ */
+export function LanguageSelector({ locale }: { locale: Locale }) {
+  const path = stripLocale(usePathname())
 
   return (
     <li className="lang-selector">
@@ -15,7 +29,7 @@ export function LanguageSelector({ locale }: { locale: string }) {
           <circle cx="12" cy="12" r="10" />
           <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
         </svg>
-        <span>{current.label}</span>
+        <span>{LABELS[locale]}</span>
         <svg
           className="lang-selector__chevron"
           width="12"
@@ -29,11 +43,14 @@ export function LanguageSelector({ locale }: { locale: string }) {
         </svg>
       </button>
       <ul className="lang-selector__menu">
-        {LOCALES.map(({ code, label }) => (
+        {LOCALES.map((code) => (
           <li key={code}>
-            {/* /api is owned by Payload, so the locale switch lives at /lang. */}
-            <Link href={`/lang/${code}`} className={code === locale ? 'is-active' : undefined}>
-              {label}
+            <Link
+              href={localeHref(path, code)}
+              hrefLang={code}
+              className={code === locale ? 'is-active' : undefined}
+            >
+              {LABELS[code]}
             </Link>
           </li>
         ))}

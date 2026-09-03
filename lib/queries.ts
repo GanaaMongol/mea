@@ -7,9 +7,14 @@ import type { Where } from 'payload'
 import type { Page, SiteSetting } from '@/payload-types'
 import type { Article, ArticleCollection } from './postHref'
 
+import { ui } from './dictionary'
+import { DEFAULT_LOCALE, localeHref, type Locale } from './i18n'
 import { getPayloadClient } from './payload'
 
-export const getPageBySlug = async (slug: string): Promise<Page | null> => {
+export const getPageBySlug = async (
+  slug: string,
+  locale: Locale = DEFAULT_LOCALE,
+): Promise<Page | null> => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayloadClient()
 
@@ -18,6 +23,7 @@ export const getPageBySlug = async (slug: string): Promise<Page | null> => {
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 2,
+    locale,
     draft,
     overrideAccess: draft,
     pagination: false,
@@ -30,6 +36,7 @@ export const getPageBySlug = async (slug: string): Promise<Page | null> => {
 export const getArticleBySlug = async (
   collection: ArticleCollection,
   slug: string,
+  locale: Locale = DEFAULT_LOCALE,
 ): Promise<Article | null> => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayloadClient()
@@ -39,6 +46,7 @@ export const getArticleBySlug = async (
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 2,
+    locale,
     draft,
     overrideAccess: draft,
     pagination: false,
@@ -81,10 +89,12 @@ export const getPageSlugs = async (): Promise<string[]> => {
  * from this one corner of `siteSettings`. Failing soft keeps the login form
  * usable (on its coded defaults) even if the global has never been saved.
  */
-export const getAuthSettings = async (): Promise<SiteSetting['auth'] | null> => {
+export const getAuthSettings = async (
+  locale: Locale = DEFAULT_LOCALE,
+): Promise<SiteSetting['auth'] | null> => {
   try {
     const payload = await getPayloadClient()
-    const settings = await payload.findGlobal({ slug: 'siteSettings', depth: 1 })
+    const settings = await payload.findGlobal({ slug: 'siteSettings', depth: 1, locale })
     return settings.auth ?? null
   } catch (error) {
     console.error('[queries] siteSettings unavailable:', error)
@@ -113,19 +123,23 @@ export type SearchResults = {
  * this is a plain contains-search across the collections a reader can reach —
  * no extra index to keep in sync. `overrideAccess: false` keeps drafts out.
  */
-export const searchSite = async (query: string): Promise<SearchResults> => {
+export const searchSite = async (
+  query: string,
+  locale: Locale = DEFAULT_LOCALE,
+): Promise<SearchResults> => {
   const q = query.trim()
   if (!q) return { posts: [], links: [], total: 0 }
 
   const payload = await getPayloadClient()
   const like = { like: q }
-  const common = { limit: 12, depth: 0, pagination: false, overrideAccess: false } as const
+  const common = { limit: 12, depth: 0, locale, pagination: false, overrideAccess: false } as const
 
   const articleQuery = {
     where: { or: [{ title: like }, { excerpt: like }] } as Where,
     sort: '-publishedAt',
     limit: 24,
     depth: 1,
+    locale,
     pagination: false as const,
     overrideAccess: false,
   }
@@ -143,25 +157,26 @@ export const searchSite = async (query: string): Promise<SearchResults> => {
     ...prayers.docs.map((doc) => ({ collection: 'prayers' as const, doc })),
   ].sort((a, b) => (b.doc.publishedAt ?? '').localeCompare(a.doc.publishedAt ?? ''))
 
+  const t = ui(locale)
   const links: SearchLink[] = [
     ...pages.docs.map((doc) => ({
       id: `page-${doc.id}`,
       title: doc.title,
-      href: doc.slug === 'home' ? '/' : `/${doc.slug}`,
-      group: 'Хуудас',
+      href: localeHref(doc.slug === 'home' ? '/' : `/${doc.slug}`, locale),
+      group: t.groupPage,
     })),
     ...departments.docs.map((doc) => ({
       id: `dept-${doc.id}`,
       title: doc.name,
-      href: `/ministries/${doc.slug}`,
-      group: 'Үйлчлэлийн алба',
+      href: localeHref(`/ministries/${doc.slug}`, locale),
+      group: t.groupDepartment,
       excerpt: doc.excerpt,
     })),
     ...hubs.docs.map((doc) => ({
       id: `hub-${doc.id}`,
       title: doc.name,
-      href: `/hubs/${doc.slug}`,
-      group: 'ХАБ',
+      href: localeHref(`/hubs/${doc.slug}`, locale),
+      group: t.groupHub,
     })),
   ]
 

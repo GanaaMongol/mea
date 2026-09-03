@@ -2,6 +2,7 @@ import type { PageBannerBlock as PageBannerProps } from '@/payload-types'
 
 import { MediaImage, asMedia } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
+import { type Locale } from '@/lib/i18n'
 
 /**
  * Class names come straight from `styles.css` so each variant keeps the mockup's
@@ -31,7 +32,8 @@ export function PageBanner({
   align,
   overlay,
   links,
-}: PageBannerProps) {
+  locale,
+}: PageBannerProps & { locale?: Locale }) {
   const classes = VARIANT_CLASS[variant] ?? 'hub-banner'
   // A variant may add a modifier; BEM children always hang off the first class.
   const base = classes.split(' ')[0]
@@ -57,7 +59,9 @@ export function PageBanner({
               {tag ? <span className="news-banner__tag">{tag}</span> : null}
               {title ? <h1 className="news-banner__title">{title}</h1> : null}
             </div>
-            {links?.[0] ? <SiteLink link={links[0]} className="news-banner__link" /> : null}
+            {links?.[0] ? (
+              <SiteLink link={links[0]} locale={locale} className="news-banner__link" />
+            ) : null}
           </div>
         </div>
       </section>
@@ -123,7 +127,7 @@ export function PageBanner({
         {links?.length ? (
           <div className={`${base}__actions`}>
             {links.map((link, index) => (
-              <SiteLink key={link.id ?? index} link={link} className="btn--lg" />
+              <SiteLink key={link.id ?? index} link={link} locale={locale} className="btn--lg" />
             ))}
           </div>
         ) : null}

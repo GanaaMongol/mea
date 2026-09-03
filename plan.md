@@ -292,6 +292,22 @@ style бараг байхгүй, `styles.css` нь бүрэн design system. Tai
 Announcement bar дээр English сэлгүүр бэлэн байгаа; дараа нэмбэл бүх schema дахин бичигдэнэ.
 Харагдах текстийн field бүр `localized: true`. `slug` нь localized **биш** (URL тогтвортой).
 
+**Frontend routing (2026-09-03-нд хэрэгжсэн).** Route бүр `app/(frontend)/[lang]/` дор
+байрлана. Монгол нь угтваргүй (`/news`) — `proxy.ts` үүнийг `/mn/news` руу **rewrite**
+хийнэ; англи нь ил угтвартай (`/en/news`); гараар бичсэн `/mn/...` нь угтваргүй хэлбэр рүү
+redirect хийгдэнэ. Ингэснээр хэл тус бүр өөрийн cache entry-тэй болно (cookie-д суурилсан
+сэлгэлт нэг URL-д хоёр хэл өгч ISR-ийг унагаана).
+
+- Payload query бүр `locale` дамжуулна (`lib/queries.ts`, `[lang]` route-ууд, өгөгдөл татдаг
+  block-ууд). `fallback: true` тул орчуулаагүй EN талбар монголоор гарна.
+- Дотоод холбоос бүр `lib/i18n.ts` дахь `localeHref()`-ээр угтвар авна — `resolveHref` нь
+  reference болон гараар бичсэн `/`-ээр эхэлсэн URL хоёуланг нь хамарна.
+- Кодод үлдсэн цөөн UI мөр (`Унших`, хайлтын хуудас, aria-label) `lib/dictionary.ts`-д.
+- `revalidatePath` нь rewrite-ийн **очих** замыг шаарддаг тул hook-ууд нийтийн зам бүрийг
+  `/mn/...` ба `/en/...` гэж хоёр удаа цэвэрлэнэ; layout нь `/[lang]`.
+- Хэл сэлгүүр (`LanguageSelector`) нь client component — `usePathname()`-ээс одоогийн
+  хуудсыг аваад нөгөө хэл рүү нь байрандаа сэлгэнэ.
+
 ### 7.2 Auth
 `users` = админ панел, `members` = олон нийтийн бүртгэл (гишүүнчлэлийн төрөл, байгууллага,
 төлөв). Хоёрыг хольж болохгүй. `/membership/join` → Server Action →

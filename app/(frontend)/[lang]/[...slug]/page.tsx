@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
+import { localeAlternates, localeHref, toLocale } from '@/lib/i18n'
 import { getPageBySlug, getPageSlugs } from '@/lib/queries'
 
 export const revalidate = 3600
 
-type Params = { slug: string[] }
+type Params = { lang: string; slug: string[] }
 type Search = { [key: string]: string | string[] | undefined }
 
 export async function generateStaticParams() {
@@ -27,13 +27,15 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const page = await getPageBySlug(slug.join('/'))
+  const { lang, slug } = await params
+  const path = `/${slug.join('/')}`
+  const page = await getPageBySlug(slug.join('/'), toLocale(lang))
   if (!page) return {}
 
   return {
     title: page.meta?.title || page.title,
     description: page.meta?.description ?? undefined,
+    alternates: localeAlternates(path),
   }
 }
 
@@ -44,21 +46,21 @@ export default async function CatchAllPage({
   params: Promise<Params>
   searchParams: Promise<Search>
 }) {
-  const [{ slug }, search, headerList] = await Promise.all([
-    params,
-    searchParams,
-    headers(),
-  ])
-  const page = await getPageBySlug(slug.join('/'))
+  const [{ lang, slug }, search] = await Promise.all([params, searchParams])
+  const locale = toLocale(lang)
+  const page = await getPageBySlug(slug.join('/'), locale)
 
   if (!page) notFound()
 
   const kind = typeof search.kind === 'string' ? search.kind : undefined
 
+  // The route already knows its own path, so the tab rows need no request
+  // headers — reading them would opt the page out of static rendering.
   return (
     <RenderBlocks
       blocks={page.layout}
-      pathname={headerList.get('x-pathname') ?? `/${slug.join('/')}`}
+      locale={locale}
+      pathname={localeHref(`/${slug.join('/')}`, locale)}
       activeKind={kind}
     />
   )

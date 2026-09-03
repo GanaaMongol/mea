@@ -5,13 +5,14 @@ import { notFound } from 'next/navigation'
 import type { Department } from '@/payload-types'
 
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
+import { DEFAULT_LOCALE, localeAlternates, localeHref, toLocale, type Locale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
 
 export const revalidate = 3600
 
-type Params = { slug: string }
+type Params = { lang: string; slug: string }
 
-const getDepartment = async (slug: string): Promise<Department | null> => {
+const getDepartment = async (slug: string, locale: Locale = DEFAULT_LOCALE): Promise<Department | null> => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayloadClient()
 
@@ -20,6 +21,7 @@ const getDepartment = async (slug: string): Promise<Department | null> => {
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 2,
+    locale,
     draft,
     overrideAccess: draft,
     pagination: false,
@@ -51,18 +53,25 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const department = await getDepartment(slug)
+  const { lang, slug } = await params
+  const department = await getDepartment(slug, toLocale(lang))
   if (!department) return {}
 
-  return { title: department.name }
+  return { title: department.name, alternates: localeAlternates(`/ministries/${slug}`) }
 }
 
 export default async function MinistryPage({ params }: { params: Promise<Params> }) {
-  const { slug } = await params
-  const department = await getDepartment(slug)
+  const { lang, slug } = await params
+  const locale = toLocale(lang)
+  const department = await getDepartment(slug, locale)
 
   if (!department) notFound()
 
-  return <RenderBlocks blocks={department.layout} pathname={`/ministries/${slug}`} />
+  return (
+    <RenderBlocks
+      blocks={department.layout}
+      locale={locale}
+      pathname={localeHref(`/ministries/${slug}`, locale)}
+    />
+  )
 }

@@ -5,13 +5,14 @@ import { notFound } from 'next/navigation'
 import type { Hub } from '@/payload-types'
 
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
+import { DEFAULT_LOCALE, localeAlternates, localeHref, toLocale, type Locale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
 
 export const revalidate = 3600
 
-type Params = { slug: string }
+type Params = { lang: string; slug: string }
 
-const getHub = async (slug: string): Promise<Hub | null> => {
+const getHub = async (slug: string, locale: Locale = DEFAULT_LOCALE): Promise<Hub | null> => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayloadClient()
 
@@ -20,6 +21,7 @@ const getHub = async (slug: string): Promise<Hub | null> => {
     where: { slug: { equals: slug } },
     limit: 1,
     depth: 2,
+    locale,
     draft,
     overrideAccess: draft,
     pagination: false,
@@ -51,20 +53,27 @@ export async function generateMetadata({
 }: {
   params: Promise<Params>
 }): Promise<Metadata> {
-  const { slug } = await params
-  const hub = await getHub(slug)
+  const { lang, slug } = await params
+  const hub = await getHub(slug, toLocale(lang))
   if (!hub) return {}
 
-  return { title: hub.name }
+  return { title: hub.name, alternates: localeAlternates(`/hubs/${slug}`) }
 }
 
 export default async function HubPage({ params }: { params: Promise<Params> }) {
-  const { slug } = await params
-  const hub = await getHub(slug)
+  const { lang, slug } = await params
+  const locale = toLocale(lang)
+  const hub = await getHub(slug, locale)
 
   if (!hub) notFound()
 
   // The route already knows its path, so the tab row needs no request headers —
   // reading them here would opt the page out of static rendering.
-  return <RenderBlocks blocks={hub.layout} pathname={`/hubs/${slug}`} />
+  return (
+    <RenderBlocks
+      blocks={hub.layout}
+      locale={locale}
+      pathname={localeHref(`/hubs/${slug}`, locale)}
+    />
+  )
 }

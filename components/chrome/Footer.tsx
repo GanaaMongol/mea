@@ -1,9 +1,11 @@
 import Link from 'next/link'
 
 import type { SiteSetting } from '@/payload-types'
+import type { Locale } from '@/lib/i18n'
 
 import { MediaImage } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
+import { localeHref } from '@/lib/i18n'
 
 /**
  * The three marks exported from the Figma footer, kept at the geometry the
@@ -16,13 +18,19 @@ const SOCIAL_ICONS: Record<string, { src: string; width: number; height: number;
   youtube: { src: '/images/social-youtube.svg', width: 16, height: 11, label: 'YouTube' },
 }
 
-export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }) {
+export function Footer({
+  footer,
+  locale,
+}: {
+  footer: SiteSetting['footer'] | undefined
+  locale: Locale
+}) {
   return (
     <footer className="footer">
       <div className="footer__inner">
         <div className="footer__top">
           <div>
-            <Link href="/" className="footer__logo">
+            <Link href={localeHref('/', locale)} className="footer__logo">
               {footer?.logo ? (
                 <MediaImage media={footer.logo} alt="MEA" />
               ) : (
@@ -32,7 +40,7 @@ export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }
             </Link>
             <div className="footer__links-row">
               {footer?.topLinks?.map((link, index) => (
-                <SiteLink key={link.id ?? index} link={link} />
+                <SiteLink key={link.id ?? index} link={link} locale={locale} />
               ))}
             </div>
           </div>
@@ -60,7 +68,7 @@ export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }
               <ul className="footer__nav-list">
                 {group.links?.map((link, linkIndex) => (
                   <li key={link.id ?? linkIndex}>
-                    <SiteLink link={link} />
+                    <SiteLink link={link} locale={locale} />
                   </li>
                 ))}
               </ul>
@@ -101,7 +109,12 @@ export function Footer({ footer }: { footer: SiteSetting['footer'] | undefined }
 
           <div className="flex flex-1 justify-end gap-lg">
             {footer?.legalLinks?.map((link, index) => (
-              <SiteLink key={link.id ?? index} link={link} className="footer__legal-link" />
+              <SiteLink
+                key={link.id ?? index}
+                link={link}
+                locale={locale}
+                className="footer__legal-link"
+              />
             ))}
           </div>
         </div>

@@ -1,5 +1,7 @@
 import type { Post, Prayer } from '@/payload-types'
 
+import { localeHref, type Locale } from './i18n'
+
 export type ArticleCollection = 'posts' | 'prayers'
 /** A `posts` or `prayers` document — same shape, different collection. */
 export type Article = Post | Prayer
@@ -8,4 +10,9 @@ export type Article = Post | Prayer
 export const articleHref = (
   doc: Pick<Article, 'slug'>,
   collection: ArticleCollection,
-): string => (collection === 'prayers' ? `/prayer/${doc.slug}` : `/news/${doc.slug}`)
+  locale?: Locale,
+): string =>
+  localeHref(
+    collection === 'prayers' ? `/prayer/${doc.slug}` : `/news/${doc.slug}`,
+    locale,
+  )

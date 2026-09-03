@@ -3,6 +3,8 @@ import type { Article, ArticleCollection } from '@/lib/postHref'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { PostsFeed } from '@/components/blocks/PostsFeed'
 import { MediaImage } from '@/components/ui/MediaImage'
+import { ui } from '@/lib/dictionary'
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n'
 import { articleHref } from '@/lib/postHref'
 
 /**
@@ -12,11 +14,14 @@ import { articleHref } from '@/lib/postHref'
 export function PostArticle({
   post,
   collection,
+  locale = DEFAULT_LOCALE,
 }: {
   post: Article
   collection: ArticleCollection
+  locale?: Locale
 }) {
   const prayer = collection === 'prayers'
+  const t = ui(locale)
 
   return (
     <>
@@ -29,7 +34,11 @@ export function PostArticle({
       <section className="news-detail-article">
         <div className="container news-detail-article__inner">
           <h1 className="news-detail-article__title">{post.title}</h1>
-          <RenderBlocks blocks={post.layout} pathname={articleHref(post, collection)} />
+          <RenderBlocks
+            blocks={post.layout}
+            locale={locale}
+            pathname={articleHref(post, collection, locale)}
+          />
         </div>
       </section>
 
@@ -40,8 +49,9 @@ export function PostArticle({
         source="auto"
         kind="all"
         limit={4}
-        readLabel="Унших"
-        header={{ title: prayer ? 'Бусад залбирлууд' : 'Төстэй мэдээнүүд', align: 'left' }}
+        locale={locale}
+        readLabel={t.read}
+        header={{ title: prayer ? t.relatedPrayers : t.relatedPosts, align: 'left' }}
       />
     </>
   )

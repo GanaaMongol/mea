@@ -2,8 +2,14 @@ import type { AcceleratorsBlock as AcceleratorsProps } from '@/payload-types'
 
 import { MediaImage } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
+import { type Locale } from '@/lib/i18n'
 
-export function Accelerators({ header, items, numbered }: AcceleratorsProps) {
+export function Accelerators({
+  header,
+  items,
+  numbered,
+  locale,
+}: AcceleratorsProps & { locale?: Locale }) {
   return (
     <section className="digital_strategy">
       <div className="container">
@@ -29,7 +35,9 @@ export function Accelerators({ header, items, numbered }: AcceleratorsProps) {
                 ) : null}
                 <h3 className="accel-card__title">
                   {item.link?.label || item.link?.url || item.link?.reference ? (
-                    <SiteLink link={item.link}>{item.title}</SiteLink>
+                    <SiteLink link={item.link} locale={locale}>
+                      {item.title}
+                    </SiteLink>
                   ) : (
                     item.title
                   )}

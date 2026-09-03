@@ -3,35 +3,50 @@ import { redirect } from 'next/navigation'
 
 import type { LinkLike } from '@/lib/links'
 
+import type { Locale } from '@/lib/i18n'
+
 import { getMember } from '@/lib/auth'
 import { AFTER_LOGIN_PATH, LOGIN_DEFAULTS } from '@/lib/authLabels'
+import { localeHref, toLocale } from '@/lib/i18n'
 import { resolveHref } from '@/lib/links'
 import { getAuthSettings } from '@/lib/queries'
 import { LoginForm, type LoginLabels } from './LoginForm'
 
 type Props = {
+  params: Promise<{ lang: string }>
   searchParams: Promise<{ next?: string }>
 }
 
 /** `resolveHref` yields '#' for an unset link; these targets have real defaults. */
-const hrefOr = (link: LinkLike | null | undefined, fallback: string): string => {
-  const href = resolveHref(link)
-  return href === '#' ? fallback : href
+const hrefOr = (
+  link: LinkLike | null | undefined,
+  fallback: string,
+  locale: Locale,
+): string => {
+  const href = resolveHref(link, locale)
+  return href === '#' ? localeHref(fallback, locale) : href
 }
 
-const safeNext = (value: string | undefined): string =>
-  value?.startsWith('/') && !value.startsWith('//') ? value : AFTER_LOGIN_PATH
+const safeNext = (value: string | undefined, locale: Locale): string =>
+  value?.startsWith('/') && !value.startsWith('//')
+    ? value
+    : localeHref(AFTER_LOGIN_PATH, locale)
 
-export async function generateMetadata(): Promise<Metadata> {
-  const auth = await getAuthSettings()
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const auth = await getAuthSettings(toLocale((await params).lang))
   return { title: auth?.login?.title || LOGIN_DEFAULTS.title }
 }
 
-export default async function LoginPage({ searchParams }: Props) {
-  const [member, auth, params] = await Promise.all([getMember(), getAuthSettings(), searchParams])
+export default async function LoginPage({ params, searchParams }: Props) {
+  const locale = toLocale((await params).lang)
+  const [member, auth, search] = await Promise.all([
+    getMember(),
+    getAuthSettings(locale),
+    searchParams,
+  ])
 
   // Already signed in — nothing to log into.
-  if (member) redirect(safeNext(params.next))
+  if (member) redirect(safeNext(search.next, locale))
 
   const login = auth?.login
   const labels: LoginLabels = {
@@ -45,17 +60,17 @@ export default async function LoginPage({ searchParams }: Props) {
     dividerLabel: login?.dividerLabel || LOGIN_DEFAULTS.dividerLabel,
     forgot: {
       label: login?.forgotLink?.label || LOGIN_DEFAULTS.forgotLabel,
-      href: hrefOr(login?.forgotLink, '#'),
+      href: hrefOr(login?.forgotLink, '#', locale),
     },
     register: {
       label: login?.registerLink?.label || LOGIN_DEFAULTS.registerLabel,
-      href: hrefOr(login?.registerLink, '/membership/join'),
+      href: hrefOr(login?.registerLink, '/membership/join', locale),
     },
     back: {
       label: login?.backLink?.label || LOGIN_DEFAULTS.backLabel,
-      href: hrefOr(login?.backLink, '/'),
+      href: hrefOr(login?.backLink, '/', locale),
     },
   }
 
-  return <LoginForm labels={labels} next={safeNext(params.next)} />
+  return <LoginForm labels={labels} next={safeNext(search.next, locale)} />
 }

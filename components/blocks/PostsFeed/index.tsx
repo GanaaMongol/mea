@@ -7,10 +7,13 @@ import type { Article, ArticleCollection } from '@/lib/postHref'
 
 import { ArrowUpRight } from '@/components/ui/ArrowUpRight'
 import { SiteLink } from '@/components/ui/SiteLink'
+import { ui } from '@/lib/dictionary'
+import { DEFAULT_LOCALE, type Locale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
 import { NewsCard } from './NewsCard'
 
 type Props = PostsFeedProps & {
+  locale?: Locale
   pathname?: string
   /** The active `kind` filter, taken from the page's query string. */
   activeKind?: string
@@ -26,9 +29,10 @@ async function loadPosts({
   kind,
   limit,
   activeKind,
+  locale,
 }: Pick<
   Props,
-  'collection' | 'source' | 'manual' | 'kind' | 'limit' | 'activeKind'
+  'collection' | 'source' | 'manual' | 'kind' | 'limit' | 'activeKind' | 'locale'
 >): Promise<Article[]> {
   if (source === 'manual') {
     // Polymorphic relationship: `{ relationTo, value }`, and `value` is only a
@@ -49,6 +53,7 @@ async function loadPosts({
     sort: '-publishedAt',
     limit: limit ?? 4,
     depth: 1,
+    locale,
     pagination: false,
   })
 
@@ -57,6 +62,7 @@ async function loadPosts({
 
 export async function PostsFeed(props: Props) {
   const { variant, header, filter, moreLink, readLabel, pathname, activeKind } = props
+  const locale = props.locale ?? DEFAULT_LOCALE
   const collection = (props.collection ?? 'posts') as ArticleCollection
   const posts = await loadPosts({ ...props, collection })
   const related = variant === 'related'
@@ -130,14 +136,15 @@ export async function PostsFeed(props: Props) {
               post={post}
               collection={collection}
               variant={bordered ? 'bordered' : 'plain'}
-              readLabel={readLabel ?? 'Унших'}
+              locale={locale}
+              readLabel={readLabel ?? ui(locale).read}
             />
           ))}
         </div>
 
         {moreLink?.label ? (
           <div className="news-more">
-            <SiteLink link={moreLink} className="news-more__link">
+            <SiteLink link={moreLink} locale={locale} className="news-more__link">
               <span className="news-more__label">{moreLink.label}</span>
               <ArrowUpRight className="news-more__icon" />
             </SiteLink>

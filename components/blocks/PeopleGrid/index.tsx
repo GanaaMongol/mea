@@ -1,7 +1,10 @@
 import type { BoardMember, PeopleGridBlock as PeopleGridProps } from '@/payload-types'
 
 import { MediaImage } from '@/components/ui/MediaImage'
+import { type Locale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
+
+type Props = PeopleGridProps & { locale?: Locale }
 
 const asPerson = (value: number | BoardMember): BoardMember | null =>
   typeof value === 'object' ? value : null
@@ -12,7 +15,10 @@ async function loadPeople({
   hub,
   people,
   limit,
-}: Pick<PeopleGridProps, 'source' | 'group' | 'hub' | 'people' | 'limit'>): Promise<BoardMember[]> {
+  locale,
+}: Pick<Props, 'source' | 'group' | 'hub' | 'people' | 'limit' | 'locale'>): Promise<
+  BoardMember[]
+> {
   if (source === 'manual') {
     return (people ?? []).map(asPerson).filter((person): person is BoardMember => Boolean(person))
   }
@@ -28,13 +34,14 @@ async function loadPeople({
     sort: 'order',
     limit: limit ?? 12,
     depth: 1,
+    locale,
     pagination: false,
   })
 
   return docs
 }
 
-export async function PeopleGrid(props: PeopleGridProps) {
+export async function PeopleGrid(props: Props) {
   const { variant, title, description } = props
   const people = await loadPeople(props)
 

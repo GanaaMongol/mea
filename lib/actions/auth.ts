@@ -12,6 +12,7 @@ import {
   MIN_PASSWORD_LENGTH,
   PASSWORD_MESSAGES,
 } from '@/lib/authLabels'
+import { localeHref, toLocale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
 import { normalizePhone } from '@/lib/phone'
 
@@ -116,7 +117,7 @@ async function setSessionCookie(token: string): Promise<void> {
 }
 
 /** Drops the server-side session as well as the cookie. */
-export async function logoutAction(): Promise<void> {
+export async function logoutAction(formData?: FormData): Promise<void> {
   const payload = await getPayloadClient()
 
   try {
@@ -149,7 +150,7 @@ export async function logoutAction(): Promise<void> {
     secure: Boolean(cookie.secure),
   })
 
-  redirect(AFTER_LOGOUT_PATH)
+  redirect(localeHref(AFTER_LOGOUT_PATH, toLocale(formData?.get('locale'))))
 }
 
 /**

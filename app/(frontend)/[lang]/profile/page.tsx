@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { logoutAction } from '@/lib/actions/auth'
 import { getMember, memberDisplayName } from '@/lib/auth'
 import { LOGIN_DEFAULTS, PROFILE_DEFAULTS } from '@/lib/authLabels'
+import { localeHref, toLocale } from '@/lib/i18n'
 import { getAuthSettings } from '@/lib/queries'
 import { PasswordSection } from './PasswordSection'
 
@@ -11,6 +12,8 @@ export const metadata: Metadata = {
   title: PROFILE_DEFAULTS.panelTitle,
   robots: { index: false, follow: false },
 }
+
+type Props = { params: Promise<{ lang: string }> }
 
 const UserIcon = () => (
   <svg
@@ -81,11 +84,14 @@ const EditIcon = () => (
  * the one place the session can be ended. Read-only for now — the mockup's two
  * "өөрчлөх" links have no target yet.
  */
-export default async function ProfilePage() {
+export default async function ProfilePage({ params }: Props) {
+  const locale = toLocale((await params).lang)
   const member = await getMember()
-  if (!member) redirect('/login?next=/profile')
+  if (!member) {
+    redirect(`${localeHref('/login', locale)}?next=${localeHref('/profile', locale)}`)
+  }
 
-  const auth = await getAuthSettings()
+  const auth = await getAuthSettings(locale)
   const labels = { ...PROFILE_DEFAULTS, ...cleaned(auth?.profile) }
   const greeting = labels.greeting.replace('{name}', memberDisplayName(member))
 
@@ -109,6 +115,8 @@ export default async function ProfilePage() {
             </span>
 
             <form action={logoutAction}>
+              {/* The action redirects home; this keeps it in the reader's language. */}
+              <input type="hidden" name="locale" value={locale} />
               <button type="submit" className="profile-menu__item w-full bg-transparent">
                 <span className="profile-menu__left">
                   <span className="profile-menu__icon">

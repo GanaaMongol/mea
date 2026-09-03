@@ -3,6 +3,7 @@ import type { CardGridBlock as CardGridProps } from '@/payload-types'
 import { SectionHeader } from '@/components/blocks/SectionHeader'
 import { MediaImage } from '@/components/ui/MediaImage'
 import { SiteLink } from '@/components/ui/SiteLink'
+import { type Locale } from '@/lib/i18n'
 
 const VARIANT = {
   info: { grid: 'info-cards', card: 'info-card' },
@@ -11,7 +12,13 @@ const VARIANT = {
   step: { grid: 'step-cards', card: 'step-card' },
 } as const
 
-export function CardGrid({ variant, header, items, background }: CardGridProps) {
+export function CardGrid({
+  variant,
+  header,
+  items,
+  background,
+  locale,
+}: CardGridProps & { locale?: Locale }) {
   const style = VARIANT[variant] ?? VARIANT.info
 
   const cards = items?.map((item, index) => (
@@ -23,7 +30,7 @@ export function CardGrid({ variant, header, items, background }: CardGridProps) 
       <h3 className={`${style.card}__title`}>{item.title}</h3>
       {item.text ? <p className={`${style.card}__text`}>{item.text}</p> : null}
       {item.link?.label ? (
-        <SiteLink link={item.link} className={`${style.card}__link`}>
+        <SiteLink link={item.link} locale={locale} className={`${style.card}__link`}>
           {item.link.label} <span>&rarr;</span>
         </SiteLink>
       ) : null}
