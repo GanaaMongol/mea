@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export PATH="/usr/local/bin:/usr/bin:/bin"
+
+BASE="/var/www/mea"
+REL="$BASE/releases/$(date +%Y%m%d%H%M%S)"
+PREV=$(readlink -f "$BASE/current" 2>/dev/null || echo "")
+
+command -v node >/dev/null || { echo "node not found"; exit 1; }
+command -v pm2  >/dev/null || { echo "pm2 not found"; exit 1; }
+
+echo "==> Receiving"
+mkdir -p "$REL"
+tar xz -C "$REL"
+
+ln -sfn "$BASE/shared/.env" "$REL/.env"
+rm -rf "$REL/apps/web/.next/cache"
+ln -sfn /srv/next-cache "$REL/apps/web/.next/cache"
+
+activate() {
+  ln -sfn "$1" "$BASE/current"
+  pm2 delete mea >/dev/null 2>&1 || true
+  pm2 start "$BASE/current/ecosystem.config.js"
+  pm2 save
+}
+
+healthy() {
+  for i in $(seq 1 30); do
+    curl -sf -o /dev/null http://127.0.0.1:3000/ && return 0
+    sleep 3
+  done
+  return 1
+}
+
+echo "==> Activating $REL"
+activate "$REL"
+
+if healthy; then
+  echo "==> OK"
+  for p in / /about /news; do curl -s -o /dev/null "http://127.0.0.1:3000$p"; done
+  ls -1dt "$BASE"/releases/*/ | tail -n +4 | xargs -r rm -rf
+else
+  echo "!! Health check failed"
+  pm2 logs mea --lines 40 --nostream || true
+  rm -rf "$REL"
+  if [ -n "$PREV" ] && [ -d "$PREV" ]; then
+    echo "!! Rolling back to $PREV"
+    activate "$PREV"
+    healthy && echo "!! Rollback OK" || echo "!! Rollback ALSO failed"
+  fi
+  exit 1
+fi
