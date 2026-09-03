@@ -43,3 +43,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+cat >> .gitignore <<'EOF'
+*.pem
+*-key
+*-key.pub
+.env
+.env.local
+EOF
