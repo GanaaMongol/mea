@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 
 /**
@@ -19,18 +18,16 @@ export function proxy(request: NextRequest) {
 
   // Canonical: the default locale is never spelled out in the URL.
   if (first === DEFAULT_LOCALE) {
-    const url = request.nextUrl.clone()
-    url.pathname = pathname.slice(DEFAULT_LOCALE.length + 1) || '/'
-    return NextResponse.redirect(url)
+    const target = (pathname.slice(DEFAULT_LOCALE.length + 1) || '/') + request.nextUrl.search
+    return NextResponse.redirect(new URL(target, request.url))
   }
 
   const headers = new Headers(request.headers)
   headers.set('x-pathname', pathname)
 
   if (!isLocale(first)) {
-    const url = request.nextUrl.clone()
-    url.pathname = `/${DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}`
-    return NextResponse.rewrite(url, { request: { headers } })
+    const target = `/${DEFAULT_LOCALE}${pathname === '/' ? '' : pathname}${request.nextUrl.search}`
+    return NextResponse.rewrite(new URL(target, request.url), { request: { headers } })
   }
 
   return NextResponse.next({ request: { headers } })
