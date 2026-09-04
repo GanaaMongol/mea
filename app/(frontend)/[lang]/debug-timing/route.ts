@@ -4,11 +4,15 @@ import { getPayloadClient } from '@/lib/payload'
 import { getPageBySlug } from '@/lib/queries'
 
 /**
- * TEMPORARY — production is answering in ~6s on any page whose layout holds a
- * block that queries (`postsFeed`, `departmentGrid`), and in ~0.7s otherwise,
- * while every one of these steps measured from outside is fast. This runs the
- * same steps in a route handler, where no React tree is rendered, so the
- * numbers say whether the time goes to the data layer or to rendering.
+ * TEMPORARY — production answers in ~6s on any page whose layout holds a block
+ * that queries (`postsFeed`, `departmentGrid`), and in ~0.7s otherwise.
+ *
+ * Round 1 (2026-09-04) settled where the time goes: rendering is innocent. In a
+ * route handler with no React tree, `pages` answered in 77ms while the `posts`
+ * and `departments` queries took 5.6s and 5.4s — for 4 and 8 rows.
+ *
+ * Round 2, below, splits those queries apart one dimension at a time — depth,
+ * select, sort, locale, the `where` clause — so the 5.5s lands on exactly one.
  *
  * The folder must not start with an underscore — Next treats `_name` as a
  * private folder and opts it out of routing, so `/_timing` fell through to
@@ -22,59 +26,130 @@ const ms = (from: number) => Math.round(performance.now() - from)
 
 export async function GET() {
   const started = performance.now()
+  const payload = await getPayloadClient()
   const t: Record<string, number> = {}
 
-  let mark = performance.now()
-  const payload = await getPayloadClient()
-  t.getPayloadClient = ms(mark)
+  const time = async <T>(name: string, run: () => Promise<T>): Promise<T> => {
+    const mark = performance.now()
+    const value = await run()
+    t[name] = ms(mark)
+    return value
+  }
 
-  mark = performance.now()
-  await getPayloadClient()
-  t.getPayloadClientAgain = ms(mark)
+  // The baseline: exactly what PostsFeed runs.
+  const base = await time('a_posts_depth1', () =>
+    payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      limit: 4,
+      depth: 1,
+      locale: 'mn',
+      pagination: false,
+    }),
+  )
 
-  mark = performance.now()
-  const page = await getPageBySlug('news', 'mn')
-  t.getPageBySlug_news = ms(mark)
+  // Same, minus relationship resolution.
+  await time('b_posts_depth0', () =>
+    payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      limit: 4,
+      depth: 0,
+      locale: 'mn',
+      pagination: false,
+    }),
+  )
 
-  // Exactly the query `PostsFeed` runs.
-  mark = performance.now()
-  const posts = await payload.find({
-    collection: 'posts',
-    where: {},
-    sort: '-publishedAt',
-    limit: 4,
-    depth: 1,
-    locale: 'mn',
-    pagination: false,
-  })
-  t.postsFeed_query = ms(mark)
+  // Same, minus the document body: no blocks, no rich text, no locale columns
+  // beyond the three asked for.
+  await time('c_posts_depth0_select', () =>
+    payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      limit: 4,
+      depth: 0,
+      locale: 'mn',
+      select: { title: true, slug: true, publishedAt: true },
+      pagination: false,
+    }),
+  )
 
-  // Exactly the query `DepartmentGrid` runs.
-  mark = performance.now()
-  const departments = await payload.find({
-    collection: 'departments',
-    sort: 'order',
-    limit: 12,
-    depth: 1,
-    locale: 'mn',
-    pagination: false,
-  })
-  t.departmentGrid_query = ms(mark)
+  // Is it the sort?
+  await time('d_posts_nosort', () =>
+    payload.find({
+      collection: 'posts',
+      limit: 4,
+      depth: 0,
+      locale: 'mn',
+      select: { title: true },
+      pagination: false,
+    }),
+  )
+
+  // Is it localization — the _locales join and its fallback?
+  await time('e_posts_nolocale', () =>
+    payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      limit: 4,
+      depth: 0,
+      select: { title: true },
+      pagination: false,
+    }),
+  )
+
+  // Is it `pagination: false`?
+  await time('f_posts_paginated', () =>
+    payload.find({
+      collection: 'posts',
+      sort: '-publishedAt',
+      limit: 4,
+      depth: 0,
+      locale: 'mn',
+      select: { title: true },
+    }),
+  )
+
+  // The cheapest question the adapter can ask this table.
+  const count = await time('g_posts_count', () =>
+    payload.count({ collection: 'posts' }),
+  )
+
+  // Control: `pages` is fast with a where clause. Is it still fast without one?
+  await time('h_pages_nowhere', () =>
+    payload.find({
+      collection: 'pages',
+      limit: 4,
+      depth: 1,
+      locale: 'mn',
+      pagination: false,
+    }),
+  )
+
+  // The other slow collection, stripped the same way.
+  await time('i_departments_depth0_select', () =>
+    payload.find({
+      collection: 'departments',
+      sort: 'order',
+      limit: 12,
+      depth: 0,
+      locale: 'mn',
+      select: { name: true },
+      pagination: false,
+    }),
+  )
+
+  await time('j_getPageBySlug_news', () => getPageBySlug('news', 'mn'))
 
   t.total = ms(started)
 
   return NextResponse.json(
     {
       timings_ms: t,
-      counts: {
-        blocks: page?.layout?.length ?? 0,
-        posts: posts.docs.length,
-        departments: departments.docs.length,
-      },
+      counts: { posts_returned: base.docs.length, posts_total: count.totalDocs },
       node: process.version,
       uptime_s: Math.round(process.uptime()),
       rss_mb: Math.round(process.memoryUsage().rss / 1024 / 1024),
-      heap_mb: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
     },
     { headers: { 'cache-control': 'no-store' } },
   )
