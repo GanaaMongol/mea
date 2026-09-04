@@ -42,12 +42,9 @@ jobs:
 
       - name: Backup before migrate
         run: |
-          sudo apt-get install -y postgresql-client-16
-          ssh -f -N -o ExitOnForwardFailure=yes -o BatchMode=yes \
-            -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
-            -i ~/.ssh/migrate -L 5433:127.0.0.1:5432 deploy@${{ secrets.EC2_HOST }}
-          pg_dump -Fc "postgres://mea:${{ secrets.DB_PASSWORD }}@127.0.0.1:5433/mea" \
-            > pre-migrate.dump
+          ssh -o BatchMode=yes -i ~/.ssh/migrate \
+            deploy@${{ secrets.EC2_HOST }} dump > pre-migrate.dump
+          ls -lh pre-migrate.dump
 
       - uses: actions/upload-artifact@v4
         with:
@@ -57,6 +54,8 @@ jobs:
 
       - name: Migrate
         run: |
+          ssh -f -N -o ExitOnForwardFailure=yes -o BatchMode=yes \
+            -i ~/.ssh/migrate -L 5433:127.0.0.1:5432 deploy@${{ secrets.EC2_HOST }}
           DATABASE_URI="postgres://mea:${{ secrets.DB_PASSWORD }}@127.0.0.1:5433/mea" \
           PAYLOAD_SECRET="${{ secrets.PAYLOAD_SECRET }}" \
           pnpm payload migrate
