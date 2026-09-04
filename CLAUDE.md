@@ -254,6 +254,26 @@ disabled here. So until the data layer stops calling `draftMode()` on the public
 `cacheComponents` is adopted deliberately), dynamic rendering is the correct setting and query
 cost is the only lever left — keep `depth` low and `select` narrow.
 
+### Postgres JIT is off — do not turn it back on
+
+`payload.config.ts` connects with `options: '-c jit=off'`. That one setting was the whole of the
+~6s TTFB the site served for weeks. Measured on production, same query, same 13 rows, same build:
+
+| query | jit on | jit off |
+| --- | --- | --- |
+| `posts`, depth 0, no `select` | 5415ms | 98ms |
+
+Reading a single `posts` document joins the 25-block `layout` catalogue and its locale tables. The
+planner's cost estimate clears both `jit_above_cost` (100000) and `jit_optimize_above_cost`
+(500000), so Postgres spent seconds in LLVM compiling a query that executes in under 100ms. The
+cost was flat regardless of rows, limit or sort — the fingerprint of planning, not execution.
+
+**It is invisible locally.** Postgres.app is built without LLVM, so the laptop never JITs and the
+same query answers in 10ms there. Any "it's fast on my machine" reasoning about query cost is
+worthless unless it is measured against Ubuntu's Postgres.
+
+This workload is many small reads. JIT can only ever cost it.
+
 ### Query budget and Payload performance
 
 Payload stores one logical document across many tables when it contains arrays, blocks, localized
@@ -265,6 +285,10 @@ public pages as cached content and by keeping DB reads shallow and narrow.
   page truly needs them.
 - Use `select` aggressively so a query does not pull rich text, nested blocks, or unrelated
   relation data. Example: `select: { title: true, slug: true, publishedAt: true }` for a list page.
+  This is not a micro-optimisation: `posts` and `departments` carry the same 25-block `layout`
+  field a page does, so an unselected read joins the whole block catalogue to render a card that
+  shows four fields. Measured on production before JIT was disabled: 5325ms without `select`, 2ms
+  with. `PostsFeed` and `DepartmentGrid` select explicitly for this reason.
 - Use `pagination: false` when a page does not need total counts; this avoids an extra count query.
 - Add indexes on high-traffic lookup fields such as `slug` and any `where` filter fields. For slug
   lookups, every public-facing collection should have a unique index or at least a text index in the
@@ -418,21 +442,11 @@ Settled (see `plan.md` §11 for dates and rationale):
   it meant writing all 19 pages twice.)
 - **`styles.css`** ✅ — ported as CSS, not converted to Tailwind utilities.
 - **Block-first** ✅ — every section is a block; all content admin-editable.
+- **Postgres JIT off** ✅ (2026-09-04) — the ~6s production TTFB was PostgreSQL's LLVM JIT, and
+  nothing else. See "Postgres JIT" below.
 
 Open — ask before the step that needs them:
 
-- **Production TTFB ~6s on pages whose blocks query** — `/`, `/news`, `/prayer`, `/ministries`,
-  `/news/[slug]`, `/prayer/[slug]` all answer in ~6s; `/about/*`, `/membership`,
-  `/hubs/[slug]`, `/ministries/[slug]` answer in ~0.7s. The split is **where the query is
-  issued**, not what it asks: `/ministries/kids` queries `departments` from its route file and is
-  fast, `/ministries` queries the same collection from the `departmentGrid` block and is slow.
-  Ruled out by measurement (2026-09-04): the queries (every shape of the `postsFeed` query over
-  the REST API is ~0.4s), query *count* (`/search` fires five in parallel, 0.64s), data volume
-  (`/prayer`'s feed is 1.8KB), images (`/hubs/ulaanbaatar` renders 9 images in 0.87s while
-  `/prayer` renders 2 in 6.1s; `X-Nextjs-Cache` HITs), redirects (none), Payload re-initialising
-  (pinning the client to `globalThis` changed nothing), and the app itself (the same build serves
-  every one of these pages in under 60ms on a laptop). Next unblocked by: the server's own
-  request log — `pm2 logs mea` prints Next's per-phase breakdown — or `PAYLOAD_LOG_SQL=true`.
 - **English locale** — real EN translation, or is the switcher decorative?
 - **`organization.html`** — which route? `/organization` is a guess.
 - **Membership signup** — real member logins, or an application form an admin approves?
