@@ -5,8 +5,9 @@ import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { localeAlternates, localeHref, toLocale } from '@/lib/i18n'
 import { getPageBySlug } from '@/lib/queries'
 
-// The home page's `postsFeed` block has its `?kind=` tab filter enabled, same
-// as `/news` — that reads searchParams, which forces this route dynamic.
+// The `postsFeed` block's `?kind=` tab reads searchParams, which forces this
+// route dynamic — unlike the shared `[...slug]` catch-all, which stays static
+// because none of its pages use tabs.
 export const dynamic = 'force-dynamic'
 
 type Params = { lang: string }
@@ -18,17 +19,17 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const locale = toLocale((await params).lang)
-  const page = await getPageBySlug('home', locale)
+  const page = await getPageBySlug('news', locale)
   if (!page) return {}
 
   return {
     title: page.meta?.title || page.title,
     description: page.meta?.description ?? undefined,
-    alternates: localeAlternates('/'),
+    alternates: localeAlternates('/news'),
   }
 }
 
-export default async function HomePage({
+export default async function NewsPage({
   params,
   searchParams,
 }: {
@@ -37,7 +38,7 @@ export default async function HomePage({
 }) {
   const [{ lang }, search] = await Promise.all([params, searchParams])
   const locale = toLocale(lang)
-  const page = await getPageBySlug('home', locale)
+  const page = await getPageBySlug('news', locale)
 
   if (!page) notFound()
 
@@ -47,7 +48,7 @@ export default async function HomePage({
     <RenderBlocks
       blocks={page.layout}
       locale={locale}
-      pathname={localeHref('/', locale)}
+      pathname={localeHref('/news', locale)}
       activeKind={kind}
     />
   )
