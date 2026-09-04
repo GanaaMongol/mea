@@ -20,6 +20,7 @@ import { Prayers } from '@/payload/collections/Prayers'
 import { Users } from '@/payload/collections/Users'
 import { SiteSettings } from '@/payload/globals/SiteSettings'
 import { Theme } from '@/payload/globals/Theme'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -59,6 +60,17 @@ export default buildConfig({
     Feedback,
     Users,
   ],
+  
+  plugins: [
+    s3Storage({
+      collections: { media: true },
+      bucket: process.env.S3_BUCKET!,
+      config: {
+        region: process.env.AWS_REGION,
+      },
+    }),
+  ],
+  
   globals: [Theme, SiteSettings],
 
   editor: lexicalEditor({
