@@ -141,11 +141,56 @@ export async function GET() {
 
   await time('j_getPageBySlug_news', () => getPageBySlug('news', 'mn'))
 
+  // Round 3. The same query is 10ms on a laptop and 5325ms here, on the same
+  // data, and the cost is flat regardless of rows, limit or sort — the
+  // fingerprint of planning, not execution. The prime suspect is JIT: an
+  // unselected read of `posts` joins 25 block tables plus their locale tables,
+  // whose estimated cost clears `jit_above_cost` (100000) and
+  // `jit_optimize_above_cost` (500000), so Postgres spends seconds in LLVM
+  // compiling a query that runs in milliseconds. Postgres.app, which is what
+  // the laptop runs, ships without LLVM — which is why it never shows there.
+  //
+  // node-postgres hands back the most recently released connection first, so
+  // `SET jit = off` here usually lands on the connection the next find() uses.
+  // If the numbers do not move, the setting went to a different connection —
+  // an inconclusive result, not a disproof.
+  const pool = (payload.db as unknown as { pool?: { query: (q: string) => Promise<{ rows: Record<string, string>[] }> } }).pool
+  const settings: Record<string, string> = {}
+
+  if (pool) {
+    for (const name of ['jit', 'jit_above_cost', 'jit_optimize_above_cost', 'server_version']) {
+      try {
+        const { rows } = await pool.query(`show ${name}`)
+        settings[name] = Object.values(rows[0] ?? {})[0] ?? '?'
+      } catch (error) {
+        settings[name] = `error: ${(error as Error).message}`
+      }
+    }
+
+    try {
+      await pool.query('set jit = off')
+      await time('k_posts_depth0_jit_off', () =>
+        payload.find({
+          collection: 'posts',
+          sort: '-publishedAt',
+          limit: 4,
+          depth: 0,
+          locale: 'mn',
+          pagination: false,
+        }),
+      )
+      await pool.query('reset jit')
+    } catch (error) {
+      settings.jit_off_test = `error: ${(error as Error).message}`
+    }
+  }
+
   t.total = ms(started)
 
   return NextResponse.json(
     {
       timings_ms: t,
+      pg: settings,
       counts: { posts_returned: base.docs.length, posts_total: count.totalDocs },
       node: process.version,
       uptime_s: Math.round(process.uptime()),

@@ -54,10 +54,18 @@ async function loadPosts({
     limit: limit ?? 4,
     depth: 1,
     locale,
+    // Everything `NewsCard` reads, and nothing else. Without this the query
+    // asks for the whole document, `layout` blocks included — 25 block tables
+    // and their locale tables joined to fetch a card that shows five fields.
+    // Measured on production: 5325ms without, 2ms with.
+    select:
+      collection === 'prayers'
+        ? { title: true, slug: true, excerpt: true, publishedAt: true, cover: true }
+        : { title: true, slug: true, excerpt: true, publishedAt: true, cover: true, kind: true },
     pagination: false,
   })
 
-  return docs
+  return docs as Article[]
 }
 
 export async function PostsFeed(props: Props) {

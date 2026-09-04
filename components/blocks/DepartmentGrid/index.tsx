@@ -8,7 +8,10 @@ import { getPayloadClient } from '@/lib/payload'
 
 type Props = DepartmentGridProps & { locale?: Locale }
 
-const asDepartment = (value: number | Department): Department | null =>
+/** The five fields a card renders — the shape the query selects for. */
+type DepartmentCard = Pick<Department, 'id' | 'name' | 'slug' | 'excerpt' | 'image'>
+
+const asDepartment = (value: number | Department): DepartmentCard | null =>
   typeof value === 'object' ? value : null
 
 /** Four to a row, so each row expands on hover like the home page's accelerators. */
@@ -24,9 +27,9 @@ async function loadDepartments({
   manual,
   limit,
   locale,
-}: Pick<Props, 'source' | 'manual' | 'limit' | 'locale'>): Promise<Department[]> {
+}: Pick<Props, 'source' | 'manual' | 'limit' | 'locale'>): Promise<DepartmentCard[]> {
   if (source === 'manual') {
-    return (manual ?? []).map(asDepartment).filter((doc): doc is Department => Boolean(doc))
+    return (manual ?? []).map(asDepartment).filter((doc): doc is DepartmentCard => Boolean(doc))
   }
 
   const payload = await getPayloadClient()
@@ -36,6 +39,10 @@ async function loadDepartments({
     limit: limit ?? 12,
     depth: 1,
     locale,
+    // The four fields the card renders. `departments` carries the same
+    // `layout` blocks field as a page, so an unselected read joins the whole
+    // block catalogue for a grid of images and names — see PostsFeed.
+    select: { name: true, slug: true, excerpt: true, image: true },
     pagination: false,
   })
 
