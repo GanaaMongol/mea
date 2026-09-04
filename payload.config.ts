@@ -63,7 +63,7 @@ export default buildConfig({
   
   plugins: [
     s3Storage({
-      collections: { media: { prefix: 'media' } },
+      collections: { media: true },
       bucket: process.env.S3_BUCKET!,
       config: {
         region: process.env.AWS_REGION,
