@@ -21,22 +21,29 @@ Same rule for Payload 3: it is installed at `node_modules/payload` and `node_mod
 
 ## Commands
 
+**This project uses pnpm, never npm.** `package.json` pins
+`"packageManager": "pnpm@11.25.0"`, `pnpm-lock.yaml` is the lockfile CI installs from
+(`pnpm install --frozen-lockfile` in `.github/workflows/deploy.yml`), and Payload/Next
+resolve their binaries through pnpm's store layout. Running `npm run …` or `npm install`
+writes a competing `package-lock.json` and a flat `node_modules` that no longer matches
+what production builds against.
+
 ```bash
-npm run dev                  # dev server at http://localhost:3000
-npm run build                # production build
-npm run start                # serve the production build
-npm run lint                 # eslint (flat config, eslint 9)
-npm run generate:types       # payload-types.ts (run after every schema change)
-npm run generate:importmap   # app/(payload)/admin/importMap.js
+pnpm dev                  # dev server at http://localhost:3000
+pnpm build                # production build
+pnpm start                # serve the production build
+pnpm lint                 # eslint (flat config, eslint 9)
+pnpm generate:types       # payload-types.ts (run after every schema change)
+pnpm generate:importmap   # app/(payload)/admin/importMap.js
 ```
 
 **Never run `npx payload …`.** npx reaches out to the registry for a `payload` binary it
 thinks is missing; a failed fetch has already wiped `next`, `payload` and `@payloadcms/*`
-out of `node_modules` once, requiring a full `npm install`. Use `npm run <script>` — the
+out of `node_modules` once, requiring a full `pnpm install`. Use `pnpm <script>` — the
 package scripts resolve the local binary. `package.json` also needs `"type": "module"`, or
 the Payload CLI cannot load `payload.config.ts` (lexical uses top-level await).
 
-There is no test setup. Verification = `npm run build`, `npm run lint`, and visual comparison
+There is no test setup. Verification = `pnpm build`, `pnpm lint`, and visual comparison
 of each route against its `lib/html/` mockup.
 
 Local Postgres: Postgres.app **18** on `127.0.0.1:5432`, database `mea`. `psql` is not on PATH —
@@ -101,7 +108,7 @@ Writing a field before looking at the markup is forbidden. For each page:
    `class`→`className`, self-close tags, `<img>`→`next/image`. Verify visual parity first.
 2. **Componentize** — each section becomes `components/blocks/<Name>` taking **props**. Every
    hardcoded value must surface as a prop; anything left inline is a bug.
-3. **Derive the schema** — write the block fields *from those props*, then `npm run generate:types`.
+3. **Derive the schema** — write the block fields *from those props*, then `pnpm generate:types`.
 4. **Enter the content in `/admin`** — the database is the only source of truth for content;
    there is no seed script, so nothing re-imposes hardcoded copy over an editor's work.
 5. **Wire up** — the route reads via `payload.find(...)` and renders
@@ -389,8 +396,8 @@ hand-author Lexical JSON.
 `/admin` authenticates; all 19 routes render from Payload data; **every section of every page is
 editable in admin** (text, image, link, order); an editor can assemble a new page from blocks
 without writing code; the `theme` global drives the site's CSS custom properties; visual parity
-with the mockups on desktop **and** mobile; `payload-types.ts` committed; `npm run build` +
-`npm run lint` pass; `.env.example` documented; `lib/html/` and static `lib/*.ts` removed.
+with the mockups on desktop **and** mobile; `payload-types.ts` committed; `pnpm build` +
+`pnpm lint` pass; `.env.example` documented; `lib/html/` and static `lib/*.ts` removed.
 
 ## Decisions
 
