@@ -62,10 +62,15 @@ jobs:
 
       - name: Deploy
         run: |
-          mkdir -p out/.next
+          # `cp -a src dst` nests src *inside* dst when dst already exists, and
+          # .next/standalone ships its own traced `public/` (a file read via fs
+          # at runtime lands there). That put every real asset at
+          # public/public/images/... on the server, so /images/* 404'd apart
+          # from the one traced file. Copy contents into a pre-made dir instead.
+          mkdir -p out/.next/static out/public
           cp -a .next/standalone/. out/
-          cp -a .next/static out/.next/static
-          cp -a public out/public
+          cp -a .next/static/. out/.next/static/
+          cp -a public/. out/public/
           cp -a ecosystem.config.cjs out/
           for d in node_modules/.pnpm/@img+*; do
             rm -rf "out/node_modules/.pnpm/$(basename "$d")"
