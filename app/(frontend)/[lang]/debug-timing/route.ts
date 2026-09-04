@@ -10,6 +10,10 @@ import { getPageBySlug } from '@/lib/queries'
  * same steps in a route handler, where no React tree is rendered, so the
  * numbers say whether the time goes to the data layer or to rendering.
  *
+ * The folder must not start with an underscore — Next treats `_name` as a
+ * private folder and opts it out of routing, so `/_timing` fell through to
+ * `[...slug]` and 404'd instead of running any of this.
+ *
  * Returns durations only, never content. Delete once the cause is found.
  */
 export const dynamic = 'force-dynamic'

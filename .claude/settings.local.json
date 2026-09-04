@@ -27,7 +27,9 @@
       "Bash(git diff *)",
       "mcp__claude_ai_Figma__get_design_context",
       "mcp__claude_ai_Figma__get_metadata",
-      "mcp__claude_ai_Figma__get_figma_skill"
+      "mcp__claude_ai_Figma__get_figma_skill",
+      "Bash(/Applications/Postgres.app/Contents/Versions/18/bin/psql -h 127.0.0.1 -p 5432 -d mea -c \"select 1\")",
+      "Bash(lsof -ti:3000)"
     ]
   }
 }
