@@ -97,6 +97,20 @@ export default buildConfig({
         : undefined,
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+      // Postgres' LLVM JIT is the whole of the ~6s production TTFB, measured
+      // 2026-09-04. Reading one `posts` document joins the 25-block `layout`
+      // catalogue and its locale tables; the planner's cost estimate clears
+      // `jit_above_cost` (100000) and `jit_optimize_above_cost` (500000), so
+      // the server spends seconds in LLVM compiling a query that executes in
+      // 98ms. Same query, same 13 rows, same build: 5415ms with JIT, 98ms with
+      // `SET jit = off`. Nothing here is an analytical query — the workload is
+      // many small reads, which JIT can only ever make slower.
+      //
+      // `options` is passed to the backend at connection time, so it applies to
+      // every pooled connection without touching the server's postgresql.conf.
+      // Invisible on a laptop: Postgres.app ships without LLVM, so it never
+      // JITs whatever the setting says.
+      options: '-c jit=off',
     },
   }),
   sharp,
