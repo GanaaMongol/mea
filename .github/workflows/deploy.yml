@@ -63,14 +63,15 @@ jobs:
 
       - name: Deploy
         run: |
-          echo "--- @img in repo node_modules:"
-          ls node_modules/.pnpm | grep -i img || echo NONE
-          echo "--- @img in standalone:"
-          ls .next/standalone/node_modules/.pnpm | grep -i img || echo NONE
           mkdir -p out/.next
           cp -a .next/standalone/. out/
           cp -a .next/static out/.next/static
           cp -a public out/public
           cp -a ecosystem.config.cjs out/
+          for d in node_modules/.pnpm/@img+*; do
+            rm -rf "out/node_modules/.pnpm/$(basename "$d")"
+            cp -a "$d" out/node_modules/.pnpm/
+          done
+          find out -name "libvips*" | head
           tar cz --exclude='._*' -C out . \
             | ssh -i ~/.ssh/deploy deploy@${{ secrets.EC2_HOST }}
