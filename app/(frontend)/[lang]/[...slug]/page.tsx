@@ -3,29 +3,18 @@ import { notFound } from 'next/navigation'
 
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { localeAlternates, localeHref, toLocale } from '@/lib/i18n'
-import { getPageBySlug, getPageSlugs } from '@/lib/queries'
+import { getPageBySlug } from '@/lib/queries'
 
-export const revalidate = 3600
+// `getPageBySlug`'s `draftMode()` and the shared header nav's `x-pathname`
+// header read are both Dynamic APIs. With a `generateStaticParams` fallback
+// (the CI build's DB is empty, so every real slug used to fall back to
+// on-demand generation) that combination throws `DYNAMIC_SERVER_USAGE` —
+// the same calls are harmless on `/prayer`, which has no static params to
+// fall back from. `force-dynamic` sidesteps the fallback path entirely, so
+// there's nothing left for `generateStaticParams` to do here.
+export const dynamic = 'force-dynamic'
 
 type Params = { lang: string; slug: string[] }
-
-// `home` and `news` have their own dynamic route (their `postsFeed` block's
-// `?kind=` tab needs searchParams, which would force this whole catch-all
-// dynamic too); `prayer` gets its own static route for the same separation.
-// Every other page here stays static.
-const DEDICATED_SLUGS = new Set(['home', 'news', 'prayer'])
-
-export async function generateStaticParams() {
-  try {
-    const slugs = await getPageSlugs()
-    return slugs
-      .filter((slug) => !DEDICATED_SLUGS.has(slug))
-      .map((slug) => ({ slug: slug.split('/') }))
-  } catch {
-    // The DB may not be reachable during a build; pages then render on demand.
-    return []
-  }
-}
 
 export async function generateMetadata({
   params,
@@ -53,7 +42,8 @@ export default async function CatchAllPage({ params }: { params: Promise<Params>
 
   // No page here carries a `postsFeed` tab filter (those live on the
   // dedicated `/news` and `/prayer` routes), so this stays free of
-  // searchParams and keeps its static, `revalidate`-d rendering.
+  // searchParams — the route is still dynamic overall, see the
+  // `dynamic = 'force-dynamic'` note above.
   return (
     <RenderBlocks
       blocks={page.layout}
