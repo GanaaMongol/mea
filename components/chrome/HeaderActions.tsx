@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 import type { UiStrings } from "@/lib/dictionary";
 
@@ -111,6 +112,26 @@ export function SearchButton({ action, t }: { action: string; t: UiStrings }) {
 
 export function MenuToggle({ t }: { t: UiStrings }) {
     const [open, setOpen] = useState(false);
+    const pathname = usePathname();
+    const [navigatedFrom, setNavigatedFrom] = useState(pathname);
+
+    // The header sits in the root layout and stays mounted across navigations,
+    // so an open menu would survive the tap that navigated away from it.
+    // Adjusted during render rather than in an effect — React re-runs this
+    // component before painting, so the panel never flashes open on the new page.
+    if (pathname !== navigatedFrom) {
+        setNavigatedFrom(pathname);
+        setOpen(false);
+    }
+
+    // The nav is a sibling rendered by a Server Component, so the open state
+    // travels through <body> rather than a shared parent. Deriving the class
+    // from state (instead of toggling it in the handler) keeps the two from
+    // drifting apart.
+    useEffect(() => {
+        document.body.classList.toggle("nav-open", open);
+        return () => document.body.classList.remove("nav-open");
+    }, [open]);
 
     return (
         <button
@@ -118,10 +139,7 @@ export function MenuToggle({ t }: { t: UiStrings }) {
             aria-label={t.menu}
             aria-expanded={open}
             data-open={open || undefined}
-            onClick={() => {
-                setOpen((value) => !value);
-                document.body.classList.toggle("nav-open");
-            }}>
+            onClick={() => setOpen((value) => !value)}>
             <span />
         </button>
     );

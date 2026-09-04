@@ -203,6 +203,26 @@
     content: "";
     top: 7px;
 }
+/* Open state: the three bars fold into a cross. */
+.header__menu-toggle span,
+.header__menu-toggle span::before,
+.header__menu-toggle span::after {
+    transition:
+        transform 0.2s ease,
+        top 0.2s ease,
+        background 0.2s ease;
+}
+.header__menu-toggle[data-open] span {
+    background: transparent;
+}
+.header__menu-toggle[data-open] span::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+.header__menu-toggle[data-open] span::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
 
 /* /Header --- */
 .digital_strategy {
