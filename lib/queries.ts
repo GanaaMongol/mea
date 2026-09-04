@@ -22,7 +22,11 @@ export const getPageBySlug = async (
     collection: 'pages',
     where: { slug: { equals: slug } },
     limit: 1,
-    depth: 2,
+    // Every `postsFeed` block on the site uses `source: 'auto'`, which runs
+    // its own depth-1 query — no block currently needs a relation's relation
+    // resolved, so depth 1 covers direct media/link references at far lower
+    // query cost than depth 2.
+    depth: 1,
     locale,
     draft,
     overrideAccess: draft,
