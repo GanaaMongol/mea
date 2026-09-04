@@ -414,11 +414,18 @@ Settled (see `plan.md` §11 for dates and rationale):
 
 Open — ask before the step that needs them:
 
-- **Production TTFB** — pages whose layout contains a collection-driven block (`postsFeed`,
-  `departmentGrid`) answer in ~6s on mea.mn, while pages without one answer in ~0.7s. It is not
-  the data: the same queries over the REST API take ~0.4s, and the same build on a laptop renders
-  every one of those pages in under 60ms. Unidentified; needs a look at the server's own request
-  log (`pm2 logs mea`, which prints Next's per-phase timings) or `PAYLOAD_LOG_SQL`.
+- **Production TTFB ~6s on pages whose blocks query** — `/`, `/news`, `/prayer`, `/ministries`,
+  `/news/[slug]`, `/prayer/[slug]` all answer in ~6s; `/about/*`, `/membership`,
+  `/hubs/[slug]`, `/ministries/[slug]` answer in ~0.7s. The split is **where the query is
+  issued**, not what it asks: `/ministries/kids` queries `departments` from its route file and is
+  fast, `/ministries` queries the same collection from the `departmentGrid` block and is slow.
+  Ruled out by measurement (2026-09-04): the queries (every shape of the `postsFeed` query over
+  the REST API is ~0.4s), query *count* (`/search` fires five in parallel, 0.64s), data volume
+  (`/prayer`'s feed is 1.8KB), images (`/hubs/ulaanbaatar` renders 9 images in 0.87s while
+  `/prayer` renders 2 in 6.1s; `X-Nextjs-Cache` HITs), redirects (none), Payload re-initialising
+  (pinning the client to `globalThis` changed nothing), and the app itself (the same build serves
+  every one of these pages in under 60ms on a laptop). Next unblocked by: the server's own
+  request log — `pm2 logs mea` prints Next's per-phase breakdown — or `PAYLOAD_LOG_SQL=true`.
 - **English locale** — real EN translation, or is the switcher decorative?
 - **`organization.html`** — which route? `/organization` is a guess.
 - **Membership signup** — real member logins, or an application form an admin approves?
