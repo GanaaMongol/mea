@@ -3,21 +3,16 @@ import { notFound } from 'next/navigation'
 
 import { PostArticle } from '@/components/posts/PostArticle'
 import { localeAlternates, toLocale } from '@/lib/i18n'
-import { getArticleBySlug, getArticleSlugs } from '@/lib/queries'
+import { getArticleBySlug } from '@/lib/queries'
 
-export const revalidate = 3600
+// `getArticleBySlug` reads `draftMode()` and the shared header nav reads the
+// `x-pathname` header — both Dynamic APIs. Combined with a
+// `generateStaticParams` fallback (the CI build's DB is empty, so nothing
+// prerenders) that threw `DYNAMIC_SERVER_USAGE` on every request. See
+// `[lang]/[...slug]/page.tsx` for the same fix.
+export const dynamic = 'force-dynamic'
 
 type Params = { lang: string; slug: string }
-
-export async function generateStaticParams() {
-  try {
-    const slugs = await getArticleSlugs('posts')
-    return slugs.map((slug) => ({ slug }))
-  } catch {
-    // The DB may not be reachable during a build; pages then render on demand.
-    return []
-  }
-}
 
 export async function generateMetadata({
   params,

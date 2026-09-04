@@ -3,21 +3,13 @@ import { notFound } from 'next/navigation'
 
 import { PostArticle } from '@/components/posts/PostArticle'
 import { localeAlternates, toLocale } from '@/lib/i18n'
-import { getArticleBySlug, getArticleSlugs } from '@/lib/queries'
+import { getArticleBySlug } from '@/lib/queries'
 
-export const revalidate = 3600
+// Same as `/news/[slug]`: `draftMode()` plus a `generateStaticParams`
+// fallback threw `DYNAMIC_SERVER_USAGE` on every request.
+export const dynamic = 'force-dynamic'
 
 type Params = { lang: string; slug: string }
-
-export async function generateStaticParams() {
-  try {
-    const slugs = await getArticleSlugs('prayers')
-    return slugs.map((slug) => ({ slug }))
-  } catch {
-    // The DB may not be reachable during a build; pages then render on demand.
-    return []
-  }
-}
 
 export async function generateMetadata({
   params,

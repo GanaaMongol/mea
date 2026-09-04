@@ -8,7 +8,9 @@ import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { DEFAULT_LOCALE, localeAlternates, localeHref, toLocale, type Locale } from '@/lib/i18n'
 import { getPayloadClient } from '@/lib/payload'
 
-export const revalidate = 3600
+// `draftMode()` below plus a `generateStaticParams` fallback threw
+// `DYNAMIC_SERVER_USAGE` on every request — see `[lang]/[...slug]/page.tsx`.
+export const dynamic = 'force-dynamic'
 
 type Params = { lang: string; slug: string }
 
@@ -28,24 +30,6 @@ const getHub = async (slug: string, locale: Locale = DEFAULT_LOCALE): Promise<Hu
   })
 
   return docs[0] ?? null
-}
-
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayloadClient()
-    const { docs } = await payload.find({
-      collection: 'hubs',
-      limit: 100,
-      depth: 0,
-      pagination: false,
-      select: { slug: true },
-    })
-
-    return docs.map((doc) => ({ slug: doc.slug }))
-  } catch {
-    // The DB may not be reachable during a build; hubs then render on demand.
-    return []
-  }
 }
 
 export async function generateMetadata({
