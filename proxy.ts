@@ -13,6 +13,10 @@ import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
  *    is forwarded as a header for anything that needs it server-side.
  */
 export function proxy(request: NextRequest) {
+   // Re-entry from our own rewrite — nothing left to do.
+  if (request.headers.has('x-pathname')) {
+    return NextResponse.next()
+  }
   const { pathname } = request.nextUrl
   const first = pathname.split('/')[1]
 
