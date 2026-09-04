@@ -39,8 +39,8 @@ the Payload CLI cannot load `payload.config.ts` (lexical uses top-level await).
 There is no test setup. Verification = `npm run build`, `npm run lint`, and visual comparison
 of each route against its `lib/html/` mockup.
 
-Local Postgres: Postgres.app 16 on `127.0.0.1:5432`, database `mea`. `psql` is not on PATH —
-use `/Applications/Postgres.app/Contents/Versions/16/bin/psql`.
+Local Postgres: Postgres.app **18** on `127.0.0.1:5432`, database `mea`. `psql` is not on PATH —
+use `/Applications/Postgres.app/Contents/Versions/18/bin/psql`.
 
 ## Architecture
 
@@ -225,6 +225,28 @@ validation and basic abuse protection (honeypot / rate limit).
   `siteSettings` revalidate `('/', 'layout')`. `revalidateTag`/`updateTag` semantics changed in
   Next 16 — read `02-guides/upgrading/version-16.md` §"Caching APIs" first.
 
+#### ⚠️ `revalidate` + `draftMode()` = 500 in production (learned the hard way, 2026-09-04)
+
+Every page route in this app is `export const dynamic = 'force-dynamic'`. **Do not "restore"
+`export const revalidate` on a page route** without redesigning the data layer first — it takes
+the site down.
+
+Why: `getPageBySlug`/`getArticleBySlug` (and the hub/department loaders) call `draftMode()`, and
+`components/chrome/HeaderNav.tsx` reads the `x-pathname` request header. Both are Dynamic APIs.
+On a route that also declares `revalidate` **and** has `generateStaticParams`, Next tries to
+generate the page through the static/ISR fallback path at request time, hits those Dynamic APIs,
+and throws `DYNAMIC_SERVER_USAGE` → plain-text `Internal Server Error`, on every request.
+
+It bites hardest here because **the CI build has an empty database** (see Deploy below), so
+`generateStaticParams` returns `[]` and *nothing* prerenders — every real URL takes the failing
+fallback path. It is invisible locally: `next dev` renders everything on demand, so the route
+returns 200 in dev and 500 in production.
+
+This is exactly the case Partial Prerendering / Cache Components exists to solve, and that is
+disabled here. So until the data layer stops calling `draftMode()` on the public path (or
+`cacheComponents` is adopted deliberately), dynamic rendering is the correct setting and query
+cost is the only lever left — keep `depth` low and `select` narrow.
+
 ### Query budget and Payload performance
 
 Payload stores one logical document across many tables when it contains arrays, blocks, localized
@@ -240,10 +262,13 @@ public pages as cached content and by keeping DB reads shallow and narrow.
 - Add indexes on high-traffic lookup fields such as `slug` and any `where` filter fields. For slug
   lookups, every public-facing collection should have a unique index or at least a text index in the
   database.
-- Keep public pages mostly static: homepage, about pages, department listings, hub landing pages,
-  and large marketing views should be cacheable and should not hit the database on every request.
-  Prefer `export const revalidate = 3600` for route-level cache and `unstable_cache`/`revalidateTag`
-  for data-level caches when a page depends on query results.
+- Keeping public pages static is the *goal*, but it is **not the current state** and
+  `export const revalidate` is not the way back — see the `DYNAMIC_SERVER_USAGE` note above.
+  Every page route renders per request today, so each query runs on every visit: that is why
+  `getPageBySlug` is `depth: 1` and why list queries need `select`. The route back to caching is
+  `unstable_cache`/`revalidateTag` around the data (note: Dynamic APIs such as `cookies()`,
+  `headers()` and `draftMode()` are not allowed inside a cache scope, which is the whole
+  difficulty), not a route-level `revalidate`.
 - Use hooks to invalidate cache tags when content changes. `afterChange` and `afterDelete` should call
   `revalidateTag` for collections like `pages`, `posts`, `departments`, `hubs`, `theme`, and
   `siteSettings` so admin edits refresh immediately without requiring a full rebuild.
@@ -265,8 +290,8 @@ const posts = await payload.find({
 ```
 
 ```ts
-// app/(frontend)/page.tsx
-export const revalidate = 3600
+// app/(frontend)/[lang]/page.tsx — every page route, for now
+export const dynamic = 'force-dynamic'
 ```
 
 ```ts
@@ -281,6 +306,55 @@ Verification requirement: enable the Postgres logger locally and measure real qu
 public route. If a route regularly produces 30+ SQL queries, the issue is likely `depth`/relation
 explosion or missing select narrowing. If a route stays around 5 queries or fewer after warm cache,
 then the query shape is acceptable.
+
+### Deploy and production (mea.mn)
+
+Pushing to `main` **deploys to production** — there is no staging. `.github/workflows/deploy.yml`
+builds, migrates and ships on every push; treat a push as a release.
+
+| Piece | Where |
+| --- | --- |
+| Host | EC2 (`ubuntu@ip-172-31-9-3`), nginx 1.24 → Node on `127.0.0.1:3000` |
+| Process | pm2 app `mea`, `ecosystem.config.cjs`, `--max-old-space-size=512`, restart at 600M |
+| Releases | `/var/www/mea/releases/<ts>`, symlinked as `/var/www/mea/current` |
+| Deploy script | `infra/mea-deploy` (runs on the server, receives a tarball over ssh) |
+| Env | `/var/www/mea/shared/.env` |
+| Logs | `sudo tail /home/deploy/.pm2/logs/mea-error.log` |
+| Media | S3 bucket `mea-mn-media` (private), served through Payload at `/api/media/file/<name>` |
+
+Two things about the pipeline that change how code must be written:
+
+1. **The CI build has an empty database.** The workflow spins up a throwaway `postgres:16-alpine`
+   purely so the build can boot Payload. So `generateStaticParams` returns `[]` at build time and
+   nothing is prerendered — see the `DYNAMIC_SERVER_USAGE` note above. Never assume build-time
+   content exists.
+2. **Locale routing lives in nginx, not in the app.** `mn` is the default locale and is
+   *unprefixed* (`/about/vision`); nginx rewrites it internally to `/mn/about/vision` and sets
+   `x-locale-rewritten: 1`, which `proxy.ts` uses to tell an internal rewrite from a hand-typed
+   `/mn/...` (which it redirects back to the clean URL). `infra/nginx-mea.conf` in this repo is
+   **empty** — the real config only exists on the server.
+
+Testing locally therefore needs that header, because there is no nginx in front of `next dev`:
+
+```bash
+curl -H "x-locale-rewritten: 1" http://localhost:3000/mn/about/vision   # 200
+curl http://localhost:3000/about/vision                                 # 404 — expected locally
+```
+
+`next dev` also renders every page on demand, so it cannot reproduce static-rendering failures.
+To reproduce production behaviour, build and run the standalone server:
+
+```bash
+pnpm build
+cp -a .next/static .next/standalone/.next/static && cp -a public .next/standalone/public
+PORT=3001 node .next/standalone/server.js     # `next start` does NOT work with output: standalone
+```
+
+Known rough edges in `infra/mea-deploy`, unverified on the server:
+
+- it starts `ecosystem.config.js` but the file shipped is `ecosystem.config.cjs`;
+- it symlinks the Next cache to `apps/web/.next/cache`, a monorepo path this repo does not have;
+- its health check curls `http://127.0.0.1:3000/`, which is a 404 without nginx's locale rewrite.
 
 ### Rich text
 
@@ -325,8 +399,13 @@ Settled (see `plan.md` §11 for dates and rationale):
 - **Next 16 ↔ Payload** ✅ — `@payloadcms/next@3.86.0` supports `next >=16.2.6 <17.0.0`. Next
   16.2.11 is inside the range; no override, no waiting.
 - **DB adapter** ✅ — `@payloadcms/db-postgres`, local Postgres.app, database `mea`.
-- **Media storage** ✅ — local disk (`/media`); swap to `@payloadcms/storage-s3` later as a
-  config-only change.
+- **Media storage** ✅ — **done**: `@payloadcms/storage-s3` on bucket `mea-mn-media`, files at the
+  bucket root (no prefix). The bucket is private and unsigned, so images are served through the app
+  at `/api/media/file/<name>` and then re-optimised by `next/image` — every image request costs the
+  Node process, which is worth remembering when the site feels slow.
+- **Rendering mode** ✅ (2026-09-04, forced) — every page route is `dynamic = 'force-dynamic'`.
+  `revalidate` + `generateStaticParams` + `draftMode()` returned 500 (`DYNAMIC_SERVER_USAGE`) on
+  the whole site. Caching has to come back at the data layer, not the route level.
 - **Theme editability** ✅ — fully admin-editable `theme` global.
 - **Build order** ✅ — Payload first, single pass. (The old phase 1 → phase 2 split is cancelled;
   it meant writing all 19 pages twice.)
@@ -335,6 +414,11 @@ Settled (see `plan.md` §11 for dates and rationale):
 
 Open — ask before the step that needs them:
 
+- **Production TTFB** — pages whose layout contains a collection-driven block (`postsFeed`,
+  `departmentGrid`) answer in ~6s on mea.mn, while pages without one answer in ~0.7s. It is not
+  the data: the same queries over the REST API take ~0.4s, and the same build on a laptop renders
+  every one of those pages in under 60ms. Unidentified; needs a look at the server's own request
+  log (`pm2 logs mea`, which prints Next's per-phase timings) or `PAYLOAD_LOG_SQL`.
 - **English locale** — real EN translation, or is the switcher decorative?
 - **`organization.html`** — which route? `/organization` is a guess.
 - **Membership signup** — real member logins, or an application form an admin approves?
