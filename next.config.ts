@@ -4,6 +4,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: 'standalone',
   cacheMaxMemorySize: 25 * 1024 * 1024,
+  outputFileTracingIncludes: {
+    '/**': ['./node_modules/.pnpm/@img+*/**/*'],
+  },
 };
 
 export default withPayload(nextConfig);
