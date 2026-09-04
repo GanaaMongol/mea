@@ -51,4 +51,6 @@ cat >> .gitignore <<'EOF'
 *-key.pub
 .env
 .env.local
+
+*.md
 EOF
