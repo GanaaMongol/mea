@@ -30,6 +30,26 @@
 @import "./styles/pages/news-detail.css" layer(components);
 @import "./styles/pages/organization.css" layer(components);
 
+/*
+ * Tailwind v4 ships its own `container` utility, and the utilities layer outranks
+ * `components` — so its breakpoint max-widths (80rem, then 96rem) silently replaced
+ * the design system's `.container` from base.css on every page that uses the class.
+ * The symptom: `.container` pages (about/vision) sat in a 1280/1536px box while
+ * `.about-content__inner` pages (about/history) kept the intended 1360px.
+ * Redefining the utility makes Tailwind emit the design system's values instead;
+ * base.css/responsive.css keep the same rules so the ported stylesheet still reads
+ * as the source of truth.
+ */
+@utility container {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: 40px;
+
+    @media (width <= 1024px) {
+        padding-inline: 24px;
+    }
+}
+
 /* New UI with no mockup of its own, kept in the same layer as the design system. */
 @import "./styles/search.css" layer(components);
 

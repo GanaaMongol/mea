@@ -29,7 +29,11 @@
       "mcp__claude_ai_Figma__get_metadata",
       "mcp__claude_ai_Figma__get_figma_skill",
       "Bash(/Applications/Postgres.app/Contents/Versions/18/bin/psql -h 127.0.0.1 -p 5432 -d mea -c \"select 1\")",
-      "Bash(lsof -ti:3000)"
+      "Bash(lsof -ti:3000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -H \"x-locale-rewritten: 1\" http://localhost:3000/mn/about/vision)",
+      "Bash($PSQL *)",
+      "Bash(PSQL=/Applications/Postgres.app/Contents/Versions/18/bin/psql; $PSQL -d mea -tAc \"select table_name from information_schema.tables where table_name like 'pages_blocks%' order by 1;\" | head -40)",
+      "Bash(/Applications/Postgres.app/Contents/Versions/18/bin/psql -d mea -tAc ' *)"
     ]
   }
 }
